@@ -4,7 +4,7 @@ package com.gjf.lovezzu.entity;
  * Created by zhaox on 2017/4/9.
  */
 
-public class PlayTop {
+public class PlayTop extends PlayItems{
     private int userImage;
     private String userName;
     private String dateTime;

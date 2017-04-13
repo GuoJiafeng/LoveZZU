@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import com.gjf.lovezzu.R;
 import com.gjf.lovezzu.entity.PlayEnd;
+import com.gjf.lovezzu.entity.PlayItems;
 import com.gjf.lovezzu.entity.PlayTop;
 
 import java.util.List;
@@ -17,12 +18,11 @@ import java.util.List;
 
 public class PlayTogetherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<PlayTop> playTops;
-    private List<PlayEnd> playEnds;
-
-    public PlayTogetherAdapter(List<PlayTop> playTopList, List<PlayEnd> playEndList) {
-        this.playTops = playTopList;
-        this.playEnds = playEndList;
+  /*  private List<PlayTop> playTops;
+    private List<PlayEnd> playEnds;*/
+    private List<PlayItems> playItems;
+    public PlayTogetherAdapter(List<PlayItems> playItemsList) {
+        this.playItems=playItemsList;
     }
 
     @Override
@@ -48,7 +48,7 @@ public class PlayTogetherAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             switch (getItemViewType(position)){
                 case 1:
                     final TypeOneViewViewHolder typeOneViewViewHolder= (TypeOneViewViewHolder) holder;
-                    PlayTop playTop=playTops.get(position);
+                    PlayTop playTop= (PlayTop) playItems.get(position);
                     typeOneViewViewHolder.circleImageView.setImageResource(playTop.getUserImage());
                     typeOneViewViewHolder.userName.setText(playTop.getUserName());
                     typeOneViewViewHolder.userTime.setText(playTop.getDateTime());
@@ -60,7 +60,7 @@ public class PlayTogetherAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     break;
                 case 2:
                     final TypeTwoViewViewHolder typeTwoViewViewHolder= (TypeTwoViewViewHolder) holder;
-                    PlayEnd playEnd=playEnds.get(position);
+                    PlayEnd playEnd= (PlayEnd) playItems.get(position);
                     typeTwoViewViewHolder.groupImage.setImageResource(playEnd.getGroupImage());
                     typeTwoViewViewHolder.groupName.setText(playEnd.getGroupName());
                     typeTwoViewViewHolder.groupInfo.setText(playEnd.getGroupInfo());
@@ -81,7 +81,7 @@ public class PlayTogetherAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public int getItemCount() {
-        return playTops.size() + playEnds.size();
+        return playItems.size();
     }
 
 
