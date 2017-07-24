@@ -11,6 +11,8 @@ import rx.Observable;
  * Created by BlackBeard丶 on 2017/03/10.
  */
 public interface EdituserInfoServer {
+
+
     @FormUrlEncoded
     @POST("userinfoAction")
     Observable<UserInfoResult> editNickname(@Field("identifier") String identifier, @Field("phone") String phone, @Field("nickname") String nickname);
