@@ -73,20 +73,20 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
         if (getItemViewType(position) == TYPE_PHOTO) {
             uri = Uri.fromFile(new File(photoPaths.get(position)));
 
-            Map<String, RequestBody> photos = new HashMap<>();
+            //Map<String, RequestBody> photos = new HashMap<>();
             File file = new File(uri.getPath());
 
-            if (file.exists()){
+           /* if (file.exists()){
                 Log.d("ggggg","yicunzai");
-            }
-            testReq(file);
-            RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-            photos.put("image", requestFile);
-            photos.put("phone", RequestBody.create(MediaType.parse("multipart/form-data"), "123456"));
-            Log.d("ggggg", photos.toString());
+            }*/
+            //testReq(file);
+            //RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+            //photos.put("image", requestFile);
+            //photos.put("phone", RequestBody.create(MediaType.parse("multipart/form-data"), "123456"));
+           /* Log.d("ggggg", photos.toString());
             Log.d("ggggg", uri.toString());
             Log.d("ggggg", file.getName());
-
+*/
 
             boolean canLoadImage = AndroidLifecycleUtils.canLoadImage(holder.ivPhoto.getContext());
 
@@ -105,7 +105,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
         }
     }
 
-    private void testReq(File file){
+   /* private void testReq(File file){
 //        x.Ext.init(mContext.getApplicationContext());
         RequestParams requestParams=new RequestParams(LOGIN_URL+"upload");
         requestParams.setMultipart(true);
@@ -137,7 +137,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
 
             }
         });
-    }
+    }*/
 
 
     @Override
@@ -166,7 +166,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
         }
     }
 
-    public void upLoad(Map<String, RequestBody> photos) {
+   /* public void upLoad(Map<String, RequestBody> photos) {
         subscriber = new Subscriber<ResponseBody>() {
             @Override
             public void onCompleted() {
@@ -186,5 +186,5 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
         };
         String phone = null;
         UpLoadIconMethods.upLoadIconMethods().goToUploadIcon(subscriber, photos);
-    }
+    }*/
 }

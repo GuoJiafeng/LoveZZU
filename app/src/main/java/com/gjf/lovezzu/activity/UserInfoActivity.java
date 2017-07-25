@@ -12,9 +12,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.OrientationHelper;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,27 +23,31 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.gjf.lovezzu.R;
+
 import com.gjf.lovezzu.entity.UserInfoResult;
 import com.gjf.lovezzu.network.DownloadIconMethods;
 import com.gjf.lovezzu.network.GetUserInfoMethods;
 import com.gjf.lovezzu.network.SaveUserInfoMethods;
-import com.gjf.lovezzu.view.CircleImageView;
-import com.gjf.lovezzu.view.PhotoAdapter;
-import com.gjf.lovezzu.view.RecyclerItemClickListener;
 
+import com.gjf.lovezzu.view.CircleImageView;
+
+
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
+
+import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.rong.imkit.RongIM;
-import io.rong.imlib.RongIMClient;
-import io.rong.imlib.model.UserInfo;
 import me.iwf.photopicker.PhotoPicker;
-import me.iwf.photopicker.PhotoPreview;
 import rx.Subscriber;
+
+import static com.gjf.lovezzu.constant.Url.LOGIN_URL;
 
 /**
  * Created by BlackBeard丶 on 2017/03/01.
@@ -54,7 +56,6 @@ public class UserInfoActivity extends AppCompatActivity {
     @BindView(R.id.user_info_refresh)
     SwipeRefreshLayout userInfoRefresh;
     private Subscriber subscriber;
-    private PhotoAdapter photoAdapter;
     private ArrayList<String> selectedPhotos = new ArrayList<>();
     @BindView(R.id.userinfo_icon)
     ImageView userinfo_icon;
@@ -94,16 +95,17 @@ public class UserInfoActivity extends AppCompatActivity {
     private static String userPhone;
     private static String userName;
     private  String token;
+    private  static String userIcon,imageURL=null;
+    private static  String upIcon;
 
+    private   String SessionID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_userinfo);
         ButterKnife.bind(this);
-        disPlayImage();
         dispalyUserInfo();
-
         onRefresh();
 
         if (Build.VERSION.SDK_INT >= 21) {
@@ -120,13 +122,13 @@ public class UserInfoActivity extends AppCompatActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.userinfo_icon_layout:
-                UploadIcon();
+                startUp();
                 break;
             case R.id.userinfo_nickname_layout:
                 EditNickname();
                 break;
             case R.id.userinfo_code_layout:
-                DisPlayCode();
+               Toast.makeText(UserInfoActivity.this,"无效",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.userinfo_sex_layout:
                 EditSex();
@@ -173,6 +175,8 @@ public class UserInfoActivity extends AppCompatActivity {
 
     //显示用户头像
     private void disPlayImage() {
+
+
         subscriber = new Subscriber<Bitmap>() {
             @Override
             public void onCompleted() {
@@ -189,8 +193,8 @@ public class UserInfoActivity extends AppCompatActivity {
                 circleImageView.setImageBitmap(bitmap);
             }
         };
-        DownloadIconMethods.getInstance().startDownloadIcon(subscriber);
 
+        DownloadIconMethods.getInstance().startDownloadIcon(subscriber,userIcon,"头像");
     }
 
     //显示用户信息
@@ -198,7 +202,7 @@ public class UserInfoActivity extends AppCompatActivity {
         subscriber = new Subscriber<UserInfoResult>() {
             @Override
             public void onCompleted() {
-
+                disPlayImage();
             }
 
             @Override
@@ -212,7 +216,8 @@ public class UserInfoActivity extends AppCompatActivity {
                 final SharedPreferences.Editor editor = sharedPreferences.edit();
                 user_info_nickname_text.setText(userInfoResult.getNickname());
                 //this.userName=userInfoResult.getNickname();
-
+                //Glide.with(UserInfoActivity.this).load(userInfoResult.getImageUrl()).into(circleImageView);
+                userIcon=userInfoResult.getImageUrl().toString();
                 user_info_phone_text.setText(userInfoResult.getPhone());
                 user_info_sex_text.setText(userInfoResult.getGender());
                 user_info_hone_text.setText(userInfoResult.getHometown());
@@ -226,52 +231,60 @@ public class UserInfoActivity extends AppCompatActivity {
         final SharedPreferences.Editor editor = sharedPreferences.edit();
         String phone = sharedPreferences.getString("phone", "");
         String password = sharedPreferences.getString("password", "");
-        String SessionID = sharedPreferences.getString("SessionID", "");
+
+        SessionID = sharedPreferences.getString("SessionID", "");
         String id = "3";
         GetUserInfoMethods.getUserInfoMethods().goToGetUserInfo(subscriber, id, phone, password);
 
 
     }
 
-    private void DisPlayEditText() {
-
-    }
 
     //上传图片
+    private void startUp(){
+        PhotoPicker.builder()
+                .setPhotoCount(1)
+                .setShowCamera(true)
+                .setShowGif(true)
+                .setPreviewEnabled(false)
+                .start(this, PhotoPicker.REQUEST_CODE);
+    }
     private void UploadIcon() {
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        photoAdapter = new PhotoAdapter(this, selectedPhotos);
+        RequestParams requestParams=new RequestParams(LOGIN_URL+"upload");
+        requestParams.setMultipart(true);
+        requestParams.addBodyParameter("SessionID",SessionID);
+        requestParams.addBodyParameter("myUpload",new File(upIcon));
+        x.http().post(requestParams, new Callback.CacheCallback<String>() {
+            @Override
+            public boolean onCache(String result) {
+                return false;
+            }
 
-        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(4, OrientationHelper.VERTICAL));
-        recyclerView.setAdapter(photoAdapter);
+            @Override
+            public void onSuccess(String result) {
+            }
 
-        PhotoPicker.builder()
-                .setPhotoCount(2)
-                .start(UserInfoActivity.this);
-        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this,
-                new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+            }
 
-                        if (photoAdapter.getItemViewType(position) == PhotoAdapter.TYPE_ADD) {
-                            PhotoPicker.builder()
-                                    .setPhotoCount(PhotoAdapter.MAX)
-                                    .setShowCamera(true)
-                                    .setPreviewEnabled(false)
-                                    .setSelected(selectedPhotos)
-                                    .start(UserInfoActivity.this);
-                        } else {
-                            PhotoPreview.builder()
-                                    .setPhotos(selectedPhotos)
-                                    .setCurrentItem(position)
-                                    .start(UserInfoActivity.this);
-                        }
-                    }
-                }));
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
 
 
     }
+
+
+
 
     //修改昵称
     private void EditNickname() {
@@ -291,10 +304,6 @@ public class UserInfoActivity extends AppCompatActivity {
     }
     //显示二维码
 
-    private void DisPlayCode() {
-
-
-    }
 
     //修改性别
     private void EditSex() {
@@ -303,11 +312,13 @@ public class UserInfoActivity extends AppCompatActivity {
         final EditText text = (EditText) layout.findViewById(R.id.edituserinfo);
 
 
-        new AlertDialog.Builder(UserInfoActivity.this).setMessage("请输入您的昵称：")
+        new AlertDialog.Builder(UserInfoActivity.this).setMessage("请输入您的性别：")
                 .setView(layout).setPositiveButton("保存", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 SaveInfoSex(text.getText().toString());
+                user_info_nickname_text.setText(text.getText().toString());
+
             }
         }).setNegativeButton("取消", null).show();
 
@@ -320,11 +331,13 @@ public class UserInfoActivity extends AppCompatActivity {
         final EditText text = (EditText) layout.findViewById(R.id.edituserinfo);
 
 
-        new AlertDialog.Builder(UserInfoActivity.this).setMessage("请输入您的昵称：")
+        new AlertDialog.Builder(UserInfoActivity.this).setMessage("请输入您的家乡：")
                 .setView(layout).setPositiveButton("保存", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 SaveInfoHome(text.getText().toString());
+                user_info_hone_text.setText(text.getText().toString());
+
             }
         }).setNegativeButton("取消", null).show();
 
@@ -337,11 +350,12 @@ public class UserInfoActivity extends AppCompatActivity {
         final EditText text = (EditText) layout.findViewById(R.id.edituserinfo);
 
 
-        new AlertDialog.Builder(UserInfoActivity.this).setMessage("请输入您的昵称：")
+        new AlertDialog.Builder(UserInfoActivity.this).setMessage("请输入您的院校：")
                 .setView(layout).setPositiveButton("保存", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 SaveInfoSChool(text.getText().toString());
+                user_info_school_text.setText(text.getText().toString());
             }
         }).setNegativeButton("取消", null).show();
 
@@ -354,11 +368,12 @@ public class UserInfoActivity extends AppCompatActivity {
         final EditText text = (EditText) layout.findViewById(R.id.edituserinfo);
 
 
-        new AlertDialog.Builder(UserInfoActivity.this).setMessage("请输入您的昵称：")
+        new AlertDialog.Builder(UserInfoActivity.this).setMessage("请输入您的院系：")
                 .setView(layout).setPositiveButton("保存", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 SaveInfoClass(text.getText().toString());
+                user_info_class_text.setText(text.getText().toString());
             }
         }).setNegativeButton("取消", null).show();
 
@@ -371,11 +386,12 @@ public class UserInfoActivity extends AppCompatActivity {
         final EditText text = (EditText) layout.findViewById(R.id.edituserinfo);
 
 
-        new AlertDialog.Builder(UserInfoActivity.this).setMessage("请输入您的昵称：")
+        new AlertDialog.Builder(UserInfoActivity.this).setMessage("请输入您的专业：")
                 .setView(layout).setPositiveButton("保存", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 SaveInfoMajor(text.getText().toString());
+                user_info_major_text.setText(text.getText().toString());
             }
         }).setNegativeButton("取消", null).show();
 
@@ -557,22 +573,19 @@ public class UserInfoActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == RESULT_OK &&
-                (requestCode == PhotoPicker.REQUEST_CODE || requestCode == PhotoPreview.REQUEST_CODE)) {
-
-            List<String> photos = null;
+        if (resultCode == RESULT_OK && requestCode == PhotoPicker.REQUEST_CODE) {
             if (data != null) {
-                photos = data.getStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS);
+                selectedPhotos =
+                        data.getStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS);
             }
-            selectedPhotos.clear();
-
-            if (photos != null) {
-
-                selectedPhotos.addAll(photos);
-            }
-            photoAdapter.notifyDataSetChanged();
         }
+        if (upIcon!=null&&!upIcon.equals("")){
+            upIcon=null;
+        }
+        upIcon=selectedPhotos.get(0).toString();
+        Glide.with(UserInfoActivity.this).load(upIcon).into(circleImageView);
+
+        UploadIcon();
     }
 
 

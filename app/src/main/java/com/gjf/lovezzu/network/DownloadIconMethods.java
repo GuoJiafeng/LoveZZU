@@ -48,8 +48,8 @@ public class DownloadIconMethods {
         return SingletonHolder.INSTANCE;
     }
 
-    public void startDownloadIcon(Subscriber<Bitmap> subscriber) {
-        downloadIconServer.downloadIconFromNet().
+    public void startDownloadIcon(Subscriber<Bitmap> subscriber,String imageURL,String action) {
+        downloadIconServer.downloadIconFromNet(imageURL, action).
                 subscribeOn(Schedulers.newThread())
                 .map(new Func1<ResponseBody, Bitmap>() {
                     @Override

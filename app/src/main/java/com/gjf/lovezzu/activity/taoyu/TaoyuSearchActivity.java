@@ -117,7 +117,8 @@ public class TaoyuSearchActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("userinfo", Activity.MODE_APPEND);
         final SharedPreferences.Editor editor = sharedPreferences.edit();
         String SessionID = sharedPreferences.getString("SessionID", "");
-        TaoyuGoodsListMethods.getInstance().getGoodsList(subscriber,msg,1);
+        int i=0;
+        TaoyuGoodsListMethods.getInstance().getGoodsList(subscriber,msg,i+=10);
 
     }
 
