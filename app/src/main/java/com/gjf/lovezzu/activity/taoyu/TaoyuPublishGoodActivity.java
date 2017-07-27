@@ -29,13 +29,17 @@ import com.gjf.lovezzu.view.WheelView;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.xutils.common.Callback;
-import org.xutils.common.util.KeyValue;
+
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
 import java.io.File;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -66,18 +70,21 @@ public class TaoyuPublishGoodActivity extends AppCompatActivity {
     @BindView(R.id.goods_class)
     TextView goodsClass;
     @BindView(R.id.goods_school)
-    EditText goodsSchool;
+    TextView goodsSchool;
     private PhotoAdapter photoAdapter;
     private ArrayList<String> selectedPhotos = new ArrayList<>();
     @BindView(R.id.taoyu_publish_addimage)
     FrameLayout taoyu_publish_addimage;
 
-    private String goods_class="商品种类";
+    private String goods_class="出行";
     private static final String[] GOODS_CLASS={"学校","出行","娱乐"};
+    private String goods_school="郑州大学（主校区）";
+    private static final String[] GOODS_SCHOOL={"郑州大学（主校区）","郑州大学（北校区）","郑州大学（南校区）","郑州大学（东校区）"};
     private android.app.AlertDialog goods_alertDialog;
+    private android.app.AlertDialog goods_schoolDialog;
     private static String SessionID="";
     private static String goodsId="";
-    private static File[] photos;
+    private static List<File>  photoList=new ArrayList<File>();
     private static List<String> photosURL=new ArrayList<String>();
 
     @Override
@@ -101,7 +108,6 @@ public class TaoyuPublishGoodActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.taoyu_publish_addimage:
                 upLoadImage();
-
                 break;
         }
 
@@ -122,9 +128,8 @@ public class TaoyuPublishGoodActivity extends AppCompatActivity {
         requestParams.addBodyParameter("Gtype",goodsClass.getText().toString());
         requestParams.addBodyParameter("Gname",goodsName.getText().toString());
         requestParams.addBodyParameter("Gdescribe",goodsDesc.getText().toString());
-        requestParams.addBodyParameter("Gprice",goodsClass.getText().toString());
-        //requestParams.addBodyParameter("Gtype",goodsClass.getText().toString());
-
+        requestParams.addBodyParameter("Gprice",goodsPrice.getText().toString());
+        requestParams.addBodyParameter("Gcampus",goodsSchool.getText().toString());
 
         x.http().post(requestParams, new Callback.CacheCallback<String>() {
             @Override
@@ -138,10 +143,10 @@ public class TaoyuPublishGoodActivity extends AppCompatActivity {
                 try {
                     JSONObject jsonObject=new JSONObject(result);
                     goodsId=jsonObject.getString("goods_id");
-                    Log.e("上传商品信息的ID-----------",goodsId);
+                    //Log.e("上传商品信息的ID-----------",goodsId);
                     upGoodsImages();
                 } catch (JSONException e) {
-                    Log.e("上传商品信息返回的JSON解析-----------",e.getMessage());
+                    //Log.e("上传商品信息返回的JSON解析-----------",e.getMessage());
                 }finally {
 
                 }
@@ -150,7 +155,7 @@ public class TaoyuPublishGoodActivity extends AppCompatActivity {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("上传商品信息------------错误信息",ex.getMessage().toString());
+                //Log.e("上传商品信息------------错误信息",ex.getMessage().toString());
             }
 
             @Override
@@ -167,32 +172,26 @@ public class TaoyuPublishGoodActivity extends AppCompatActivity {
     }
 
     private void upGoodsImages(){
-        if (photosURL!=null&&photos!=null){
+        if (photosURL!=null&&photoList!=null){
             int i=0;
             for (String photo:photosURL){
                 File file=new File(photo);
-                photos[i++]=file;
+                photoList.add(file);
             }
         }
-
 
         RequestParams requestParams=new RequestParams(LOGIN_URL+"imagesupload");
         requestParams.setMultipart(true);
         requestParams.addBodyParameter("SessionID",SessionID);
         requestParams.addBodyParameter("goods_id",goodsId);
         requestParams.addBodyParameter("action","上传图片");
-
-
-        /*
+        //requestParams.addBodyParameter("images", );
+        /*s
         * File[]数组不能直接设置给requestParams
         * */
+        requestParams.addParameter("images",photoList);
 
-        if (photos!=null){
-            for (int i=0;i<photos.length;i++){
-                File photo=photos[i];
-                requestParams.addBodyParameter("images",photo);
-            }
-        }
+
 
         x.http().post(requestParams, new Callback.CacheCallback<String>() {
             @Override
@@ -202,13 +201,13 @@ public class TaoyuPublishGoodActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(String result) {
-                Log.e("上传商品图片+++++++++++",result);
+                //Log.e("上传商品图片+++++++++++",result);
 
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("上传商品图片++++++++++++错误信息",ex.getMessage().toString());
+                //Log.e("上传商品图片++++++++++++错误信息",ex.getMessage().toString());
             }
 
             @Override
@@ -218,7 +217,7 @@ public class TaoyuPublishGoodActivity extends AppCompatActivity {
 
             @Override
             public void onFinished() {
-
+                photosURL.clear();
             }
         });
 
@@ -268,7 +267,7 @@ public class TaoyuPublishGoodActivity extends AppCompatActivity {
                 photos = data.getStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS);
             }
             selectedPhotos.clear();
-
+            photosURL.clear();
             if (photos != null) {
                 photosURL=photos;
                 selectedPhotos.addAll(photos);
@@ -277,7 +276,7 @@ public class TaoyuPublishGoodActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick({R.id.go_back, R.id.goods_commit, R.id.goods_class})
+    @OnClick({R.id.go_back, R.id.goods_commit, R.id.goods_class,R.id.goods_school})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.go_back:
@@ -295,7 +294,7 @@ public class TaoyuPublishGoodActivity extends AppCompatActivity {
                 wv.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
                     @Override
                     public void onSelected(int selectedIndex, String item) {
-                        Log.d("选择商品", "[Dialog]selectedIndex: " + selectedIndex + ", item: " + item);
+                        //Log.d("选择商品", "[Dialog]selectedIndex: " + selectedIndex + ", item: " + item);
                         goods_class=item;
                     }
                 });
@@ -320,6 +319,41 @@ public class TaoyuPublishGoodActivity extends AppCompatActivity {
                     }
                 });
                 break;
+            case R.id.goods_school:
+                View outerView1 = LayoutInflater.from(this).inflate(R.layout.wheel_view, null);
+                WheelView wv1 = (WheelView) outerView1.findViewById(R.id.wheel_view_wv);
+                wv1.setOffset(1);
+                wv1.setItems(Arrays.asList(GOODS_SCHOOL));
+                wv1.setSeletion(1);
+                wv1.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
+                    @Override
+                    public void onSelected(int selectedIndex, String item) {
+                        //Log.d("选择商品", "[Dialog]selectedIndex: " + selectedIndex + ", item: " + item);
+                        goods_school=item;
+                    }
+                });
+
+                goods_schoolDialog= new android.app.AlertDialog.Builder(this)
+                        .setTitle("选择校区")
+                        .setView(outerView1)
+                        .show();
+                TextView txtSure1= (TextView) outerView1.findViewById(R.id.txt_sure);
+                txtSure1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        goodsSchool.setText(goods_school);
+                        goods_schoolDialog.dismiss();
+                    }
+                });
+                TextView txtCancle1= (TextView) outerView1.findViewById(R.id.txt_cancel);
+                txtCancle1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        goods_schoolDialog.dismiss();
+                    }
+                });
+                break;
+
         }
     }
 }

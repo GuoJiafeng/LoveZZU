@@ -99,7 +99,8 @@ public class TaoyuGoodsEnjoyTypeFragment extends Fragment{
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("userinfo", Activity.MODE_APPEND);
         final SharedPreferences.Editor editor = sharedPreferences.edit();
         String SessionID = sharedPreferences.getString("SessionID", "");
-        TaoyuGoodsListMethods.getInstance().getGoodsList(subscriber,"娱乐",1);
+        int i=1;
+        TaoyuGoodsListMethods.getInstance().getGoodsList(subscriber,"娱乐",i+=5);
 
     }
 

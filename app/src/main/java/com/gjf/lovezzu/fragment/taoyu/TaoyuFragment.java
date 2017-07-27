@@ -70,70 +70,17 @@ public class TaoyuFragment extends Fragment {
     }
 
 
-//    private void inittaoyuList() {
-//        TaoyuResult taoyuResult1 = new TaoyuResult(R.drawable.ic_launcher,R.drawable.ic_launcher,"18838970227","快来买我东西啦啦啦","郑州",5,5,5,5);
-//        TaoyuResult taoyuResult2 = new TaoyuResult(R.drawable.ic_launcher,R.drawable.ic_launcher,"18838970227","快来买我东西啦","lala",5,5,5,5);
-//        TaoyuResult taoyuResult3 = new TaoyuResult(R.drawable.ic_launcher,R.drawable.ic_launcher,"18838970227","快来买我东西啦","郑州",5,5,5,5);
-//        taoyuResultList.add(taoyuResult1);
-//        taoyuResultList.add(taoyuResult2);
-//        taoyuResultList.add(taoyuResult3);
-//
-//    }
-
-
-
-//    private void onRefresh() {
-//        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.last_school_content_flash);
-//        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
-//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                refreshlast();
-//            }
-//        });
-//    }
-
-//    private void refreshlast() {
-//
-//
-//
-//
-//
-//
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                //重新加载数据并更新界面
-//                try {
-//                    Thread.sleep(200);
-//
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//                getActivity().runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//
-//                        swipeRefreshLayout.setRefreshing(false);
-//                    }
-//                });
-//
-//
-//            }
-//        }).start();
-//    }
-
     public void getTaoyuGoodsList(){
 
         subscriber = new Subscriber<TaoyuGoodsData>() {
             @Override
             public void onCompleted() {
-                Log.d("ggggg","yiwancheng taoyu");
+                //Log.d("ggggg","yiwancheng taoyu");
             }
 
             @Override
             public void onError(Throwable e) {
-                Log.d("ggggg",e.getMessage().toString()+"hgggggggggggggg");
+                //Log.d("ggggg",e.getMessage().toString()+"hgggggggggggggg");
             }
 
             @Override

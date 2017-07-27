@@ -16,7 +16,6 @@ public class TaoyuResult {
     private int time;
     private int zan;
     private int comment;
-    private SchoolNewsResult schoolNewsResult;
 
 
     public TaoyuResult(int imageID1, int imageID2, String phone, String title, String position, int price, int time, int zan, int comment) {

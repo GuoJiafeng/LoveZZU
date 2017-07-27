@@ -8,7 +8,6 @@ public class UserInfoResult {
     private String imageUrl;//头像地址
     private String nickname;//昵称
     private String phone;//手机号
-    private String Qr_codeUrl; //二维码地址
     private String gender;//性别
     private String hometown;//家乡
     private String academy;//院校
@@ -45,14 +44,6 @@ public class UserInfoResult {
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public String getQr_codeUrl() {
-        return Qr_codeUrl;
-    }
-
-    public void setQr_codeUrl(String qr_codeUrl) {
-        Qr_codeUrl = qr_codeUrl;
     }
 
     public String getGender() {

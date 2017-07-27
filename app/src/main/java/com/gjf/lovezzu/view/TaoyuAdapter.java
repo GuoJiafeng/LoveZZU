@@ -38,7 +38,20 @@ public class TaoyuAdapter extends RecyclerView.Adapter<TaoyuAdapter.ViewHolder> 
         holder.taoyuView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "点击事件", Toast.LENGTH_SHORT).show();
+                Toast.makeText(v.getContext(), "商品详情页（含有评论）", Toast.LENGTH_SHORT).show();
+            }
+        });
+        holder.zan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(v.getContext(), "+1", Toast.LENGTH_SHORT).show();
+                //点赞的网络操作
+            }
+        });
+        holder.comm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(v.getContext(), "商品详情页（含有评论）", Toast.LENGTH_SHORT).show();
             }
         });
         return holder;
@@ -51,18 +64,21 @@ public class TaoyuAdapter extends RecyclerView.Adapter<TaoyuAdapter.ViewHolder> 
         Glide.with(context)
                 .load(taoyuResult.getUserinfo().getImageUrl())
                 .centerCrop().dontAnimate()
+                .placeholder(R.drawable.def_avatar)
+                .error(R.drawable.__picker_ic_broken_image_black_48dp)
+                .into(holder.user_icon);
+        Glide.with(context)
+                .load(taoyuResult.getGoods().getImageUrl())
                 .placeholder(R.drawable.__picker_ic_photo_black_48dp)
                 .error(R.drawable.__picker_ic_broken_image_black_48dp)
-                .into(holder.taoyuimag);
+                .into(holder.goods_img);
         //holder.taoyuimag.setImageResource(taoyuResult.getImageID2());
-        holder.describe.setText(taoyuResult.getGoods().getGdescribe());
-        holder.comment.setText(taoyuResult.getGoods().getGname());
-        holder.position.setText(taoyuResult.getUserinfo().getAcademy());
-        holder.price.setText(taoyuResult.getGoods().getGprice());
-        holder.phone.setText(taoyuResult.getUserinfo().getPhone());
-        holder.time.setText(taoyuResult.getGoods().getGdate());
-        holder.zan.setText(taoyuResult.getGoods().getGname());
-
+        holder.goods_comment.setText(taoyuResult.getGoods().getGname());
+        holder.goods_position.setText(taoyuResult.getGoods().getGcampus());
+        holder.good_price.setText(taoyuResult.getGoods().getGprice());
+        holder.goods_name.setText(taoyuResult.getGoods().getGname());
+        holder.user_nickname.setText(taoyuResult.getUserinfo().getNickname());
+        holder.goods_zan.setText(taoyuResult.getGoods().getGthumb());
 
     }
 
@@ -73,29 +89,32 @@ public class TaoyuAdapter extends RecyclerView.Adapter<TaoyuAdapter.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         View taoyuView;
-        ImageView touxiang;
-        ImageView taoyuimag;
-        TextView phone;
-        TextView time;
-        TextView price;
-        TextView position;
-        TextView zan;
-        TextView comment;
-        TextView describe;
+        ImageView user_icon;
+        ImageView goods_img;
+        ImageView zan;
+        ImageView comm;
+        TextView user_nickname;
+        TextView goods_name;
+        TextView good_price;
+        TextView goods_position;
+        TextView goods_zan;
+        TextView goods_comment;
+
 
 
         public ViewHolder(View itemView) {
             super(itemView);
-            taoyuView = itemView;
-            taoyuimag = (ImageView) itemView.findViewById(R.id.taoyuimag);
-            touxiang = (ImageView) itemView.findViewById(R.id.taoyuimag);
-            phone = (TextView) itemView.findViewById(R.id.phone);
-            time = (TextView) itemView.findViewById(R.id.time);
-            price = (TextView) itemView.findViewById(R.id.price);
-            position = (TextView) itemView.findViewById(R.id.position);
-            zan = (TextView) itemView.findViewById(R.id.zan);
-            comment = (TextView) itemView.findViewById(R.id.comment);
-            describe = (TextView) itemView.findViewById(R.id.goods_des);
+            taoyuView = itemView.findViewById(R.id.goods_info);
+            user_icon = (ImageView) itemView.findViewById(R.id.goods_user_icon);
+            goods_img = (ImageView) itemView.findViewById(R.id.goodsImg);
+            user_nickname = (TextView) itemView.findViewById(R.id.goods_user_nickname);
+            goods_name= (TextView) itemView.findViewById(R.id.goodsName);
+            good_price = (TextView) itemView.findViewById(R.id.goodsPrice);
+            goods_position = (TextView) itemView.findViewById(R.id.goodsPosition);
+            goods_zan = (TextView) itemView.findViewById(R.id.goodsZan);
+            zan= (ImageView) itemView.findViewById(R.id.zan);
+            goods_comment = (TextView) itemView.findViewById(R.id.goodsComment);
+            comm= (ImageView) itemView.findViewById(R.id.comment);
 
 
         }

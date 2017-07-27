@@ -74,12 +74,12 @@ public class TaoyuGoodsStudyTypeFragment extends Fragment {
         subscriber = new Subscriber<TaoyuGoodsData>() {
             @Override
             public void onCompleted() {
-                Log.d("ggggg","yiwancheng taoyu");
+                //Log.d("ggggg","yiwancheng taoyu");
             }
 
             @Override
             public void onError(Throwable e) {
-                Log.d("ggggg",e.getMessage().toString()+"hgggggggggggggg");
+                //Log.d("ggggg",e.getMessage().toString()+"hgggggggggggggg");
             }
 
             @Override
