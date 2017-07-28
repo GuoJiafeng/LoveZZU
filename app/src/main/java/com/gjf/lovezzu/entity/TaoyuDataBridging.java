@@ -5,6 +5,7 @@ package com.gjf.lovezzu.entity;
  */
 
 public class TaoyuDataBridging {
+
     private TaoyuGoodsResult goods;
     private UserInfoResult userinfo;
 

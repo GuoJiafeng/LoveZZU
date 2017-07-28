@@ -1,25 +1,28 @@
 package com.gjf.lovezzu.entity;
 
+import java.util.ArrayList;
+
 /**
  * Created by BlackBeard丶 on 2017/04/13.
  */
 
 public class TaoyuGoodsResult {
-    private Integer Goods_id ;//商品id
-    private String Gtype;// 商品分类
-    private String Gname;//  商品名称
-    private String Ggrade;// 几年级用品
-    private String Gdescribe;//商品描述
-    private String Gprice;// 商品价格
-    private String Gimage;//商品图片
-    private String Gsearch;//用于搜索的字段
-    private String Gdate;
+
+    private Integer goods_id ;//商品id
+    private String gtype;// 商品分类
+    private String gname;//  商品名称
+    private String gcampus;// 几年级用品
+    private String gdescribe;//商品描述
+    private String gprice;// 商品价格
+    private String gimage;//商品图片
+    private String gsearch;//用于搜索的字段
+    private String gdate;
     private String UG_id;
     private boolean isSuccessful;
     private String imageUrl;//头像地址
     private String nickname;//昵称
     private String phone;//手机号
-    private String Qr_codeUrl; //二维码地址
+    private String qr_codeUrl; //二维码地址
     private String gender;//性别
     private String hometown ;//家乡
     private String academy;//院校
@@ -77,12 +80,84 @@ public class TaoyuGoodsResult {
         this.phone = phone;
     }
 
+    public Integer getGoods_id() {
+        return goods_id;
+    }
+
+    public void setGoods_id(Integer goods_id) {
+        this.goods_id = goods_id;
+    }
+
+    public String getGtype() {
+        return gtype;
+    }
+
+    public void setGtype(String gtype) {
+        this.gtype = gtype;
+    }
+
+    public String getGname() {
+        return gname;
+    }
+
+    public void setGname(String gname) {
+        this.gname = gname;
+    }
+
+    public String getGcampus() {
+        return gcampus;
+    }
+
+    public void setGcampus(String gcampus) {
+        this.gcampus = gcampus;
+    }
+
+    public String getGdescribe() {
+        return gdescribe;
+    }
+
+    public void setGdescribe(String gdescribe) {
+        this.gdescribe = gdescribe;
+    }
+
+    public String getGprice() {
+        return gprice;
+    }
+
+    public void setGprice(String gprice) {
+        this.gprice = gprice;
+    }
+
+    public String getGimage() {
+        return gimage;
+    }
+
+    public void setGimage(String gimage) {
+        this.gimage = gimage;
+    }
+
+    public String getGsearch() {
+        return gsearch;
+    }
+
+    public void setGsearch(String gsearch) {
+        this.gsearch = gsearch;
+    }
+
+    public String getGdate() {
+        return gdate;
+    }
+
+    public void setGdate(String gdate) {
+        this.gdate = gdate;
+    }
+
     public String getQr_codeUrl() {
-        return Qr_codeUrl;
+        return qr_codeUrl;
     }
 
     public void setQr_codeUrl(String qr_codeUrl) {
-        Qr_codeUrl = qr_codeUrl;
+        this.qr_codeUrl = qr_codeUrl;
     }
 
     public String getGender() {
@@ -125,77 +200,7 @@ public class TaoyuGoodsResult {
         this.professional = professional;
     }
 
-    public Integer getGoods_id() {
-        return Goods_id;
-    }
 
-    public void setGoods_id(Integer goods_id) {
-        Goods_id = goods_id;
-    }
-
-    public String getGtype() {
-        return Gtype;
-    }
-
-    public void setGtype(String gtype) {
-        Gtype = gtype;
-    }
-
-    public String getGname() {
-        return Gname;
-    }
-
-    public void setGname(String gname) {
-        Gname = gname;
-    }
-
-    public String getGgrade() {
-        return Ggrade;
-    }
-
-    public void setGgrade(String ggrade) {
-        Ggrade = ggrade;
-    }
-
-    public String getGdescribe() {
-        return Gdescribe;
-    }
-
-    public void setGdescribe(String gdescribe) {
-        Gdescribe = gdescribe;
-    }
-
-    public String getGprice() {
-        return Gprice;
-    }
-
-    public void setGprice(String gprice) {
-        Gprice = gprice;
-    }
-
-    public String getGimage() {
-        return Gimage;
-    }
-
-    public void setGimage(String gimage) {
-        Gimage = gimage;
-    }
-
-    public String getGsearch() {
-        return Gsearch;
-    }
-
-    public void setGsearch(String gsearch) {
-        Gsearch = gsearch;
-    }
-
-    public String getGdate() {
-        return Gdate;
-    }
-
-    public void setGdate(String gdate) {
-        Gdate = gdate;
-    }
 
     public String getUG_id() {
         return UG_id;

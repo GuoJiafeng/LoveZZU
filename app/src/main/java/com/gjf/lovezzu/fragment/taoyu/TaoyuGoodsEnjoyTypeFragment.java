@@ -3,8 +3,10 @@ package com.gjf.lovezzu.fragment.taoyu;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,6 +19,7 @@ import com.gjf.lovezzu.R;
 import com.gjf.lovezzu.entity.TaoyuDataBridging;
 import com.gjf.lovezzu.entity.TaoyuGoodsData;
 import com.gjf.lovezzu.network.TaoyuGoodsListMethods;
+import com.gjf.lovezzu.view.EndLessOnScrollListener;
 import com.gjf.lovezzu.view.TaoyuAdapter;
 
 import java.util.ArrayList;
@@ -34,73 +37,90 @@ public class TaoyuGoodsEnjoyTypeFragment extends Fragment{
     private Subscriber subscriber;
     private View view;
     private List<TaoyuDataBridging> taoyuResultList = new ArrayList<>();
-    public static final  String TAG = "Fragment";
     RecyclerView taoyu_list;
+    private SwipeRefreshLayout refreshLayout;
     private TaoyuAdapter adapter;
-    // private SwipeRefreshLayout swipeRefreshLayout;
-
+    private static int START=0;
+    private LinearLayoutManager layoutManager;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         if (view == null) {
+            START=0;
             view = inflater.inflate(R.layout.taoyu_goods_enjoy_type_fragment, container, false);
-
             //初始化所需数据
             intList();
-            //inittaoyuList();
-            getTaoyuGoodsList();
-            //onRefresh();
+            getTaoyuGoodsList(0);
+            refreshEnjoy();
         } else {
             ViewGroup viewGroup = (ViewGroup) view.getParent();
             if (viewGroup != null) {
                 viewGroup.removeView(view);
             }
-            // onRefresh();
+            refreshEnjoy();
         }
         return view;
     }
 
+    private void refreshEnjoy() {
+        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.taoyu_enjoy_list_refresh);
+        refreshLayout.setColorSchemeColors(Color.BLUE);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getTaoyuGoodsList(START += 10);
+
+            }
+        });
+        taoyu_list.addOnScrollListener(new EndLessOnScrollListener(layoutManager) {
+            @Override
+            public void onLoadMore(int currentPage) {
+                Toast.makeText(getContext(),"正在加载",Toast.LENGTH_SHORT).show();
+                getTaoyuGoodsList(START+=10);
+
+            }
+        });
+
+    }
+
+
     public void intList() {
         taoyu_list = (RecyclerView) view.findViewById(R.id.taoyu_enjoy_list);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(view.getContext());
+        layoutManager = new LinearLayoutManager(view.getContext());
         taoyu_list.setLayoutManager(layoutManager);
         adapter = new TaoyuAdapter(taoyuResultList, getContext());
         taoyu_list.setAdapter(adapter);
     }
 
 
-    public void getTaoyuGoodsList(){
-
+    public void getTaoyuGoodsList(int num){
         subscriber = new Subscriber<TaoyuGoodsData>() {
             @Override
             public void onCompleted() {
-                Log.d("ggggg","yiwancheng taoyu");
+
             }
 
             @Override
             public void onError(Throwable e) {
-                Log.d("ggggg",e.getMessage().toString()+"hgggggggggggggg");
             }
 
             @Override
             public void onNext(TaoyuGoodsData taoyuGoodsData) {
                 List<TaoyuDataBridging> list = taoyuGoodsData.getValues();
-                Toast.makeText(getContext(),taoyuGoodsData.getResult(),Toast.LENGTH_LONG).show();
-                taoyuResultList.addAll(list);
-                adapter.notifyDataSetChanged();
-
-
+                if (list.size()==0){
+                    Toast.makeText(getContext(),"没有更多数据",Toast.LENGTH_LONG).show();
+                    return;
+                }else {
+                    taoyuResultList.addAll(list);
+                    adapter.notifyDataSetChanged();
+                }
             }
-
-
         };
-
-        SharedPreferences sharedPreferences = getContext().getSharedPreferences("userinfo", Activity.MODE_APPEND);
-        final SharedPreferences.Editor editor = sharedPreferences.edit();
-        String SessionID = sharedPreferences.getString("SessionID", "");
-        TaoyuGoodsListMethods.getInstance().getGoodsList(subscriber,"娱乐",1);
-
+        TaoyuGoodsListMethods.getInstance().getGoodsList(subscriber,"娱乐",num);
+        if (num>0){
+            refreshLayout.setRefreshing(false);
+        }
     }
 
 }

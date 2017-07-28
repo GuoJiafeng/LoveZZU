@@ -1,6 +1,7 @@
 package com.gjf.lovezzu.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.gjf.lovezzu.R;
+import com.gjf.lovezzu.activity.tapictalk.TopicTalkActivity;
+import com.gjf.lovezzu.activity.tapictalk.topic2Activity;
 import com.gjf.lovezzu.entity.TopicMid;
 
 import org.w3c.dom.Text;
@@ -40,8 +43,10 @@ public class TopicMidAdapter extends RecyclerView.Adapter<TopicMidAdapter.ViewHo
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent= new Intent(TopicTalkActivity.topicTalkActivity,topic2Activity.class);
+
+                 TopicTalkActivity.topicTalkActivity.startActivity(intent);
                 //点击事件
-                Toast.makeText(view.getContext(), "点击事件", Toast.LENGTH_SHORT).show();
             }
         });
         return holder;

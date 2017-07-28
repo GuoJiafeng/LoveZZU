@@ -36,7 +36,6 @@ import rx.Subscriber;
 public class TaoyuSearchActivity extends AppCompatActivity {
 
     private Subscriber subscriber;
-    private View view;
     private List<TaoyuDataBridging> taoyuResultList = new ArrayList<>();
     public static final  String TAG = "Fragment";
     RecyclerView taoyu_list;
@@ -114,9 +113,6 @@ public class TaoyuSearchActivity extends AppCompatActivity {
 
         };
 
-        SharedPreferences sharedPreferences = getSharedPreferences("userinfo", Activity.MODE_APPEND);
-        final SharedPreferences.Editor editor = sharedPreferences.edit();
-        String SessionID = sharedPreferences.getString("SessionID", "");
         int i=0;
         TaoyuGoodsListMethods.getInstance().getGoodsList(subscriber,msg,i+=10);
 

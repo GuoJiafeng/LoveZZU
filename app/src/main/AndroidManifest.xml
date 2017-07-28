@@ -90,8 +90,10 @@
         <activity android:name=".activity.UserInfoActivity" />
         <activity android:name=".activity.UserSettingActivity" />
         <activity
-            android:name=".activity.TopicTalkActivity"
+            android:name=".activity.tapictalk.TopicTalkActivity"
             android:launchMode="singleTask" />
+        <activity android:name=".activity.tapictalk.topic2Activity"/>
+        <activity android:name=".activity.tapictalk.Topic_pub"/>
         <activity
 
             android:name="me.iwf.photopicker.PhotoPickerActivity" />
