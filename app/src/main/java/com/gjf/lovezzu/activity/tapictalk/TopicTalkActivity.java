@@ -1,4 +1,4 @@
-package com.gjf.lovezzu.activity;
+package com.gjf.lovezzu.activity.tapictalk;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.gjf.lovezzu.R;
+import com.gjf.lovezzu.activity.MainActivity;
 import com.gjf.lovezzu.entity.TopicLast;
 import com.gjf.lovezzu.entity.TopicMid;
 import com.gjf.lovezzu.view.TopicLastAdapter;
@@ -28,7 +29,7 @@ public class TopicTalkActivity extends AppCompatActivity {
     private List<TopicMid> topicMidList = new ArrayList<>();
     private List<TopicLast> topicLastList = new ArrayList<>();
 
-
+public  static TopicTalkActivity topicTalkActivity;
     private RecyclerView midRecyclerView;
     private RecyclerView lastRecyerView;
     private ImageView backImage;
@@ -36,12 +37,23 @@ public class TopicTalkActivity extends AppCompatActivity {
     private TopicMidAdapter topicMidAdapter;
     private TopicLastAdapter topicLastAdapter;
 
-
+    private ImageView  Topicpub;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        topicTalkActivity=this;
         setContentView(R.layout.talk_view);
+        Topicpub= (ImageView) findViewById(R.id.Topicpub);
+        Topicpub.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(TopicTalkActivity.this,Topic_pub.class);
+                startActivity(intent);
+            }
+        });
         backImage = (ImageView) findViewById(R.id.back);
+
 
         backImage.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -8,8 +8,6 @@ public class TaoyuResult {
     private int imageID1;
     private int ImageID2;
     private String phone;
-
-
     private String title;
     private String position;
     private int price;

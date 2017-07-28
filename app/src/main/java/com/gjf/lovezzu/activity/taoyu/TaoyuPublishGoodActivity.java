@@ -1,6 +1,7 @@
 package com.gjf.lovezzu.activity.taoyu;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
@@ -20,8 +21,10 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gjf.lovezzu.R;
+import com.gjf.lovezzu.fragment.taoyu.TaoyuGoodsStudyTypeFragment;
 import com.gjf.lovezzu.view.PhotoAdapter;
 import com.gjf.lovezzu.view.RecyclerItemClickListener;
 import com.gjf.lovezzu.view.WheelView;
@@ -77,11 +80,12 @@ public class TaoyuPublishGoodActivity extends AppCompatActivity {
     FrameLayout taoyu_publish_addimage;
 
     private String goods_class="出行";
-    private static final String[] GOODS_CLASS={"学校","出行","娱乐"};
+    private static final String[] GOODS_CLASS={"学习","出行","娱乐"};
     private String goods_school="郑州大学（主校区）";
     private static final String[] GOODS_SCHOOL={"郑州大学（主校区）","郑州大学（北校区）","郑州大学（南校区）","郑州大学（东校区）"};
     private android.app.AlertDialog goods_alertDialog;
     private android.app.AlertDialog goods_schoolDialog;
+    private static ProgressDialog progressDialog;
     private static String SessionID="";
     private static String goodsId="";
     private static List<File>  photoList=new ArrayList<File>();
@@ -130,7 +134,7 @@ public class TaoyuPublishGoodActivity extends AppCompatActivity {
         requestParams.addBodyParameter("Gdescribe",goodsDesc.getText().toString());
         requestParams.addBodyParameter("Gprice",goodsPrice.getText().toString());
         requestParams.addBodyParameter("Gcampus",goodsSchool.getText().toString());
-
+        Log.e("商品地址-----------------",goodsSchool.getText().toString());
         x.http().post(requestParams, new Callback.CacheCallback<String>() {
             @Override
             public boolean onCache(String result) {
@@ -201,8 +205,25 @@ public class TaoyuPublishGoodActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(String result) {
-                //Log.e("上传商品图片+++++++++++",result);
+                Log.e("上传商品图片+++++++++++",result);
+                try {
+                    JSONObject jsonObject=new JSONObject(result);
+                    Boolean res=jsonObject.getBoolean("isSuccessful");
+                    //Log.e("上传商品信息的ID-----------",goodsId);
+                    if (res){
+                        progressDialog.dismiss();
+                        Toast.makeText(getApplicationContext(),"发布成功！",Toast.LENGTH_SHORT).show();
+                        onStop();
 
+                    }else{
+                        progressDialog.dismiss();
+                        Toast.makeText(getApplicationContext(),"发布失败！",Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    //Log.e("上传商品信息返回的JSON解析-----------",e.getMessage());
+                }finally {
+
+                }
             }
 
             @Override
@@ -280,10 +301,20 @@ public class TaoyuPublishGoodActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.go_back:
-                onDestroy();
+                onStop();
+                startActivity(new Intent(TaoyuPublishGoodActivity.this, TaoyuGoodsStudyTypeFragment.class));
                 break;
             case R.id.goods_commit:
-                upGoodsInfo();
+                if(goodsName.equals("")||goodsPrice.equals("")||photosURL==null){
+                    Toast.makeText(getApplicationContext(),"请完善商品信息",Toast.LENGTH_SHORT).show();
+                }else {
+                    upGoodsInfo();
+                    progressDialog=new ProgressDialog(TaoyuPublishGoodActivity.this);
+                    progressDialog.setTitle("正在上传商品信息");
+                    progressDialog.setMessage("uploading....");
+                    progressDialog.setCancelable(true);
+                    progressDialog.show();
+                }
                 break;
             case R.id.goods_class:
                 View outerView = LayoutInflater.from(this).inflate(R.layout.wheel_view, null);

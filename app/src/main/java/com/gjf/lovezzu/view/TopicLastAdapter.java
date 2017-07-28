@@ -1,6 +1,7 @@
 package com.gjf.lovezzu.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +10,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gjf.lovezzu.R;
-import com.gjf.lovezzu.activity.TopicTalkActivity;
+import com.gjf.lovezzu.activity.tapictalk.TopicTalkActivity;
+import com.gjf.lovezzu.activity.tapictalk.topic2Activity;
 import com.gjf.lovezzu.entity.TopicLast;
 
 import java.util.List;
@@ -36,13 +38,17 @@ public class TopicLastAdapter extends RecyclerView.Adapter<TopicLastAdapter.View
         holder.title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "进入详情页", Toast.LENGTH_SHORT).show();
+                Intent intent= new Intent(TopicTalkActivity.topicTalkActivity,topic2Activity.class);
+
+                TopicTalkActivity.topicTalkActivity.startActivity(intent);
             }
         });
         holder.content.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "进入详情页", Toast.LENGTH_SHORT).show();
+                Intent intent= new Intent(TopicTalkActivity.topicTalkActivity,topic2Activity.class);
+
+                TopicTalkActivity.topicTalkActivity.startActivity(intent);
             }
         });
         holder.talk.setOnClickListener(new View.OnClickListener() {

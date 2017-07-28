@@ -17,7 +17,7 @@ import com.gjf.lovezzu.R;
 import com.gjf.lovezzu.activity.parttimejob.PartTimeJobActivity;
 import com.gjf.lovezzu.activity.palytogether.PlayTogetherActivity;
 import com.gjf.lovezzu.activity.taoyu.TaoyuActivity;
-import com.gjf.lovezzu.activity.TopicTalkActivity;
+import com.gjf.lovezzu.activity.tapictalk.TopicTalkActivity;
 import com.gjf.lovezzu.activity.treehole.TreeHoleActivity;
 
 import java.util.ArrayList;
