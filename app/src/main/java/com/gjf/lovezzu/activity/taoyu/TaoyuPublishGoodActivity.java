@@ -184,15 +184,12 @@ public class TaoyuPublishGoodActivity extends AppCompatActivity {
             }
         }
 
+
         RequestParams requestParams=new RequestParams(LOGIN_URL+"imagesupload");
         requestParams.setMultipart(true);
         requestParams.addBodyParameter("SessionID",SessionID);
         requestParams.addBodyParameter("goods_id",goodsId);
         requestParams.addBodyParameter("action","上传图片");
-        //requestParams.addBodyParameter("images", );
-        /*s
-        * File[]数组不能直接设置给requestParams
-        * */
         requestParams.addParameter("images",photoList);
 
 
@@ -209,7 +206,6 @@ public class TaoyuPublishGoodActivity extends AppCompatActivity {
                 try {
                     JSONObject jsonObject=new JSONObject(result);
                     Boolean res=jsonObject.getBoolean("isSuccessful");
-                    //Log.e("上传商品信息的ID-----------",goodsId);
                     if (res){
                         progressDialog.dismiss();
                         Toast.makeText(getApplicationContext(),"发布成功！",Toast.LENGTH_SHORT).show();
@@ -301,7 +297,6 @@ public class TaoyuPublishGoodActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.go_back:
-                onStop();
                 startActivity(new Intent(TaoyuPublishGoodActivity.this, TaoyuGoodsStudyTypeFragment.class));
                 break;
             case R.id.goods_commit:

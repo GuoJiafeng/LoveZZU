@@ -93,7 +93,7 @@
             android:name=".activity.tapictalk.TopicTalkActivity"
             android:launchMode="singleTask" />
         <activity android:name=".activity.tapictalk.topic2Activity"/>
-        <activity android:name=".activity.tapictalk.Topic_pub"/>
+        <activity android:name=".activity.tapictalk.TopicPublishActivity"/>
         <activity
 
             android:name="me.iwf.photopicker.PhotoPickerActivity" />
