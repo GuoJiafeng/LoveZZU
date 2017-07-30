@@ -29,6 +29,7 @@ public class TaoyuActivity extends AppCompatActivity {
     private TaoyuGoodsEnjoyTypeFragment taoyuGoodsEnjoyTypeFragment;
     private TaoyuGoodsStudyTypeFragment taoyuGoodsStudyTypeFragment;
     private TaoyuGoodsTrafficTypeFragment taoyuGoodsTrafficTypeFragment;
+    public static TaoyuActivity taoyuActivity;
     @BindView(R.id.taoyu_study)
     TextView taoyu_study;
     @BindView(R.id.taoyu_traffic)
@@ -44,6 +45,7 @@ public class TaoyuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.taoyu_activity);
+        taoyuActivity=this;
         ButterKnife.bind(this);
 
         if (Build.VERSION.SDK_INT >= 21) {

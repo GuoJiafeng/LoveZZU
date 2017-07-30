@@ -20,7 +20,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/*
+* 弹出选择框
+* */
 public class WheelView extends ScrollView {
     public static final String TAG = "WheelView";
 

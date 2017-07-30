@@ -1,6 +1,7 @@
 package com.gjf.lovezzu.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,6 +14,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.gjf.lovezzu.R;
+import com.gjf.lovezzu.activity.taoyu.TaoyuActivity;
+import com.gjf.lovezzu.activity.taoyu.TaoyuDetialActivity;
 import com.gjf.lovezzu.entity.TaoyuDataBridging;
 import com.gjf.lovezzu.network.DownloadIconMethods;
 
@@ -46,6 +49,13 @@ public class TaoyuAdapter extends RecyclerView.Adapter<TaoyuAdapter.ViewHolder> 
             @Override
             public void onClick(View v) {
                 Toast.makeText(v.getContext(), "商品详情页（含有评论）", Toast.LENGTH_SHORT).show();
+                Intent intent =new Intent(TaoyuActivity.taoyuActivity, TaoyuDetialActivity.class);
+
+
+
+
+                TaoyuActivity.taoyuActivity.startActivity(intent);
+
             }
         });
         holder.zan.setOnClickListener(new View.OnClickListener() {
@@ -100,11 +110,9 @@ public class TaoyuAdapter extends RecyclerView.Adapter<TaoyuAdapter.ViewHolder> 
 */
 
         String goodsImagesURL=taoyuResult.getGoods().getGimage();
-        //Log.e("商品图片---------",goodsImagesURL+"kkkkkkkkkkk");
+
         String imagesURL[]=goodsImagesURL.split("ZZU");
-        /*for (int i=0;i<imagesURL.length;i++){
-            Log.e("商品图片---------",imagesURL[i]);
-        }*/
+
         Glide.with(context)
                 .load(LOGIN_URL+"filedownload?action=商品&imageURL="+imagesURL[0])
                 .placeholder(R.drawable.__picker_ic_photo_black_48dp)

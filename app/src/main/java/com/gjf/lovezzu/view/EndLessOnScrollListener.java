@@ -4,6 +4,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 /**
+ *
+ * 下拉加载监听
  * Created by zhao on 2017/7/28.
  */
 
