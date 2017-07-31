@@ -68,8 +68,7 @@
             android:layout_height="80dp"
             android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
-            android:src="@drawable/pub_tree"
-            />
+            android:src="@drawable/pub_tree" />
 
     </FrameLayout>
 

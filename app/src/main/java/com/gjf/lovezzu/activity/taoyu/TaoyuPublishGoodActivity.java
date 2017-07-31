@@ -134,7 +134,6 @@ public class TaoyuPublishGoodActivity extends AppCompatActivity {
         requestParams.addBodyParameter("Gdescribe",goodsDesc.getText().toString());
         requestParams.addBodyParameter("Gprice",goodsPrice.getText().toString());
         requestParams.addBodyParameter("Gcampus",goodsSchool.getText().toString());
-        Log.e("商品地址-----------------",goodsSchool.getText().toString());
         x.http().post(requestParams, new Callback.CacheCallback<String>() {
             @Override
             public boolean onCache(String result) {
@@ -143,14 +142,14 @@ public class TaoyuPublishGoodActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(String result) {
-                Log.e("上传商品信息-----------",result);
+
                 try {
                     JSONObject jsonObject=new JSONObject(result);
                     goodsId=jsonObject.getString("goods_id");
-                    //Log.e("上传商品信息的ID-----------",goodsId);
+
                     upGoodsImages();
                 } catch (JSONException e) {
-                    //Log.e("上传商品信息返回的JSON解析-----------",e.getMessage());
+
                 }finally {
 
                 }
@@ -159,7 +158,7 @@ public class TaoyuPublishGoodActivity extends AppCompatActivity {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                //Log.e("上传商品信息------------错误信息",ex.getMessage().toString());
+
             }
 
             @Override
@@ -177,7 +176,6 @@ public class TaoyuPublishGoodActivity extends AppCompatActivity {
 
     private void upGoodsImages(){
         if (photosURL!=null&&photoList!=null){
-            int i=0;
             for (String photo:photosURL){
                 File file=new File(photo);
                 photoList.add(file);
@@ -216,7 +214,7 @@ public class TaoyuPublishGoodActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(),"发布失败！",Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
-                    //Log.e("上传商品信息返回的JSON解析-----------",e.getMessage());
+
                 }finally {
 
                 }
@@ -224,7 +222,7 @@ public class TaoyuPublishGoodActivity extends AppCompatActivity {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                //Log.e("上传商品图片++++++++++++错误信息",ex.getMessage().toString());
+
             }
 
             @Override
@@ -297,7 +295,7 @@ public class TaoyuPublishGoodActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.go_back:
-                startActivity(new Intent(TaoyuPublishGoodActivity.this, TaoyuGoodsStudyTypeFragment.class));
+                startActivity(new Intent(TaoyuPublishGoodActivity.this, TaoyuActivity.class));
                 break;
             case R.id.goods_commit:
                 if(goodsName.equals("")||goodsPrice.equals("")||photosURL==null){
@@ -320,7 +318,6 @@ public class TaoyuPublishGoodActivity extends AppCompatActivity {
                 wv.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
                     @Override
                     public void onSelected(int selectedIndex, String item) {
-                        //Log.d("选择商品", "[Dialog]selectedIndex: " + selectedIndex + ", item: " + item);
                         goods_class=item;
                     }
                 });
@@ -354,7 +351,6 @@ public class TaoyuPublishGoodActivity extends AppCompatActivity {
                 wv1.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
                     @Override
                     public void onSelected(int selectedIndex, String item) {
-                        //Log.d("选择商品", "[Dialog]selectedIndex: " + selectedIndex + ", item: " + item);
                         goods_school=item;
                     }
                 });

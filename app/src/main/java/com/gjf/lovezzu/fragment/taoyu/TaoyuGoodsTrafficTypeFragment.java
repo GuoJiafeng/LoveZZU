@@ -1,15 +1,12 @@
 package com.gjf.lovezzu.fragment.taoyu;
 
-import android.app.Activity;
 import android.app.Fragment;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +16,8 @@ import com.gjf.lovezzu.R;
 import com.gjf.lovezzu.entity.TaoyuDataBridging;
 import com.gjf.lovezzu.entity.TaoyuGoodsData;
 import com.gjf.lovezzu.network.TaoyuGoodsListMethods;
-import com.gjf.lovezzu.view.EndLessOnScrollListener;
 import com.gjf.lovezzu.view.TaoyuAdapter;
-import com.nostra13.universalimageloader.utils.L;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,15 +73,16 @@ public class TaoyuGoodsTrafficTypeFragment extends Fragment {
 
             }
         });
-        taoyu_list.addOnScrollListener(new EndLessOnScrollListener(layoutManager) {
+        taoyu_list.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onLoadMore(int currentPage) {
-                Toast.makeText(getContext(),"正在加载",Toast.LENGTH_SHORT).show();
-
-                getTaoyuGoodsList(START+=10);
-
-
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (recyclerView.canScrollVertically(1) == false && recyclerView.canScrollVertically(-1) == true) {
+                    Toast.makeText(getContext(), "正在加载", Toast.LENGTH_SHORT).show();
+                    getTaoyuGoodsList(START += 10);
+                }
             }
+
         });
 
     }
@@ -114,7 +111,7 @@ public class TaoyuGoodsTrafficTypeFragment extends Fragment {
             public void onNext(TaoyuGoodsData taoyuGoodsData) {
                 List<TaoyuDataBridging> list = taoyuGoodsData.getValues();
                 if (list.size()==0){
-                    Toast.makeText(getContext(),"没有更多数据了",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(),"没有更多数据了",Toast.LENGTH_SHORT).show();
                     return;
                 }else {
                     taoyuResultList.addAll(list);

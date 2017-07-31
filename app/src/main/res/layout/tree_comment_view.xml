@@ -12,24 +12,23 @@
         android:padding="10dp">
 
         <TextView
+            android:id="@+id/tree_hole_content_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="1111"
-            android:id="@+id/tree_hole_content_id"/>
+            android:text="1111" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:paddingLeft="20dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingLeft="20dp">
 
             <TextView
                 android:id="@+id/tree_hole_comment_content"
                 android:layout_width="290dp"
                 android:layout_height="wrap_content"
-                android:text="这是评论!"
-               />
+                android:text="这是评论!" />
 
             <ImageView
                 android:id="@+id/tree_hole_comment_zan_imageview"
@@ -37,18 +36,19 @@
                 android:layout_height="wrap_content"
 
                 android:background="@drawable/life_zan" />
+
             <TextView
+                android:id="@+id/tree_hole_comment_zan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="100"
-                android:id="@+id/tree_hole_comment_zan"
-                />
+                android:text="100" />
         </LinearLayout>
 
 
     </LinearLayout>
-<ImageView
-    android:layout_width="match_parent"
-    android:layout_height="2dp"
-    android:background="@drawable/shape_white_view"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@drawable/shape_white_view" />
 </LinearLayout>

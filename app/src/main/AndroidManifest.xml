@@ -125,7 +125,8 @@
         <service android:name=".service.CheckLogin" />
 
         <activity android:name=".activity.taoyu.TaoyuSearchActivity" />
-        <activity android:name=".activity.taoyu.TaoyuPublishGoodActivity" />
+        <activity android:name=".activity.taoyu.TaoyuPublishGoodActivity"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".activity.taoyu.TaoyuDetialActivity"
             />
         <activity android:name=".activity.treehole.TreeHoleActivity" />

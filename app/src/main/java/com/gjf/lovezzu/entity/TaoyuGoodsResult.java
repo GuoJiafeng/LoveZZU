@@ -18,16 +18,7 @@ public class TaoyuGoodsResult {
     private String gsearch;//用于搜索的字段
     private String gdate;
     private String UG_id;
-    private boolean isSuccessful;
-    private String imageUrl;//头像地址
-    private String nickname;//昵称
-    private String phone;//手机号
-    private String qr_codeUrl; //二维码地址
-    private String gender;//性别
-    private String hometown ;//家乡
-    private String academy;//院校
-    private String departments ;//院系
-    private String professional ;//专业
+
 
     private String Gthumb;//点赞数
     private String Gcomments;//评论数
@@ -48,37 +39,6 @@ public class TaoyuGoodsResult {
         Gcomments = gcomments;
     }
 
-    public boolean isSuccessful() {
-        return isSuccessful;
-    }
-
-    public void setSuccessful(boolean successful) {
-        isSuccessful = successful;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
 
     public Integer getGoods_id() {
         return goods_id;
@@ -151,55 +111,6 @@ public class TaoyuGoodsResult {
     public void setGdate(String gdate) {
         this.gdate = gdate;
     }
-
-    public String getQr_codeUrl() {
-        return qr_codeUrl;
-    }
-
-    public void setQr_codeUrl(String qr_codeUrl) {
-        this.qr_codeUrl = qr_codeUrl;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public String getHometown() {
-        return hometown;
-    }
-
-    public void setHometown(String hometown) {
-        this.hometown = hometown;
-    }
-
-    public String getAcademy() {
-        return academy;
-    }
-
-    public void setAcademy(String academy) {
-        this.academy = academy;
-    }
-
-    public String getDepartments() {
-        return departments;
-    }
-
-    public void setDepartments(String departments) {
-        this.departments = departments;
-    }
-
-    public String getProfessional() {
-        return professional;
-    }
-
-    public void setProfessional(String professional) {
-        this.professional = professional;
-    }
-
 
 
     public String getUG_id() {
