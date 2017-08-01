@@ -8,7 +8,7 @@ public class GoodsCommentsResult {
     private String account;
     private String cdate;
     private String comments;
-    private int l1_Cid;
+    private Integer l1_Cid;
     private int num_replies;
     private int num_thumb;
 

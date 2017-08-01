@@ -60,7 +60,6 @@ public class TaoyuAdapter extends RecyclerView.Adapter<TaoyuAdapter.ViewHolder> 
                 goods.setImages(imagesURL);
                 goods.setGprice(taoyuResultNew.getGoods().getGprice());
                 intent.putExtra("goods",goods);
-                Log.e("商品详情--------onCreateViewHolder",goods.getGoods_id()+"  点击位置"+holder.getAdapterPosition());
                 TaoyuActivity.taoyuActivity.startActivity(intent);
 
             }
@@ -75,7 +74,19 @@ public class TaoyuAdapter extends RecyclerView.Adapter<TaoyuAdapter.ViewHolder> 
         holder.comm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "商品详情页（含有评论）", Toast.LENGTH_SHORT).show();
+                Intent intent =new Intent(TaoyuActivity.taoyuActivity, TaoyuDetialActivity.class);
+                TaoyuDataBridging taoyuResultNew=taoyuResultList.get(holder.getAdapterPosition());
+                String goodsImagesURL=taoyuResultNew.getGoods().getGimage();
+                String imagesURL[]=goodsImagesURL.split("ZZU");
+                goods.setGcampus(taoyuResultNew.getGoods().getGcampus());
+                goods.setGoods_id(taoyuResultNew.getGoods().getGoods_id());
+                goods.setGdescribe(taoyuResultNew.getGoods().getGdescribe());
+                goods.setGname(taoyuResultNew.getGoods().getGname());
+                goods.setImages(imagesURL);
+                goods.setGprice(taoyuResultNew.getGoods().getGprice());
+                intent.putExtra("goods",goods);
+                Log.e("商品详情--------onCreateViewHolder",goods.getGoods_id()+"  点击位置"+holder.getAdapterPosition());
+                TaoyuActivity.taoyuActivity.startActivity(intent);
             }
         });
         return holder;
@@ -144,7 +155,7 @@ public class TaoyuAdapter extends RecyclerView.Adapter<TaoyuAdapter.ViewHolder> 
             goods_zan = (TextView) itemView.findViewById(R.id.goodsZan);
             zan= (ImageView) itemView.findViewById(R.id.zan);
             goods_comment = (TextView) itemView.findViewById(R.id.goodsComment);
-            comm= (ImageView) itemView.findViewById(R.id.comment);
+            comm= (ImageView) itemView.findViewById(R.id.comment_num);
 
 
         }

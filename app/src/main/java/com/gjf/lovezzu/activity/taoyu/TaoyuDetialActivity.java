@@ -1,6 +1,7 @@
 package com.gjf.lovezzu.activity.taoyu;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,7 +16,12 @@ import android.widget.Toast;
 
 import com.gjf.lovezzu.R;
 import com.gjf.lovezzu.entity.Goods;
+import com.gjf.lovezzu.entity.GoodsCommentsData;
+import com.gjf.lovezzu.entity.GoodsCommentsDataBridging;
 import com.gjf.lovezzu.entity.GoodsImages;
+import com.gjf.lovezzu.network.TaoyuGoodsCommentsMethods;
+import com.gjf.lovezzu.network.api.TaoyuGoodsCommentsServer;
+import com.gjf.lovezzu.view.TaoyuGoodsCommentsAdapter;
 import com.gjf.lovezzu.view.TaoyuGoodsImagesAdapter;
 
 import org.json.JSONObject;
@@ -61,6 +67,8 @@ public class TaoyuDetialActivity extends AppCompatActivity {
     private Goods goods;
     private List<GoodsImages> goodsImagesList = new ArrayList<>();
     private TaoyuGoodsImagesAdapter taoyuGoodsImagesAdapter;
+    private List<GoodsCommentsDataBridging> goodsCommentsDataBridgingList=new ArrayList<>();
+    private TaoyuGoodsCommentsAdapter taoyuGoodsCommentsAdapter;
     public static TaoyuDetialActivity taoyuDetialActivity;
     private Subscriber subscriber;
     private static String SessionID = "";
@@ -76,7 +84,8 @@ public class TaoyuDetialActivity extends AppCompatActivity {
         goods = (Goods) getIntent().getSerializableExtra("goods");
         Log.e("商品详情---------------", goods.getGoods_id() + "");
         initView();
-
+        getGoodsComments();
+        showComments();
 
     }
 
@@ -110,12 +119,15 @@ public class TaoyuDetialActivity extends AppCompatActivity {
     }
 
     private void showComments() {
-
+        taoyuGoodsCommentsAdapter=new TaoyuGoodsCommentsAdapter(goodsCommentsDataBridgingList,this);
+        LinearLayoutManager layoutManager=new LinearLayoutManager(this);
+        goodsTalks.setLayoutManager(layoutManager);
+        goodsTalks.setAdapter(taoyuGoodsCommentsAdapter);
     }
 
 
     private void getGoodsComments() {
-        subscriber = new Subscriber() {
+        subscriber = new Subscriber<GoodsCommentsData>() {
             @Override
             public void onCompleted() {
 
@@ -127,10 +139,20 @@ public class TaoyuDetialActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onNext(Object o) {
-
+            public void onNext(GoodsCommentsData goodsCommentsData) {
+                List<GoodsCommentsDataBridging> list=goodsCommentsData.getValues();
+                if (list.size()==0){
+                    Toast.makeText(getApplicationContext(), "该商品还没有评论，快来吐槽吧！", Toast.LENGTH_SHORT).show();
+                    return;
+                }else {
+                    goodsCommentsDataBridgingList.addAll(list);
+                    taoyuGoodsCommentsAdapter.notifyDataSetChanged();
+                }
             }
+
         };
+
+        TaoyuGoodsCommentsMethods.getInstance().getTaoyuGoodsComments(subscriber,"querycomments_L1",goods.getGoods_id().toString());
     }
 
     private void publishGoodsComments() {
@@ -142,16 +164,16 @@ public class TaoyuDetialActivity extends AppCompatActivity {
         x.http().post(requestParams, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.e("商品评论---------------------------success", result.toString());
                if (result!=null){
                    Toast.makeText(TaoyuDetialActivity.taoyuDetialActivity,"评论成功！",Toast.LENGTH_SHORT).show();
                    editComments.setText("");
+               }else {
+                   Toast.makeText(TaoyuDetialActivity.taoyuDetialActivity,"评论失败，请检查网络!",Toast.LENGTH_SHORT).show();
                }
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("商品评论---------------------------error", ex.getMessage().toString());
             }
 
             @Override
@@ -178,6 +200,8 @@ public class TaoyuDetialActivity extends AppCompatActivity {
 
                 break;
             case R.id.buybutton:
+                Intent intent=new Intent(this,ShopcartActivity.class);
+                startActivity(intent);
                 break;
             case R.id.send:
                 if (editComments.getText().toString().equals("")){
