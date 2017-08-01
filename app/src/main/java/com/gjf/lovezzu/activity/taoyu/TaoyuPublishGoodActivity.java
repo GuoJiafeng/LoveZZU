@@ -187,7 +187,7 @@ public class TaoyuPublishGoodActivity extends AppCompatActivity {
         requestParams.setMultipart(true);
         requestParams.addBodyParameter("SessionID",SessionID);
         requestParams.addBodyParameter("goods_id",goodsId);
-        requestParams.addBodyParameter("action","上传图片");
+        requestParams.addBodyParameter("action","上传商品图片");
         requestParams.addParameter("images",photoList);
 
 

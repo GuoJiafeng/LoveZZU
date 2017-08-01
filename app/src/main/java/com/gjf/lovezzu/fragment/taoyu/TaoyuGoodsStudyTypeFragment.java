@@ -70,15 +70,39 @@ public class TaoyuGoodsStudyTypeFragment extends Fragment {
             }
         });
         taoyu_list.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            boolean isSlidingToLast = false;
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (recyclerView.canScrollVertically(1) == false && recyclerView.canScrollVertically(-1) == true) {
-                    Toast.makeText(getContext(), "正在加载", Toast.LENGTH_SHORT).show();
-                    getTaoyuGoodsList(START += 10);
+                LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                // 当不滚动时
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    //获取最后一个完全显示的ItemPosition
+                    int lastVisibleItem = manager.findLastCompletelyVisibleItemPosition();
+                    int totalItemCount = manager.getItemCount();
+
+                    // 判断是否滚动到底部，并且是向下滚动
+                    if (lastVisibleItem == (totalItemCount - 1) && isSlidingToLast) {
+                        Toast.makeText(getContext(), "加载中", Toast.LENGTH_SHORT).show();
+                        getTaoyuGoodsList(START += 10);
+                    }
                 }
+
+
             }
 
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > 0) {
+                    //大于0表示正在向右滚动
+                    isSlidingToLast = true;
+                } else {
+                    //小于等于0表示停止或向左滚动
+                    isSlidingToLast = false;
+                }
+
+            }
         });
 
 

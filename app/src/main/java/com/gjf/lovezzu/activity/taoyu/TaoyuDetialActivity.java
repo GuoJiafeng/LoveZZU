@@ -1,6 +1,7 @@
 package com.gjf.lovezzu.activity.taoyu;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,7 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -72,7 +75,7 @@ public class TaoyuDetialActivity extends AppCompatActivity {
     public static TaoyuDetialActivity taoyuDetialActivity;
     private Subscriber subscriber;
     private static String SessionID = "";
-
+    private static String goods_id="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,11 +85,28 @@ public class TaoyuDetialActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("userinfo", Activity.MODE_APPEND);
         SessionID = sharedPreferences.getString("SessionID", "");
         goods = (Goods) getIntent().getSerializableExtra("goods");
+        goods_id=goods.getGoods_id().toString();
         Log.e("商品详情---------------", goods.getGoods_id() + "");
         initView();
         getGoodsComments();
         showComments();
 
+    }
+
+    @OnClick({R.id.buybutton, R.id.send})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.buybutton:
+                addShopCar();
+                break;
+            case R.id.send:
+                if (editComments.getText().toString().equals("")){
+                    Toast.makeText(this,"评论不能为空！",Toast.LENGTH_SHORT).show();
+                }else {
+                    publishGoodsComments();
+                }
+                break;
+        }
     }
 
 
@@ -193,24 +213,39 @@ public class TaoyuDetialActivity extends AppCompatActivity {
         });
     }
 
-    @OnClick({R.id.goods_talks, R.id.buybutton, R.id.send})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.goods_talks:
+    private void addShopCar(){
+        RequestParams requestParams=new RequestParams(LOGIN_URL+"cartAction");
+        requestParams.addBodyParameter("SessionID",SessionID);
+        requestParams.addBodyParameter("goods_id",goods_id);
+        requestParams.addBodyParameter("count","1");
+        requestParams.addBodyParameter("action","添加");
 
-                break;
-            case R.id.buybutton:
-                Intent intent=new Intent(this,ShopcartActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.send:
-                if (editComments.getText().toString().equals("")){
-                    Toast.makeText(this,"评论不能为空！",Toast.LENGTH_SHORT).show();
-                }else {
-                    publishGoodsComments();
-                }
-                break;
-        }
+        x.http().post(requestParams, new Callback.CacheCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Toast.makeText(getApplicationContext(),"已加入购物车 +1",Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+
+            @Override
+            public boolean onCache(String result) {
+                return false;
+            }
+        });
     }
+
 
 }
