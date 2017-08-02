@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 /**
  * Created by BlackBeard丶 on 2017/04/13.
+ * zhao 8.2
  */
 
 public class TaoyuGoodsResult {
@@ -17,28 +18,33 @@ public class TaoyuGoodsResult {
     private String gimage;//商品图片
     private String gsearch;//用于搜索的字段
     private String gdate;
-    private String UG_id;
+    private String gthumb;//点赞数
+    private String gcomments;//评论数
+    private String sessionID;
 
+    public String getSessionID() {
+        return sessionID;
+    }
 
-    private String Gthumb;//点赞数
-    private String Gcomments;//评论数
+    public void setSessionID(String sessionID) {
+        this.sessionID = sessionID;
+    }
 
     public String getGthumb() {
-        return Gthumb;
+        return gthumb;
     }
 
     public void setGthumb(String gthumb) {
-        Gthumb = gthumb;
+        this.gthumb = gthumb;
     }
 
     public String getGcomments() {
-        return Gcomments;
+        return gcomments;
     }
 
     public void setGcomments(String gcomments) {
-        Gcomments = gcomments;
+        this.gcomments = gcomments;
     }
-
 
     public Integer getGoods_id() {
         return goods_id;
@@ -113,11 +119,4 @@ public class TaoyuGoodsResult {
     }
 
 
-    public String getUG_id() {
-        return UG_id;
-    }
-
-    public void setUG_id(String UG_id) {
-        this.UG_id = UG_id;
-    }
 }

@@ -15,14 +15,14 @@ public class ShopcartActivity extends AppCompatActivity {
     private RecyclerView shopcartRecyvlerView;
     private ImageView backImage;
     private SwipeRefreshLayout shopcartRefresh;
-
+    public static ShopcartActivity shopcartActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopcart);
+        shopcartActivity=this;
         backImage = (ImageView) findViewById(R.id.shopcart_back);
-
         backImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
