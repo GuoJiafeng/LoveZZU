@@ -3,12 +3,12 @@ package com.gjf.lovezzu.entity;
 import java.util.List;
 
 /**
- * Created by zhao on 2017/8/2.
+ * Created by zhao on 2017/8/3.
  */
 
-public class ShoppingCartDate {
+public class GoodsChildCommentsData {
     private String result;
-    private List<ShoppingCartDateBridging> values;
+    private List<GoodsChildCommentsDateBridging> values;
 
     public String getResult() {
         return result;
@@ -18,11 +18,11 @@ public class ShoppingCartDate {
         this.result = result;
     }
 
-    public List<ShoppingCartDateBridging> getValues() {
+    public List<GoodsChildCommentsDateBridging> getValues() {
         return values;
     }
 
-    public void setValues(List<ShoppingCartDateBridging> values) {
+    public void setValues(List<GoodsChildCommentsDateBridging> values) {
         this.values = values;
     }
 }

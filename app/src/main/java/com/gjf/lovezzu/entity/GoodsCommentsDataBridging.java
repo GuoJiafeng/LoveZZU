@@ -1,12 +1,13 @@
 package com.gjf.lovezzu.entity;
 
 
+import java.io.Serializable;
 
 /**
  * Created by zhao on 2017/7/31.
  */
 
-public class GoodsCommentsDataBridging {
+public class GoodsCommentsDataBridging implements Serializable{
     private GoodsCommentsResult comments_L1;
     private UserInfoResult userinfo;
 

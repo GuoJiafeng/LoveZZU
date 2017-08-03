@@ -106,6 +106,7 @@
         <activity android:name=".activity.saylvoeActivity.IWantSayLoveActivity" />
         <activity android:name=".activity.taoyu.TaoyuActivity" />
         <activity android:name=".activity.taoyu.ShopcartActivity"/>
+        <activity android:name=".activity.taoyu.TaoyuChildConmmentsActivity"/>
         <activity
             android:name=".activity.schoolnewsActivity.SchoolNewsSubjectActivity"
             android:windowSoftInputMode="adjustPan" />

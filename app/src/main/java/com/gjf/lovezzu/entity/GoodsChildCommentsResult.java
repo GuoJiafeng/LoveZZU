@@ -1,16 +1,14 @@
 package com.gjf.lovezzu.entity;
 
-import java.io.Serializable;
-
 /**
- * Created by zhao on 2017/7/31.
+ * Created by zhao on 2017/8/3.
  */
 
-public class GoodsCommentsResult implements Serializable{
+public class GoodsChildCommentsResult {
     private String account;
     private String cdate;
     private String comments;
-    private Integer l1_Cid;
+    private Integer l2_Cid;
     private int num_replies;
     private int num_thumb;
 
@@ -38,12 +36,12 @@ public class GoodsCommentsResult implements Serializable{
         this.comments = comments;
     }
 
-    public int getL1_Cid() {
-        return l1_Cid;
+    public Integer getL2_Cid() {
+        return l2_Cid;
     }
 
-    public void setL1_Cid(int l1_Cid) {
-        this.l1_Cid = l1_Cid;
+    public void setL2_Cid(Integer l2_Cid) {
+        this.l2_Cid = l2_Cid;
     }
 
     public int getNum_replies() {

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.gjf.lovezzu.R;
 import com.gjf.lovezzu.activity.taoyu.TaoyuChildConmmentsActivity;
+import com.gjf.lovezzu.activity.taoyu.TaoyuDetialActivity;
 import com.gjf.lovezzu.entity.GoodsCommentsDataBridging;
 import com.gjf.lovezzu.entity.GoodsCommentsResult;
 
@@ -28,12 +29,11 @@ import static com.gjf.lovezzu.constant.Url.LOGIN_URL;
 public class TaoyuGoodsCommentsAdapter extends RecyclerView.Adapter<TaoyuGoodsCommentsAdapter.ViewHolder> {
 
     private List<GoodsCommentsDataBridging> goodsCommentsesList;
-    private Context mContext;
     private GoodsCommentsDataBridging goodsCommentsDataBridging;
-    private int l1_Cid;
+
     public TaoyuGoodsCommentsAdapter(List<GoodsCommentsDataBridging> list,Context context){
         goodsCommentsesList=list;
-        mContext=context;
+
     }
 
     @Override
@@ -43,9 +43,10 @@ public class TaoyuGoodsCommentsAdapter extends RecyclerView.Adapter<TaoyuGoodsCo
         viewHolder.commentView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(mContext, TaoyuChildConmmentsActivity.class);
-
-                mContext.startActivity(intent);
+                Intent intent=new Intent(TaoyuDetialActivity.taoyuDetialActivity, TaoyuChildConmmentsActivity.class);
+                GoodsCommentsDataBridging goodsCommentsDataBridging1=goodsCommentsesList.get(viewHolder.getAdapterPosition());
+                intent.putExtra("parentComm",goodsCommentsDataBridging1);
+                TaoyuDetialActivity.taoyuDetialActivity.startActivity(intent);
             }
         });
         return viewHolder;
@@ -54,16 +55,14 @@ public class TaoyuGoodsCommentsAdapter extends RecyclerView.Adapter<TaoyuGoodsCo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         goodsCommentsDataBridging=goodsCommentsesList.get(position);
-        Glide.with(mContext)
+        Glide.with(TaoyuDetialActivity.taoyuDetialActivity)
                 .load(LOGIN_URL+"filedownload?action=头像&imageURL="+goodsCommentsDataBridging.getUserinfo().getImageUrl())
                 .into(holder.goodsUserIcon);
         holder.goodsUserNickName.setText(goodsCommentsDataBridging.getUserinfo().getNickname());
         holder.comments_content.setText(goodsCommentsDataBridging.getComments_L1().getComments());
         holder.comments_date.setText(goodsCommentsDataBridging.getComments_L1().getCdate());
         holder.comments_reples.setText(goodsCommentsDataBridging.getComments_L1().getNum_replies()+"");
-        l1_Cid=goodsCommentsDataBridging.getComments_L1().getL1_Cid();
-
-
+        holder.comments_zan.setText(goodsCommentsDataBridging.getComments_L1().getNum_thumb()+"");
     }
 
     @Override
@@ -78,7 +77,7 @@ public class TaoyuGoodsCommentsAdapter extends RecyclerView.Adapter<TaoyuGoodsCo
         TextView comments_content;
         TextView comments_date;
         TextView comments_reples;
-
+        TextView comments_zan;
         public ViewHolder(View itemView) {
             super(itemView);
             commentView= (LinearLayout) itemView.findViewById(R.id.comment_main);
@@ -87,6 +86,7 @@ public class TaoyuGoodsCommentsAdapter extends RecyclerView.Adapter<TaoyuGoodsCo
             comments_content= (TextView) itemView.findViewById(R.id.goods_comm_content);
             comments_date= (TextView) itemView.findViewById(R.id.goods_comm_time);
             comments_reples= (TextView) itemView.findViewById(R.id.goods_comm_num);
+            comments_zan= (TextView) itemView.findViewById(R.id.goods_comm_zan);
         }
     }
 }

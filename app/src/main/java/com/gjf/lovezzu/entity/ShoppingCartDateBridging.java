@@ -8,16 +8,15 @@ import java.util.List;
 
 public class ShoppingCartDateBridging {
     private String count;
-    private TaoyuGoodsResult goodsResult;
-    public TaoyuGoodsResult getGoodsResult() {
-        return goodsResult;
+    private TaoyuGoodsResult goods;
+
+    public TaoyuGoodsResult getGoods() {
+        return goods;
     }
 
-    public void setGoodsResult(TaoyuGoodsResult goodsResult) {
-        this.goodsResult = goodsResult;
+    public void setGoods(TaoyuGoodsResult goods) {
+        this.goods = goods;
     }
-
-
 
     public String getCount() {
         return count;

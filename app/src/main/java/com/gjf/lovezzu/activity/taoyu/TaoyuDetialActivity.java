@@ -1,40 +1,31 @@
 package com.gjf.lovezzu.activity.taoyu;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.gjf.lovezzu.R;
 import com.gjf.lovezzu.entity.Goods;
 import com.gjf.lovezzu.entity.GoodsCommentsData;
 import com.gjf.lovezzu.entity.GoodsCommentsDataBridging;
 import com.gjf.lovezzu.entity.GoodsImages;
 import com.gjf.lovezzu.network.TaoyuGoodsCommentsMethods;
-import com.gjf.lovezzu.network.api.TaoyuGoodsCommentsServer;
 import com.gjf.lovezzu.view.TaoyuGoodsCommentsAdapter;
 import com.gjf.lovezzu.view.TaoyuGoodsImagesAdapter;
-
-import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -44,7 +35,7 @@ import static com.gjf.lovezzu.constant.Url.LOGIN_URL;
 
 /**
  * Created by BlackBeard丶 on 2017/04/18.
- * finished by zhao
+ * finished by zhao on 2017/08/1
  */
 
 public class TaoyuDetialActivity extends AppCompatActivity {
@@ -67,6 +58,9 @@ public class TaoyuDetialActivity extends AppCompatActivity {
     EditText editComments;
     @BindView(R.id.send)
     TextView send;
+
+    private SwipeRefreshLayout refreshLayout;
+
     private Goods goods;
     private List<GoodsImages> goodsImagesList = new ArrayList<>();
     private TaoyuGoodsImagesAdapter taoyuGoodsImagesAdapter;
@@ -81,6 +75,7 @@ public class TaoyuDetialActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods_detail);
         taoyuDetialActivity = this;
+        refreshLayout= (SwipeRefreshLayout) findViewById(R.id.goods_datail_refresh);
         ButterKnife.bind(this);
         SharedPreferences sharedPreferences = getSharedPreferences("userinfo", Activity.MODE_APPEND);
         SessionID = sharedPreferences.getString("SessionID", "");
@@ -90,6 +85,16 @@ public class TaoyuDetialActivity extends AppCompatActivity {
         initView();
         getGoodsComments();
         showComments();
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                initView();
+                goodsCommentsDataBridgingList.clear();
+                getGoodsComments();
+                showComments();
+                refreshLayout.setRefreshing(false);
+            }
+        });
 
     }
 

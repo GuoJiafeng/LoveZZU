@@ -146,7 +146,6 @@ public class TaoyuPublishGoodActivity extends AppCompatActivity {
                 try {
                     JSONObject jsonObject=new JSONObject(result);
                     goodsId=jsonObject.getString("goods_id");
-
                     upGoodsImages();
                 } catch (JSONException e) {
 
