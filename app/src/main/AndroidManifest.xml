@@ -93,7 +93,7 @@
             android:name=".activity.tapictalk.TopicTalkActivity"
             android:launchMode="singleTask" />
         <activity android:name=".activity.tapictalk.topic2Activity"/>
-        <activity android:name=".activity.tapictalk.Topic_pub"/>
+        <activity android:name=".activity.tapictalk.TopicPublishActivity"/>
         <activity
 
             android:name="me.iwf.photopicker.PhotoPickerActivity" />
@@ -105,6 +105,8 @@
         <activity android:name=".activity.saylvoeActivity.SayLoveActivity" />
         <activity android:name=".activity.saylvoeActivity.IWantSayLoveActivity" />
         <activity android:name=".activity.taoyu.TaoyuActivity" />
+        <activity android:name=".activity.taoyu.ShopcartActivity"/>
+        <activity android:name=".activity.taoyu.TaoyuChildConmmentsActivity"/>
         <activity
             android:name=".activity.schoolnewsActivity.SchoolNewsSubjectActivity"
             android:windowSoftInputMode="adjustPan" />
@@ -125,7 +127,10 @@
         <service android:name=".service.CheckLogin" />
 
         <activity android:name=".activity.taoyu.TaoyuSearchActivity" />
-        <activity android:name=".activity.taoyu.TaoyuPublishGoodActivity" />
+        <activity android:name=".activity.taoyu.TaoyuPublishGoodActivity"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".activity.taoyu.TaoyuDetialActivity"
+            />
         <activity android:name=".activity.treehole.TreeHoleActivity" />
         <activity android:name=".activity.parttimejob.PartTimeJobActivity" />
         <activity

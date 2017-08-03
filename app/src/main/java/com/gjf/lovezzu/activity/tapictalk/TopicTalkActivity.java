@@ -48,7 +48,7 @@ public  static TopicTalkActivity topicTalkActivity;
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                intent.setClass(TopicTalkActivity.this,Topic_pub.class);
+                intent.setClass(TopicTalkActivity.this,TopicPublishActivity.class);
                 startActivity(intent);
             }
         });

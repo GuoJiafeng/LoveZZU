@@ -1,9 +1,11 @@
 package com.gjf.lovezzu.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by BlackBeard丶 on 2017/03/09.
  */
-public class UserInfoResult {
+public class UserInfoResult implements Serializable{
     private boolean isSuccessful;
     private int info_id;
     private String qr_codeUrl;

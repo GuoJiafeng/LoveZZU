@@ -39,8 +39,9 @@ public class TaoyuSearchActivity extends AppCompatActivity {
     private List<TaoyuDataBridging> taoyuResultList = new ArrayList<>();
     public static final  String TAG = "Fragment";
     RecyclerView taoyu_list;
+    private String msg;
     private TaoyuAdapter adapter;
-
+    private static int START = 0;
     @BindView(R.id.taoyu_search_title)
     EditText taoyu_search_title;
     @BindView(R.id.taoyu_search_button)
@@ -53,7 +54,16 @@ public class TaoyuSearchActivity extends AppCompatActivity {
         setChenjinshitongzhilan();
         ButterKnife.bind(this);
         intList();
-
+        taoyu_list.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (recyclerView.canScrollVertically(1) == false && recyclerView.canScrollVertically(-1) == true) {
+                    Toast.makeText(getApplicationContext(), "正在加载", Toast.LENGTH_SHORT).show();
+                    getTaoyuGoodsList(msg,START+=10);
+                }
+            }
+        });
     }
 
     private void setChenjinshitongzhilan(){
@@ -71,8 +81,8 @@ public class TaoyuSearchActivity extends AppCompatActivity {
     public void OnClick(View view) {
         switch (view.getId()){
             case R.id.taoyu_search_button:
-                String msg = taoyu_search_title.getText().toString();
-                getTaoyuGoodsList(msg);
+                msg = taoyu_search_title.getText().toString();
+                getTaoyuGoodsList(msg,START);
                 break;
         }
 
@@ -85,36 +95,37 @@ public class TaoyuSearchActivity extends AppCompatActivity {
         taoyu_list.setAdapter(adapter);
     }
 
-    public void getTaoyuGoodsList(String msg){
+    public void getTaoyuGoodsList(String msg,int num){
 
         subscriber = new Subscriber<TaoyuGoodsData>() {
             @Override
             public void onCompleted() {
-                Log.d("ggggg","yiwancheng taoyu");
+
             }
 
             @Override
             public void onError(Throwable e) {
-                Log.d("ggggg",e.getMessage().toString()+"hgggggggggggggg");
+
             }
 
             @Override
             public void onNext(TaoyuGoodsData taoyuGoodsData) {
                 List<TaoyuDataBridging> list = taoyuGoodsData.getValues();
-                Toast.makeText(getApplicationContext(),taoyuGoodsData.getResult(),Toast.LENGTH_LONG).show();
-                taoyuResultList.clear();
-                taoyuResultList.addAll(list);
-
-                adapter.notifyDataSetChanged();
-
+                if (list.size() == 0) {
+                    Toast.makeText(getApplicationContext(), "没有更多数据了", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+                    taoyuResultList.clear();
+                    taoyuResultList.addAll(list);
+                    adapter.notifyDataSetChanged();
+                }
 
             }
 
 
         };
 
-        int i=0;
-        TaoyuGoodsListMethods.getInstance().getGoodsList(subscriber,msg,i+=10);
+        TaoyuGoodsListMethods.getInstance().getGoodsList(subscriber,msg, num);
 
     }
 

@@ -1,26 +1,21 @@
 package com.gjf.lovezzu.fragment.taoyu;
 
-import android.app.Activity;
 import android.app.Fragment;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.gjf.lovezzu.R;
 import com.gjf.lovezzu.entity.TaoyuDataBridging;
 import com.gjf.lovezzu.entity.TaoyuGoodsData;
 import com.gjf.lovezzu.network.TaoyuGoodsListMethods;
-import com.gjf.lovezzu.view.EndLessOnScrollListener;
 import com.gjf.lovezzu.view.TaoyuAdapter;
 
 import java.util.ArrayList;
@@ -74,11 +69,38 @@ public class TaoyuGoodsStudyTypeFragment extends Fragment {
                 getTaoyuGoodsList(START+=10);
             }
         });
-        taoyu_list.addOnScrollListener(new EndLessOnScrollListener(layoutManager) {
+        taoyu_list.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            boolean isSlidingToLast = false;
             @Override
-            public void onLoadMore(int currentPage) {
-                Toast.makeText(getContext(),"正在加载",Toast.LENGTH_SHORT).show();
-                getTaoyuGoodsList(START+=10);
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                // 当不滚动时
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    //获取最后一个完全显示的ItemPosition
+                    int lastVisibleItem = manager.findLastCompletelyVisibleItemPosition();
+                    int totalItemCount = manager.getItemCount();
+
+                    // 判断是否滚动到底部，并且是向下滚动
+                    if (lastVisibleItem == (totalItemCount - 1) && isSlidingToLast) {
+                        Toast.makeText(getContext(), "加载中", Toast.LENGTH_SHORT).show();
+                        getTaoyuGoodsList(START += 10);
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > 0) {
+                    //大于0表示正在向右滚动
+                    isSlidingToLast = true;
+                } else {
+                    //小于等于0表示停止或向左滚动
+                    isSlidingToLast = false;
+                }
 
             }
         });
@@ -112,7 +134,7 @@ public class TaoyuGoodsStudyTypeFragment extends Fragment {
             public void onNext(TaoyuGoodsData taoyuGoodsData) {
                 List<TaoyuDataBridging> list = taoyuGoodsData.getValues();
                 if (list.size()==0){
-                    Toast.makeText(getContext(),"没有更多数据",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(),"没有更多数据了",Toast.LENGTH_SHORT).show();
                     return;
                 }else {
                     taoyuResultList.addAll(list);

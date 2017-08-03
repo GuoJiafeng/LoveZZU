@@ -7,11 +7,14 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gjf.lovezzu.R;
+import com.gjf.lovezzu.activity.MainActivity;
 import com.gjf.lovezzu.fragment.taoyu.TaoyuGoodsEnjoyTypeFragment;
 import com.gjf.lovezzu.fragment.taoyu.TaoyuGoodsStudyTypeFragment;
 import com.gjf.lovezzu.fragment.taoyu.TaoyuGoodsTrafficTypeFragment;
@@ -26,9 +29,12 @@ import butterknife.OnClick;
 
 public class TaoyuActivity extends AppCompatActivity {
 
+    @BindView(R.id.taoyu_go_back)
+    ImageView taoyuGoBack;
     private TaoyuGoodsEnjoyTypeFragment taoyuGoodsEnjoyTypeFragment;
     private TaoyuGoodsStudyTypeFragment taoyuGoodsStudyTypeFragment;
     private TaoyuGoodsTrafficTypeFragment taoyuGoodsTrafficTypeFragment;
+    public static TaoyuActivity taoyuActivity;
     @BindView(R.id.taoyu_study)
     TextView taoyu_study;
     @BindView(R.id.taoyu_traffic)
@@ -38,12 +44,13 @@ public class TaoyuActivity extends AppCompatActivity {
     @BindView(R.id.taoyu_activity_search)
     TextView taoyu_activity_search;
     @BindView(R.id.taoyu_publish_button)
-    android.support.design.widget.FloatingActionButton taoyu_publish_button;
+    FloatingActionButton taoyu_publish_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.taoyu_activity);
+        taoyuActivity = this;
         ButterKnife.bind(this);
 
         if (Build.VERSION.SDK_INT >= 21) {
@@ -64,42 +71,42 @@ public class TaoyuActivity extends AppCompatActivity {
         taoyuGoodsStudyTypeFragment = new TaoyuGoodsStudyTypeFragment();
         transaction.replace(R.id.id_taoyuactivity, taoyuGoodsStudyTypeFragment);
         transaction.commit();
-        taoyu_enjoy.setTextColor(Color.parseColor("#000000"));
-        taoyu_study.setTextColor(Color.BLUE);
-        taoyu_traffic.setTextColor(Color.parseColor("#000000"));
+        taoyu_enjoy.setBackgroundColor(Color.parseColor("#ffffff"));
+        taoyu_study.setBackgroundColor(Color.parseColor("#CDC9C9"));
+        taoyu_traffic.setBackgroundColor(Color.parseColor("#ffffff"));
     }
 
-    @OnClick({R.id.taoyu_study, R.id.taoyu_traffic, R.id.taoyu_enjoy,R.id.taoyu_activity_search,R.id.taoyu_publish_button})
+    @OnClick({R.id.taoyu_study, R.id.taoyu_traffic, R.id.taoyu_enjoy, R.id.taoyu_activity_search, R.id.taoyu_publish_button})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.taoyu_enjoy:
                 taoyuGoodsEnjoyTypeFragment = new TaoyuGoodsEnjoyTypeFragment();
                 showFragmen(taoyuGoodsEnjoyTypeFragment);
-                taoyu_enjoy.setTextColor(Color.BLUE);
-                taoyu_study.setTextColor(Color.parseColor("#000000"));
-                taoyu_traffic.setTextColor(Color.parseColor("#000000"));
+                taoyu_enjoy.setBackgroundColor(Color.parseColor("#CDC9C9"));
+                taoyu_study.setBackgroundColor(Color.parseColor("#ffffff"));
+                taoyu_traffic.setBackgroundColor(Color.parseColor("#ffffff"));
                 break;
             case R.id.taoyu_study:
                 taoyuGoodsStudyTypeFragment = new TaoyuGoodsStudyTypeFragment();
                 showFragmen(taoyuGoodsStudyTypeFragment);
-                taoyu_enjoy.setTextColor(Color.parseColor("#000000"));
-                taoyu_study.setTextColor(Color.BLUE);
-                taoyu_traffic.setTextColor(Color.parseColor("#000000"));
+                taoyu_enjoy.setBackgroundColor(Color.parseColor("#ffffff"));
+                taoyu_study.setBackgroundColor(Color.parseColor("#CDC9C9"));
+                taoyu_traffic.setBackgroundColor(Color.parseColor("#ffffff"));
 
                 break;
             case R.id.taoyu_traffic:
                 taoyuGoodsTrafficTypeFragment = new TaoyuGoodsTrafficTypeFragment();
                 showFragmen(taoyuGoodsTrafficTypeFragment);
-                taoyu_enjoy.setTextColor(Color.parseColor("#000000"));
-                taoyu_study.setTextColor(Color.parseColor("#000000"));
-                taoyu_traffic.setTextColor(Color.BLUE);
+                taoyu_enjoy.setBackgroundColor(Color.parseColor("#ffffff"));
+                taoyu_study.setBackgroundColor(Color.parseColor("#ffffff"));
+                taoyu_traffic.setBackgroundColor(Color.parseColor("#CDC9C9"));
                 break;
             case R.id.taoyu_activity_search:
-                Intent intent = new Intent(getApplicationContext(),TaoyuSearchActivity.class);
+                Intent intent = new Intent(getApplicationContext(), TaoyuSearchActivity.class);
                 startActivity(intent);
                 break;
             case R.id.taoyu_publish_button:
-                Intent intent1 = new Intent(getApplicationContext(),TaoyuPublishGoodActivity.class);
+                Intent intent1 = new Intent(getApplicationContext(), TaoyuPublishGoodActivity.class);
                 startActivity(intent1);
                 break;
         }
@@ -111,6 +118,12 @@ public class TaoyuActivity extends AppCompatActivity {
         FragmentTransaction transaction = fm.beginTransaction();
         transaction.replace(R.id.id_taoyuactivity, fragment);
         transaction.commit();
+    }
+
+    @OnClick(R.id.taoyu_go_back)
+    public void onViewClicked() {
+        Intent intent2 = new Intent(TaoyuActivity.this, MainActivity.class);
+        startActivity(intent2);
     }
 }
 

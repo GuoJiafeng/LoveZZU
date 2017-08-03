@@ -15,6 +15,7 @@ import com.gjf.lovezzu.activity.saylvoeActivity.SayLoveActivity;
 import com.gjf.lovezzu.activity.UserInfoActivity;
 import com.gjf.lovezzu.activity.UserLoginActivity;
 import com.gjf.lovezzu.activity.UserSettingActivity;
+import com.gjf.lovezzu.activity.taoyu.ShopcartActivity;
 import com.gjf.lovezzu.entity.CheckLoginApplication;
 
 import butterknife.BindView;
@@ -34,7 +35,10 @@ public class PersonFragment extends Fragment {
     LinearLayout person_usersetting;
     @BindView(R.id.person_saylove)
     LinearLayout person_saylove;
-
+    @BindView(R.id.user_shop_car)
+    LinearLayout person_shop_car;
+    @BindView(R.id.user_shop_list)
+    LinearLayout person_shop_list;
 
     private View view;
 
@@ -68,7 +72,7 @@ public class PersonFragment extends Fragment {
         startActivity(intent);
     }
 
-    @OnClick({R.id.user_image, R.id.person_usersetting, R.id.person_saylove})
+    @OnClick({R.id.user_image, R.id.person_usersetting, R.id.person_saylove,R.id.user_shop_car,R.id.user_shop_list})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.user_image:
@@ -85,6 +89,12 @@ public class PersonFragment extends Fragment {
                 break;
             case R.id.person_saylove:
                 goToSayLove();
+                break;
+            case R.id.user_shop_car:
+                Intent intent=new Intent(getContext(),ShopcartActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.user_shop_list:
                 break;
         }
     }

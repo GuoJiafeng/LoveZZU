@@ -5,45 +5,48 @@
     android:layout_height="wrap_content"
     android:background="#fffffc"
     android:paddingTop="30dp">
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1">
-        <ImageView
 
+        <ImageView
+            android:id="@+id/taoyu_go_back"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginLeft="0.5dp"
             android:src="@drawable/fragment_back" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="6"
-        android:gravity="center"
-       >
-        <TextView
+        android:gravity="center">
 
+        <TextView
+            android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="40dp"
             android:text="淘渔"
-            android:textSize="20dp"/>
+            android:textSize="20dp" />
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:gravity="center_horizontal">
+
         <TextView
-            android:layout_gravity="center_vertical"
+            android:id="@+id/taoyu_activity_search"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
             android:gravity="center_vertical"
-            android:text="搜索"
-            android:id="@+id/taoyu_activity_search"
-            />
+            android:text="搜索" />
     </LinearLayout>
 
 
