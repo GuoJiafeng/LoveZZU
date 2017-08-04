@@ -4,17 +4,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/topic2_title" />
+    <include layout="@layout/topic_info_title" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+
 
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/topic2_refresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1">
 
             <ScrollView
@@ -23,35 +20,27 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
+                        <android.support.v7.widget.RecyclerView
+                            android:layout_weight="2"
+                            android:id="@+id/topic_info_images"
                             android:layout_width="match_parent"
-                            android:layout_height="5dp"
-                            android:background="#f1f1f1" />
+                            android:layout_height="wrap_content"/>
 
-                    </LinearLayout>
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
+                        <include layout="@layout/topic_main"
+                            />
                         <LinearLayout
+                            android:layout_weight="1"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:orientation="vertical">
-
-                            <include layout="@layout/topic_main" />
 
                             <TextView
                                 android:layout_width="match_parent"
-                                android:layout_height="10dp"
-                                android:layout_marginTop="5dp"
+                                android:layout_height="5dp"
+                                android:layout_marginTop="3dp"
                                 android:background="#f1f1f1" />
 
                             <android.support.v7.widget.RecyclerView
@@ -63,7 +52,6 @@
                             </android.support.v7.widget.RecyclerView>
                         </LinearLayout>
 
-                    </FrameLayout>
 
                 </LinearLayout>
 
@@ -73,7 +61,6 @@
 
         <include layout="@layout/topic_botton" />
 
-    </LinearLayout>
 
 
 </LinearLayout>

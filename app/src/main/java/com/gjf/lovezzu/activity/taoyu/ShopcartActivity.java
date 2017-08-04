@@ -109,7 +109,8 @@ public class ShopcartActivity extends AppCompatActivity {
             case R.id.cart_go_order:
                 for (int i = 0; i < map.size(); i++) {
                     if (map.get(i)) {
-
+                        ShoppingCartDateBridging shoppingCartDateBridging=shoppingCartDateBridgingList.get(i);
+                        Log.e("订单---------生成",shoppingCartDateBridging.getGoods().getGname());
                     }
                 }
                 break;

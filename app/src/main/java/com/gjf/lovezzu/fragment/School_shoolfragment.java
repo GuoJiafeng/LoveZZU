@@ -26,15 +26,11 @@ import com.gc.flashview.FlashView;
 import com.gc.flashview.constants.EffectConstants;
 import com.gc.flashview.listener.FlashViewListener;
 import com.gjf.lovezzu.R;
-import com.gjf.lovezzu.activity.MainActivity;
-import com.gjf.lovezzu.activity.schoolnewsActivity.SchoolNewsSubjectActivity;
 import com.gjf.lovezzu.activity.schoolnewsActivity.SchoolNewsWebView;
-import com.gjf.lovezzu.entity.SchoolMid;
 import com.gjf.lovezzu.entity.SchoolNewsData;
 import com.gjf.lovezzu.entity.SchoolNewsResult;
 import com.gjf.lovezzu.network.SchoolNewsMethods;
 import com.gjf.lovezzu.view.SchoolLastAdapter;
-import com.gjf.lovezzu.view.SchoolMidAdapter;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -66,11 +62,9 @@ import rx.Subscriber;
 public class School_shoolfragment extends Fragment {
     @BindView(R.id.last_school_listview)
     ListView lastSchoolListview;
-    Unbinder unbinder;
     private View view;
     private FlashView flashView;
     private ArrayList<String> imageUrls = new ArrayList<String>();
-    private List<SchoolMid> schoolMidList = new ArrayList<>();
     private List<SchoolNewsResult> schoolNewsResultList = new ArrayList<>();
     private int Page;
     public static final String TAG = "Fragment";
@@ -118,20 +112,8 @@ public class School_shoolfragment extends Fragment {
         if (view == null) {
             view = inflater.inflate(R.layout.inchool_school_view, container, false);
 
-//            //初始化所需数据
            initSchoolList();
            showTopImage();
-            showCenterImage();
-//            showEndImage();
-//            onRefresh();
-//            doUpResfresh();
-//            doDownResfresh();
-
-
-
-
-
-
             listView=(ListView)view.findViewById(R.id.last_school_listview);
 
             urlString="http://www16.zzu.edu.cn/msgs/vmsgisapi.dll/vmsglist?mtype=m&lan=101,102,103&pn=1";
@@ -165,14 +147,6 @@ public class School_shoolfragment extends Fragment {
 
 
 
-
-
-
-
-
-
-
-
         } else {
             ViewGroup viewGroup = (ViewGroup) view.getParent();
             if (viewGroup != null) {
@@ -181,7 +155,7 @@ public class School_shoolfragment extends Fragment {
             onRefresh();
             doUpResfresh();
         }
-        unbinder = ButterKnife.bind(this, view);
+        ButterKnife.bind(this, view);
         return view;
     }
 
@@ -236,13 +210,7 @@ public class School_shoolfragment extends Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                //重新加载数据并更新界面
-                try {
-                    Thread.sleep(200);
 
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -258,79 +226,53 @@ public class School_shoolfragment extends Fragment {
     }
 
     private void initSchoolList() {
-        //以下数据为测试数据，真实数据可从服务器中获取,由于要加载的数据过多，可以新建一个线程进行加载数据，并进行数据的初始化
-        //首页的新闻总是要更新的，是不是可以写成一个server，在后台进行更新
-        //头部轮播图片，从服务器中加载
 
-        imageUrls.add("http://7xi8d6.com1.z0.glb.clouddn.com/2017-03-09-17127109_1652837611687612_1425055271046086656_n.jpg");
-        imageUrls.add("http://7xi8d6.com1.z0.glb.clouddn.com/2017-03-13-17267506_264626920661300_5781854075880472576_n.jpg");
-        imageUrls.add("http://7xi8d6.com1.z0.glb.clouddn.com/2017-03-13-17267506_264626920661300_5781854075880472576_n.jpg");
+        imageUrls.add("http://202.196.64.199/zzupic/p005.jpg");
+        imageUrls.add("http://202.196.64.199/zzupic/p034.jpg");
+        imageUrls.add("http://202.196.64.199/zzupic/p003.jpg");
 
-        //中间滑动项，从服务器中加载
-        Intent intent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
-        SchoolMid schoolMid_1 = new SchoolMid(R.drawable.schoolintroduce, intent);
-        SchoolMid schoolMid_2 = new SchoolMid(R.drawable.schoolstyle, intent);
-        SchoolMid schoolMid_3 = new SchoolMid(R.drawable.schoolfamous, intent);
-        SchoolMid schoolMid_4 = new SchoolMid(R.drawable.schoolnews, intent);
-
-        schoolMidList.add(schoolMid_1);
-        schoolMidList.add(schoolMid_2);
-        schoolMidList.add(schoolMid_3);
-        schoolMidList.add(schoolMid_4);
-
-        //结尾新闻项（for循环从服务器读取出SchoolLast对象）
-
-//        SchoolNewsResult schoolNewsResult3 = new SchoolNewsResult(R.drawable.life_play_img1, "新闻标题1234", "新闻详情：http://...");
-//        SchoolNewsResult schoolNewsResult4 = new SchoolNewsResult(R.drawable.life_play_img2, "新闻标题tdrhsf", "新闻详情：http://...");
-//        SchoolNewsResult schoolNewsResult5 = new SchoolNewsResult(R.drawable.life_play_img3, "新闻标题dghllllllllllllll", "新闻详情：http://...");
-//        SchoolNewsResult schoolNewsResult6 = new SchoolNewsResult(R.drawable.life_play_img4, "新闻标题217532", "新闻详情：http://...");
-//        SchoolNewsResult schoolNewsResult7 = new SchoolNewsResult(R.drawable.life_play_img5, "新闻标题1024522", "新闻详情：http://...");
-//        SchoolNewsResult schoolNewsResult8 = new SchoolNewsResult(R.drawable.life_play_img6, "新闻标题455", "新闻详情：http://...");
-//        SchoolNewsResult schoolNewsResult9 = new SchoolNewsResult(R.drawable.life_play_img1, "新闻标题555555555555555555555555555", "新闻详情：http://...");
-//
-//
-//        schoolNewsResultList.add(schoolNewsResult3);
-//        schoolNewsResultList.add(schoolNewsResult4);
-//        schoolNewsResultList.add(schoolNewsResult5);
-//        schoolNewsResultList.add(schoolNewsResult6);
-//        schoolNewsResultList.add(schoolNewsResult7);
-//        schoolNewsResultList.add(schoolNewsResult8);
-//        schoolNewsResultList.add(schoolNewsResult9);
         getSchoolNews(Page);
 
     }
 
     private void showTopImage() {
 
-        //Log.d(TAG, "onCreateView");
-        //头部轮播
         flashView = (FlashView) view.findViewById(R.id.flash_view);
         flashView.setImageUris(imageUrls);
         flashView.setEffect(EffectConstants.DEFAULT_EFFECT);//更改图片切换的动画效果
         flashView.setOnPageClickListener(new FlashViewListener() {
             @Override
             public void onClick(int position) {
-                Toast.makeText(view.getContext(), "你的点击的是第" + (position + 1) + "张图片！",
-                        Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getContext(), SchoolNewsSubjectActivity.class);
-                startActivity(intent);
-
+                String mUrl;
+                Intent mintent=new Intent();
+                mintent.setClass(getActivity(),SchoolNewsWebView.class);
+                switch (position){
+                    case 0:
+                        Toast.makeText(view.getContext(), "郑大官网",
+                                Toast.LENGTH_SHORT).show();
+                        mUrl="http://202.196.64.199/";
+                        mintent.putExtra("url",mUrl);
+                        startActivity(mintent);
+                        break;
+                    case 1:
+                        Toast.makeText(view.getContext(), "学校简介",
+                                Toast.LENGTH_SHORT).show();
+                        mUrl="http://202.196.64.199/gaikuang.htm";
+                        mintent.putExtra("url",mUrl);
+                        startActivity(mintent);
+                        break;
+                    case 2:
+                        Toast.makeText(view.getContext(), "郑大教务在线",
+                                Toast.LENGTH_SHORT).show();
+                        mUrl="http://jw.zzu.edu.cn/";
+                        mintent.putExtra("url",mUrl);
+                        startActivity(mintent);
+                        break;
+                }
 
             }
         });
 
-    }
-
-    private void showCenterImage() {
-
-        //中间部分
-
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.in_mid_school);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext());
-        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        recyclerView.setLayoutManager(layoutManager);
-        SchoolMidAdapter adapter = new SchoolMidAdapter(schoolMidList);
-        recyclerView.setAdapter(adapter);
     }
 
     private void showEndImage() {
@@ -371,7 +313,7 @@ public class School_shoolfragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+
     }
 
 
@@ -477,6 +419,7 @@ public class School_shoolfragment extends Fragment {
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
+                    Toast.makeText(getContext(),"请检查网络是否通畅",Toast.LENGTH_SHORT).show();
                 }
                 try {
                     outputStream.close();
@@ -484,14 +427,10 @@ public class School_shoolfragment extends Fragment {
                     e.printStackTrace();
                 }
                 byte date[]=outputStream.toByteArray();
-//                try {
-//                    String html=new String(date,"utf-8");
-//                } catch (UnsupportedEncodingException e) {
-//                    e.printStackTrace();
-//                }
+
                 Bundle bundle=new Bundle();
                 bundle.putByteArray("html",date);
-                //bundle.putString("html",html);
+
                 Message message=new Message();
                 message.setData(bundle);
                 handler.sendMessage(message);

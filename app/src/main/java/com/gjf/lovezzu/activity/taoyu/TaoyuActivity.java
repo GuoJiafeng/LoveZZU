@@ -22,6 +22,7 @@ import com.gjf.lovezzu.fragment.taoyu.TaoyuGoodsTrafficTypeFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 /**
  * Created by lenovo047 on 2017/3/25.
@@ -45,13 +46,13 @@ public class TaoyuActivity extends AppCompatActivity {
     TextView taoyu_activity_search;
     @BindView(R.id.taoyu_publish_button)
     FloatingActionButton taoyu_publish_button;
-
+    Unbinder unbinder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.taoyu_activity);
         taoyuActivity = this;
-        ButterKnife.bind(this);
+        unbinder=ButterKnife.bind(this);
 
         if (Build.VERSION.SDK_INT >= 21) {
             View decorView = getWindow().getDecorView();
@@ -124,6 +125,12 @@ public class TaoyuActivity extends AppCompatActivity {
     public void onViewClicked() {
         Intent intent2 = new Intent(TaoyuActivity.this, MainActivity.class);
         startActivity(intent2);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbinder.unbind();
     }
 }
 

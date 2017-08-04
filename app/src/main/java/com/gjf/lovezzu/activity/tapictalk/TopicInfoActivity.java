@@ -4,28 +4,25 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+
 import com.gjf.lovezzu.R;
 
 /**
- * Created by zhaox on 2017/3/22.
+ * Created by lenovo047 on 2017/5/27.
  */
 
-public class TopicTalkActivity extends AppCompatActivity {
-
-
-
-public  static TopicTalkActivity topicTalkActivity;
+public class TopicInfoActivity extends AppCompatActivity {
 
 
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        topicTalkActivity=this;
-        setContentView(R.layout.topic_activity);
+        setContentView(R.layout.topic_info_activity);
 
 
     }
+
 
     //刷新操作
     private void onRefresh() {
@@ -38,6 +35,7 @@ public  static TopicTalkActivity topicTalkActivity;
             @Override
             public void run() {
                 //加载数据并更新
+
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -47,21 +45,9 @@ public  static TopicTalkActivity topicTalkActivity;
             }
         }).start();
     }
-
-    //初始化加载数据
     private void initItem() {
 
 
-
-
-    }
-
-    //显示一级话题圈
-    private void showMid() {
-
-    }
-    //显示二级话题圈
-    private void showLast() {
 
     }
 

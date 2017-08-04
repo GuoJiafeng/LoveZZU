@@ -7,7 +7,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.5">
+        >
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -28,6 +28,15 @@
                 android:layout_centerInParent="true"
                 android:text="话题圈"
                 android:textSize="20sp" />
+            <ImageView
+                android:id="@+id/publish_first_topic"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="5dp"
+                android:layout_marginRight="0.5dp"
+                android:src="@drawable/friend_add" />
         </RelativeLayout>
 
 
@@ -35,7 +44,7 @@
 <FrameLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_weight="10">
+    android:layout_weight="1">
 
 
     <android.support.v4.widget.SwipeRefreshLayout
@@ -49,41 +58,32 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.5">
-
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/talk_mid"
+                    android:background="#f2f2f2"
+                    android:layout_weight="2"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:layout_weight="8">
+                    android:layout_height="wrap_content" />
 
                 <android.support.v7.widget.RecyclerView
+                    android:layout_weight="10"
                     android:id="@+id/talk_last"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-
-            </LinearLayout>
+                    android:layout_height="wrap_content" />
 
         </LinearLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_gravity="end|bottom"
             android:scaleType="centerInside"
             android:background="@drawable/topic"
-            android:id="@+id/Topicpub"
+            android:id="@+id/publish_last_topic"
+            android:layout_marginRight="25dp"
+            android:layout_marginBottom="35dp"
             android:layout_centerVertical="true"
-            android:layout_margin="25dp"/>
+            />
 </FrameLayout>
 </LinearLayout>

@@ -11,6 +11,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <service android:name=".service.CheckLogin" />
+
         <meta-data
             android:name="RONG_CLOUD_APP_KEY"
             android:value="cpj2xarlc39vn" />
@@ -84,32 +86,36 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".activity.UserLoginActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name=".activity.UserInfoActivity" />
-        <activity android:name=".activity.UserSettingActivity" />
-        <activity
-            android:name=".activity.tapictalk.TopicTalkActivity"
-            android:launchMode="singleTask" />
-        <activity android:name=".activity.tapictalk.topic2Activity"/>
-        <activity android:name=".activity.tapictalk.TopicPublishActivity"/>
-        <activity
-
-            android:name="me.iwf.photopicker.PhotoPickerActivity" />
-
-        <activity
-            android:name=".activity.palytogether.PlayTogetherActivity"
-            android:launchMode="singleTask" />
-
         <activity android:name=".activity.saylvoeActivity.SayLoveActivity" />
         <activity android:name=".activity.saylvoeActivity.IWantSayLoveActivity" />
+        <activity android:name=".activity.UserInfoActivity" />
+        <activity android:name=".activity.UserSettingActivity" />
+        <activity android:name="me.iwf.photopicker.PhotoPickerActivity" />
+
+        <!-- 话题圈 -->
+        <activity android:name=".activity.tapictalk.TopicTalkActivity"
+            android:launchMode="singleTask" />
+        <activity android:name=".activity.tapictalk.TopicInfoActivity"/>
+        <activity android:name=".activity.tapictalk.TopicPublishActivity"/>
+
+        <!-- 淘鱼 -->
         <activity android:name=".activity.taoyu.TaoyuActivity" />
         <activity android:name=".activity.taoyu.ShopcartActivity"/>
         <activity android:name=".activity.taoyu.TaoyuChildConmmentsActivity"/>
+        <activity android:name=".activity.taoyu.TaoyuOrderActivity"/>
+        <activity android:name=".activity.taoyu.TaoyuSearchActivity" />
+        <activity android:name=".activity.taoyu.TaoyuPublishGoodActivity"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".activity.taoyu.TaoyuDetialActivity" />
+
+        <!-- 一起玩 -->
         <activity
-            android:name=".activity.schoolnewsActivity.SchoolNewsSubjectActivity"
-            android:windowSoftInputMode="adjustPan" />
+            android:name=".activity.palytogether.PlayTogetherActivity"
+            android:launchMode="singleTask" />
         <activity android:name=".activity.palytogether.PlayGroupActivity">
             <intent-filter>
                 <action android:name="com.playGroup" />
@@ -124,22 +130,21 @@
             android:name=".activity.palytogether.PlaySchoolActivity"
             android:windowSoftInputMode="adjustPan" />
 
-        <service android:name=".service.CheckLogin" />
-
-        <activity android:name=".activity.taoyu.TaoyuSearchActivity" />
-        <activity android:name=".activity.taoyu.TaoyuPublishGoodActivity"
-            android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".activity.taoyu.TaoyuDetialActivity"
-            />
+        <!-- 树洞 -->
         <activity android:name=".activity.treehole.TreeHoleActivity" />
+        <activity
+            android:name=".activity.treehole.AddTreeHoleActivity"
+            android:windowSoftInputMode="adjustPan" />
+
+        <!-- 兼职 -->
         <activity android:name=".activity.parttimejob.PartTimeJobActivity" />
         <activity
             android:name=".activity.parttimejob.AddJopActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activity.parttimejob.JobInfoActivity" />
-        <activity
-            android:name=".activity.treehole.AddTreeHoleActivity"
-            android:windowSoftInputMode="adjustPan" />
+
+
+
         <activity android:name=".activity.schoolnewsActivity.SchoolNewsWebView" />
 
         <!--会话列表-->

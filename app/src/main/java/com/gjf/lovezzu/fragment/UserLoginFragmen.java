@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.gjf.lovezzu.R;
 import com.gjf.lovezzu.activity.MainActivity;
+import com.gjf.lovezzu.activity.UserInfoActivity;
 import com.gjf.lovezzu.activity.UserLoginActivity;
 import com.gjf.lovezzu.constant.Url;
 import com.gjf.lovezzu.entity.CheckLoginApplication;
@@ -43,7 +44,6 @@ import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
 public class UserLoginFragmen extends Fragment {
     private View view;
     private UserSingUpFragment userSingUpFragment;
-    private Url url;
     private Subscriber subscriber;
     private CheckLoginApplication checkLoginApplication;
     private static String token;
@@ -127,7 +127,6 @@ public class UserLoginFragmen extends Fragment {
                 String SessionID = loginResult.getSessionID();
                 if (SessionID != null) {
                     String phone = user_reg_phone.getText().toString();
-                    //String password = user_reg_password.getText().toString();
                     connect(getToken());
                     saveUserInfo(SessionID, phone);
                 } else {
@@ -153,14 +152,13 @@ public class UserLoginFragmen extends Fragment {
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("userinfo", getContext().MODE_APPEND);
         SharedPreferences.Editor editUserInfo = sharedPreferences.edit();
         editUserInfo.putString("phone", phone);
-        //editUserInfo.putString("password", password);
         editUserInfo.putString("SessionID", SessionID);
-        editUserInfo.commit();
+        editUserInfo.apply();
         Toast.makeText(getContext(), "登录成功！", Toast.LENGTH_LONG).show();
 
         checkLoginApplication = (CheckLoginApplication) getActivity().getApplication();
         checkLoginApplication.setIsLogin(true);
-        Intent intent = new Intent(getContext(), MainActivity.class);
+        Intent intent = new Intent(getContext(), UserInfoActivity.class);
         startActivity(intent);
     }
 
@@ -168,7 +166,6 @@ public class UserLoginFragmen extends Fragment {
         String checkphone = user_reg_password.getText().toString();
         String checkpassword = user_reg_password.getText().toString();
         if (checkphone == null || checkpassword == null) {
-
             Toast.makeText(getContext(), "请输入用户名或者密码！", Toast.LENGTH_LONG).show();
         } else {
             goTologin();
