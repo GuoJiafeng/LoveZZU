@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by BlackBeard丶 on 2017/03/09.
  */
 public class UserInfoResult implements Serializable{
-    private boolean isSuccessful;
+
     private int info_id;
     private String qr_codeUrl;
     private String imageUrl;//头像地址
@@ -17,14 +17,6 @@ public class UserInfoResult implements Serializable{
     private String academy;//院校
     private String departments;//院系
     private String professional;//专业
-
-    public boolean isSuccessful() {
-        return isSuccessful;
-    }
-
-    public void setIsSuccessful(boolean isSuccessful) {
-        this.isSuccessful = isSuccessful;
-    }
 
 
     public int getInfo_id() {

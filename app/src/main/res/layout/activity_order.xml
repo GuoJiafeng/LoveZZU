@@ -1,51 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/in_school"
+            android:id="@+id/order_buy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
             android:gravity="right"
-            android:text="学校"
+            android:text="喜新"
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/in_society"
+            android:id="@+id/order_sell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_weight="1"
-            android:text="社会"
+            android:text="换旧"
             android:textSize="20sp" />
     </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/school_in"
+    <FrameLayout
+        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_weight="1">
+        android:id="@+id/order_activity"
+        android:layout_height="wrap_content">
 
-
-
-            <FrameLayout
-                android:id="@+id/in_school_content"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-    </LinearLayout>
-
+    </FrameLayout>
 </LinearLayout>

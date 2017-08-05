@@ -16,6 +16,7 @@ import com.gc.flashview.listener.FlashViewListener;
 import com.gjf.lovezzu.R;
 import com.gjf.lovezzu.activity.parttimejob.PartTimeJobActivity;
 import com.gjf.lovezzu.activity.palytogether.PlayTogetherActivity;
+import com.gjf.lovezzu.activity.schoolnewsActivity.SchoolNewsWebView;
 import com.gjf.lovezzu.activity.taoyu.TaoyuActivity;
 import com.gjf.lovezzu.activity.tapictalk.TopicTalkActivity;
 import com.gjf.lovezzu.activity.treehole.TreeHoleActivity;
@@ -67,9 +68,9 @@ public class LifeFragment extends Fragment {
 
     //加载轮播图片
     private void initImage() {
-        imageUrl.add("http://www.bz55.com/uploads1/allimg/120312/1_120312100435_8.jpg");
-        imageUrl.add("http://www.237.cc/uploads/pcline/712_0_1680x1050.jpg");
-        imageUrl.add("http://img2.pconline.com.cn/pconline/0706/19/1038447_34.jpg");
+        imageUrl.add("http://202.196.64.199/zzupic/p025.jpg");
+        imageUrl.add("http://202.196.64.199/zzupic/p038.jpg");
+        imageUrl.add("http://202.196.64.199/zzupic/p010.jpg");
 
     }
 
@@ -81,8 +82,32 @@ public class LifeFragment extends Fragment {
         flashView.setOnPageClickListener(new FlashViewListener() {
             @Override
             public void onClick(int position) {
-                Toast.makeText(view.getContext(), "你的点击的是第" + (position + 1) + "张图片！",
-                        Toast.LENGTH_SHORT).show();
+                String mUrl;
+                Intent mintent=new Intent();
+                mintent.setClass(getActivity(),SchoolNewsWebView.class);
+                switch (position){
+                    case 0:
+                        Toast.makeText(view.getContext(), "北校区",
+                                Toast.LENGTH_SHORT).show();
+                        mUrl="http://www5.zzu.edu.cn/soft/";
+                        mintent.putExtra("url",mUrl);
+                        startActivity(mintent);
+                        break;
+                    case 1:
+                        Toast.makeText(view.getContext(), "南校区",
+                                Toast.LENGTH_SHORT).show();
+                        mUrl="http://www5.zzu.edu.cn/gjxy/";
+                        mintent.putExtra("url",mUrl);
+                        startActivity(mintent);
+                        break;
+                    case 2:
+                        Toast.makeText(view.getContext(), "新闻中心",
+                                Toast.LENGTH_SHORT).show();
+                        mUrl="http://news.zzu.edu.cn/";
+                        mintent.putExtra("url",mUrl);
+                        startActivity(mintent);
+                        break;
+                }
 
             }
         });

@@ -32,7 +32,6 @@
         </LinearLayout>
 
         <LinearLayout
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/user_image"
@@ -41,10 +40,8 @@
             android:orientation="vertical">
 
             <LinearLayout
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:layout_weight="1"
                 android:background="#fffffc"
                 android:id="@+id/my_info">
@@ -54,6 +51,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:src="@drawable/mine_dynamic"
+                    android:layout_marginLeft="3dp"
                     android:paddingLeft="5dp"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
@@ -92,6 +90,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:src="@drawable/mine_confession"
+                    android:layout_marginLeft="3dp"
                     android:paddingLeft="5dp"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
@@ -136,6 +135,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:src="@drawable/mine_task"
+                    android:layout_marginLeft="3dp"
                     android:paddingLeft="5dp"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"

@@ -28,6 +28,7 @@ import me.iwf.photopicker.PhotoPreview;
 
 /**
  * Created by Leon on 2017/7/25.
+ * finished by zhoa
  */
 
 public class TopicPublishActivity extends AppCompatActivity {
@@ -51,7 +52,7 @@ public class TopicPublishActivity extends AppCompatActivity {
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.topic_pub);
+        setContentView(R.layout.topic_publish_activity);
         ButterKnife.bind(this);
 
     }
@@ -74,7 +75,6 @@ public class TopicPublishActivity extends AppCompatActivity {
 
     private void upLoadImages(){
         if (photosURL!=null&&photoList!=null){
-            int i=0;
             for (String photo:photosURL){
                 File file=new File(photo);
                 photoList.add(file);

@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="300dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    app:cardCornerRadius="5dp">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="250dp"
     android:orientation="vertical">
-
     <TextView
         android:id="@+id/topic_last_title"
         android:layout_width="match_parent"
@@ -11,15 +16,24 @@
         android:layout_weight="1"
         android:gravity="center_vertical"
         android:text="小标题111111111111111111111111" />
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#999999" />
     <TextView
         android:id="@+id/topic_last_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="4"
         android:gravity="center"
+        android:ellipsize="end"
+        android:maxEms="18"
+        android:maxLines="4"
         android:text="详细内容66666666666" />
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#999999" />
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,23 +41,22 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:layout_margin="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
             android:layout_gravity="center_vertical">
 
-
-            <TextView
+            <ImageView
+                android:id="@+id/topic_last_comm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="2"
-                android:gravity="center"
-                android:text="关注"
-                android:textSize="10sp" />
+                android:background="@drawable/comment" />
 
             <TextView
-                android:id="@+id/topic_last_start"
+                android:layout_marginLeft="5dp"
+                android:id="@+id/topic_last_comm_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -52,18 +65,16 @@
                 android:text="1111"
                 android:textSize="10sp" />
 
-            <TextView
+            <ImageView
+                android:id="@+id/topic_last_zan"
+                android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="5dp"
-                android:layout_weight="2"
-                android:gravity="center"
-                android:text="讨论"
-                android:textSize="10sp" />
+                android:background="@drawable/life_zan" />
 
             <TextView
-                android:id="@+id/topic_last_talk"
+                android:layout_marginLeft="5dp"
+                android:id="@+id/topic_last_zan_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -75,17 +86,6 @@
         </LinearLayout>
 
 
-        <TextView
-            android:id="@+id/topic_last_starting"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:gravity="center"
-            android:text="关注"
-            android:background="#0091FF"
-            android:textColor="#fff" />
-
-
     </RelativeLayout>
 </LinearLayout>
+    </android.support.v7.widget.CardView>

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,21 +24,11 @@ import java.util.List;
 
 public class SocietyAdapter extends RecyclerView.Adapter<SocietyAdapter.ViewHolder> {
 
-    private List<SocietyNewsResult> societyNewsResultList;
-    HttpClientUtils httpClientUtils;
-
-    private SocietyNewsResult societyNewsResult;
-
-    private Context mContext;
-    private Activity activity;
-    private LayoutInflater inflater;
 
 
-    public SocietyAdapter(List<SocietyNewsResult> societyNewsResults, Context mContext) {
-        this.societyNewsResultList = societyNewsResults;
 
-        this.mContext = mContext;
-        inflater = LayoutInflater.from(mContext);
+    public SocietyAdapter() {
+
     }
 
 
@@ -45,57 +36,33 @@ public class SocietyAdapter extends RecyclerView.Adapter<SocietyAdapter.ViewHold
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.society_item, parent, false);
         final ViewHolder holder = new ViewHolder(view);
-        holder.societyView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //点击事件
-
-
-                Toast.makeText(view.getContext(), "点击事件", Toast.LENGTH_SHORT).show();
-
-            }
-        });
         return holder;
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        societyNewsResult = societyNewsResultList.get(position);
 
-        // holder.newsImage.setImageResource(schoolSociety.getNewsImage());
-        Glide.with(mContext)
-                .load(societyNewsResult.getUrl())
-                .centerCrop().dontAnimate()
-                .placeholder(R.drawable.__picker_ic_photo_black_48dp)
-                .error(R.drawable.__picker_ic_broken_image_black_48dp)
-                .into(holder.newsImage);
-        holder.newsTitle.setText(societyNewsResult.getCreatedAt());
-        holder.newsDate.setText(societyNewsResult.get_id());
-        holder.newsRead.setText(societyNewsResult.getSource());
-         httpClientUtils = new HttpClientUtils(societyNewsResult.getUrl(),"gjf",societyNewsResult.get_id()+".jpg");
-        httpClientUtils.downloadFile();
     }
 
     @Override
     public int getItemCount() {
-        return societyNewsResultList.size();
+        return 0;
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-
-        View societyView;
-        ImageView newsImage;
-        TextView newsTitle;
-        TextView newsDate;
-        TextView newsRead;
+        LinearLayout news_body;
+        ImageView news_images;
+        TextView news_title;
+        TextView news_content;
+        TextView news_time;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            societyView = itemView;
-            newsImage = (ImageView) itemView.findViewById(R.id.in_society_image);
-            newsTitle = (TextView) itemView.findViewById(R.id.in_society_title);
-            newsDate = (TextView) itemView.findViewById(R.id.in_society_date);
-            newsRead = (TextView) itemView.findViewById(R.id.in_society_read);
+            news_body= (LinearLayout) itemView.findViewById(R.id.news_body);
+            news_images= (ImageView) itemView.findViewById(R.id.news_image);
+            news_title= (TextView) itemView.findViewById(R.id.news_title);
+            news_content= (TextView) itemView.findViewById(R.id.news_desc);
+            news_time= (TextView) itemView.findViewById(R.id.news_time);
 
 
         }

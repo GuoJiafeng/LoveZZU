@@ -51,6 +51,8 @@
                             android:gravity="right|center_vertical"
                             android:layout_weight="1"
                             android:text="刷新"
+                            android:textSize="15sp"
+                            android:layout_marginRight="10dp"
                             android:textColor="#fa851e"
                             android:id="@+id/goods_child_refresh"
                             android:layout_width="wrap_content"

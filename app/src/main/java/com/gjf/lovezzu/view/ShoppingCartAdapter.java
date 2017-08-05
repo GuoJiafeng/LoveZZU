@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.gjf.lovezzu.R;
 import com.gjf.lovezzu.activity.taoyu.ShopcartActivity;
+import com.gjf.lovezzu.activity.taoyu.TaoyuChildConmmentsActivity;
 import com.gjf.lovezzu.activity.taoyu.TaoyuDetialActivity;
 import com.gjf.lovezzu.entity.Goods;
 import com.gjf.lovezzu.entity.ShoppingCartDateBridging;
@@ -61,7 +63,27 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
         final ViewHolder viewHolder=new ViewHolder(view);
         final Intent intent=new Intent(ShopcartActivity.shopcartActivity, TaoyuDetialActivity.class);
 
-
+        viewHolder.goods_count.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                View view1=View.inflate(ShopcartActivity.shopcartActivity,R.layout.userinfo_update_view,null);
+                final EditText editText= (EditText) view1.findViewById(R.id.edituserinfo);
+                editText.setText("1");
+                final ShoppingCartDateBridging shoppingCartnum=shoppingCartDateBridgings.get(viewHolder.getAdapterPosition());
+                new android.app.AlertDialog.Builder(ShopcartActivity.shopcartActivity).setMessage("购买数量：")
+                        .setView(view1).setPositiveButton("提交", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (editText.getText()!=null) {
+                            shoppingCartnum.setCount(editText.getText().toString());
+                        }else {
+                            shoppingCartnum.setCount("1");
+                            Toast.makeText(ShopcartActivity.shopcartActivity,"默认+1！",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }).setNegativeButton("取消", null).show();
+            }
+        });
         viewHolder.goods_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -194,6 +216,7 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
         TextView goods_name;
         TextView goods_desc;
         TextView goods_price;
+        TextView goods_count;
         LinearLayout goods_body;
         public ViewHolder(View view) {
             super(view);
@@ -201,6 +224,7 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
             goods_body= (LinearLayout) itemView.findViewById(R.id.cart_goods_body);
             goods_type= (TextView) itemView.findViewById(R.id.shop_car_goods_type);
             goods_delete= (TextView) itemView.findViewById(R.id.shop_car_delete);
+            goods_count= (TextView) itemView.findViewById(R.id.shop_car_count);
             goods_image= (ImageView) itemView.findViewById(R.id.cart_goods_image);
             goods_name= (TextView) itemView.findViewById(R.id.cart_goods_name);
             goods_desc= (TextView) itemView.findViewById(R.id.cart_goods_desc);

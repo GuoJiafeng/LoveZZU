@@ -22,23 +22,6 @@
         android:orientation="vertical">
 
 
-        <LinearLayout
-            android:id="@+id/in_school_mid"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/in_mid_school"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="2dp"
-                android:layout_marginRight="2dp" />
-
-        </LinearLayout>
-
 
         <LinearLayout
             android:id="@+id/in_school_last"

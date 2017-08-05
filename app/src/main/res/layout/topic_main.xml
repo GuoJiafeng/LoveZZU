@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:orientation="vertical">
 
         <TextView
+            android:layout_margin="5dp"
             android:id="@+id/topic2main_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -21,8 +17,9 @@
             android:textSize="25sp" />
 
         <LinearLayout
+            android:layout_margin="5dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
@@ -42,58 +39,60 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="vertical">
-
-            <TextView
+        <TextView
+                android:layout_margin="5dp"
                 android:id="@+id/topic2main_context"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:ellipsize="end"
+                android:maxEms="18"
+                android:maxLines="4"
                 android:text="这是内容,有很多字呀骄傲的技巧我都哇文化低奇偶发动机佛平均哦评价佛牌绝望坡附近哦陪我减肥哦评价我二姐夫"
-                android:textSize="20sp" />
-
-            <ImageView
-                android:id="@+id/topic2_img"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+                android:textSize="18sp" />
 
         <LinearLayout
+            android:layout_gravity="right"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_margin="5dp"
             android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="关注" />
-
-            <TextView
-                android:id="@+id/topic2main_guanzhunum"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
-                android:text="12346" />
-
-            <TextView
+            <ImageView
+                android:id="@+id/topic_info_comm"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="13dp"
-                android:text="讨论数" />
+                android:layout_height="wrap_content"
+                android:background="@drawable/comment" />
 
             <TextView
-                android:id="@+id/topic2main_taolunnum"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
-                android:text="123456" />
+                android:id="@+id/topic_info_comm_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:text="1111"
+                android:textSize="10sp" />
+
+            <ImageView
+                android:id="@+id/topic_info_zan"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/life_zan" />
+
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:id="@+id/topic_info_zan_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:text="1111"
+                android:textSize="10sp" />
+
         </LinearLayout>
 
-    </LinearLayout>
+
 </LinearLayout>

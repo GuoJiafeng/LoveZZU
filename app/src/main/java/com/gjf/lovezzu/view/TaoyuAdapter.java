@@ -64,13 +64,7 @@ public class TaoyuAdapter extends RecyclerView.Adapter<TaoyuAdapter.ViewHolder> 
 
             }
         });
-        holder.zan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(v.getContext(), "+1", Toast.LENGTH_SHORT).show();
-                //点赞的网络操作
-            }
-        });
+
         holder.comm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,15 +85,11 @@ public class TaoyuAdapter extends RecyclerView.Adapter<TaoyuAdapter.ViewHolder> 
         });
         return holder;
     }
-
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         taoyuResult = taoyuResultList.get(position);
-
         String goodsImagesURL=taoyuResult.getGoods().getGimage();
-
         String imagesURL[]=goodsImagesURL.split("ZZU");
-
 
         Glide.with(context)
                 .load(LOGIN_URL+"filedownload?action=头像&imageURL="+taoyuResult.getUserinfo().getImageUrl())
@@ -118,7 +108,7 @@ public class TaoyuAdapter extends RecyclerView.Adapter<TaoyuAdapter.ViewHolder> 
         holder.good_price.setText(taoyuResult.getGoods().getGprice());
         holder.goods_name.setText(taoyuResult.getGoods().getGname());
         holder.user_nickname.setText(taoyuResult.getUserinfo().getNickname());
-        holder.goods_zan.setText("75"/*taoyuResult.getGoods().getGthumb()*/);
+
 
 
     }
@@ -132,15 +122,12 @@ public class TaoyuAdapter extends RecyclerView.Adapter<TaoyuAdapter.ViewHolder> 
         View taoyuView;
         ImageView user_icon;
         ImageView goods_img;
-        ImageView zan;
         ImageView comm;
         TextView user_nickname;
         TextView goods_name;
         TextView good_price;
         TextView goods_position;
-        TextView goods_zan;
         TextView goods_comment;
-
 
 
         public ViewHolder(View itemView) {
@@ -152,8 +139,6 @@ public class TaoyuAdapter extends RecyclerView.Adapter<TaoyuAdapter.ViewHolder> 
             goods_name= (TextView) itemView.findViewById(R.id.goodsName);
             good_price = (TextView) itemView.findViewById(R.id.goodsPrice);
             goods_position = (TextView) itemView.findViewById(R.id.goodsPosition);
-            goods_zan = (TextView) itemView.findViewById(R.id.goodsZan);
-            zan= (ImageView) itemView.findViewById(R.id.zan);
             goods_comment = (TextView) itemView.findViewById(R.id.goodsComment);
             comm= (ImageView) itemView.findViewById(R.id.comment_num);
 

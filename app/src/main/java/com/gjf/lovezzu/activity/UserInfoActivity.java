@@ -7,13 +7,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,14 +22,11 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.gjf.lovezzu.R;
-
 import com.gjf.lovezzu.entity.UserInfoResult;
 import com.gjf.lovezzu.network.DownloadIconMethods;
 import com.gjf.lovezzu.network.GetUserInfoMethods;
 import com.gjf.lovezzu.network.SaveUserInfoMethods;
-
 import com.gjf.lovezzu.view.CircleImageView;
-
 
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
@@ -55,6 +49,8 @@ import static com.gjf.lovezzu.constant.Url.LOGIN_URL;
 public class UserInfoActivity extends AppCompatActivity {
     @BindView(R.id.user_info_refresh)
     SwipeRefreshLayout userInfoRefresh;
+    @BindView(R.id.my_title_back)
+    ImageView myTitleBack;
     private Subscriber subscriber;
     private ArrayList<String> selectedPhotos = new ArrayList<>();
     @BindView(R.id.userinfo_icon)
@@ -94,16 +90,23 @@ public class UserInfoActivity extends AppCompatActivity {
 
     private static String userPhone;
     private static String userName;
-    private  String token;
-    private  static String userIcon,imageURL=null;
-    private static  String upIcon;
+    private String token;
+    private SharedPreferences sharedPreferences;
+    private String phone;
+    private String id = "";
 
-    private   String SessionID;
+
+    private static String userIcon, imageURL = null;
+    private static String upIcon;
+    private String SessionID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_userinfo);
         ButterKnife.bind(this);
+        sharedPreferences = getSharedPreferences("userinfo", Activity.MODE_APPEND);
+        phone = sharedPreferences.getString("phone", "");
         dispalyUserInfo();
         onRefresh();
 
@@ -127,7 +130,7 @@ public class UserInfoActivity extends AppCompatActivity {
                 EditNickname();
                 break;
             case R.id.userinfo_code_layout:
-               Toast.makeText(UserInfoActivity.this,"无效",Toast.LENGTH_SHORT).show();
+                Toast.makeText(UserInfoActivity.this, "无效", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.userinfo_sex_layout:
                 EditSex();
@@ -144,7 +147,6 @@ public class UserInfoActivity extends AppCompatActivity {
             case R.id.userinfo_major_layout:
                 EditMjaor();
                 break;
-
         }
     }
 
@@ -193,11 +195,15 @@ public class UserInfoActivity extends AppCompatActivity {
             }
         };
 
-        DownloadIconMethods.getInstance().startDownloadIcon(subscriber,userIcon,"头像");
+        DownloadIconMethods.getInstance().startDownloadIcon(subscriber, userIcon, "头像");
     }
 
     //显示用户信息
     private void dispalyUserInfo() {
+        final SharedPreferences.Editor editor = sharedPreferences.edit();
+        String phone = sharedPreferences.getString("phone", "");
+        String password = sharedPreferences.getString("password", "");
+        SessionID = sharedPreferences.getString("SessionID", "");
         subscriber = new Subscriber<UserInfoResult>() {
             @Override
             public void onCompleted() {
@@ -211,36 +217,28 @@ public class UserInfoActivity extends AppCompatActivity {
 
             @Override
             public void onNext(UserInfoResult userInfoResult) {
-                SharedPreferences sharedPreferences = getSharedPreferences("userinfo", Activity.MODE_APPEND);
-                final SharedPreferences.Editor editor = sharedPreferences.edit();
                 user_info_nickname_text.setText(userInfoResult.getNickname());
-                //this.userName=userInfoResult.getNickname();
-                //Glide.with(UserInfoActivity.this).load(userInfoResult.getImageUrl()).into(circleImageView);
-                userIcon=userInfoResult.getImageUrl().toString();
+                userIcon = userInfoResult.getImageUrl().toString();
                 user_info_phone_text.setText(userInfoResult.getPhone());
                 user_info_sex_text.setText(userInfoResult.getGender());
                 user_info_hone_text.setText(userInfoResult.getHometown());
                 user_info_school_text.setText(userInfoResult.getAcademy());
                 user_info_class_text.setText(userInfoResult.getDepartments());
                 user_info_major_text.setText(userInfoResult.getProfessional());
-
+                editor.putString("userIcon", userInfoResult.getImageUrl().toString());
+                editor.putString("userNickName", userInfoResult.getNickname());
+                editor.apply();
             }
         };
-        SharedPreferences sharedPreferences = getSharedPreferences("userinfo", Activity.MODE_APPEND);
-        final SharedPreferences.Editor editor = sharedPreferences.edit();
-        String phone = sharedPreferences.getString("phone", "");
-        String password = sharedPreferences.getString("password", "");
 
-        SessionID = sharedPreferences.getString("SessionID", "");
-        String id = "3";
-        GetUserInfoMethods.getUserInfoMethods().goToGetUserInfo(subscriber, id, phone, password);
+        String mid = "3";
+        GetUserInfoMethods.getUserInfoMethods().goToGetUserInfo(subscriber, mid, phone, password);
 
 
     }
 
-
     //上传图片
-    private void startUp(){
+    private void startUp() {
         PhotoPicker.builder()
                 .setPhotoCount(1)
                 .setShowCamera(true)
@@ -248,12 +246,13 @@ public class UserInfoActivity extends AppCompatActivity {
                 .setPreviewEnabled(false)
                 .start(this, PhotoPicker.REQUEST_CODE);
     }
+
     private void UploadIcon() {
 
-        RequestParams requestParams=new RequestParams(LOGIN_URL+"upload");
+        RequestParams requestParams = new RequestParams(LOGIN_URL + "upload");
         requestParams.setMultipart(true);
-        requestParams.addBodyParameter("SessionID",SessionID);
-        requestParams.addBodyParameter("myUpload",new File(upIcon));
+        requestParams.addBodyParameter("SessionID", SessionID);
+        requestParams.addBodyParameter("myUpload", new File(upIcon));
         x.http().post(requestParams, new Callback.CacheCallback<String>() {
             @Override
             public boolean onCache(String result) {
@@ -281,8 +280,6 @@ public class UserInfoActivity extends AppCompatActivity {
 
 
     }
-
-
 
 
     //修改昵称
@@ -397,10 +394,6 @@ public class UserInfoActivity extends AppCompatActivity {
 
     }
 
-    private void SaveInfoIcon(Uri uri) {
-
-
-    }
 
     //修改昵称的网络操作
     private void SaveInfoNcikNmae(String nickname) {
@@ -421,16 +414,12 @@ public class UserInfoActivity extends AppCompatActivity {
 
             }
         };
-        SharedPreferences sharedPreferences = getSharedPreferences("userinfo", Activity.MODE_APPEND);
-        final SharedPreferences.Editor editor = sharedPreferences.edit();
-        String phone = sharedPreferences.getString("phone", "");
-        String id = "";
-        Toast.makeText(getApplicationContext(), phone, Toast.LENGTH_LONG).show();
+
         SaveUserInfoMethods.saveUserInfoMethods().editNickname(subscriber, id, phone, nickname);
 
     }
 
-    //修改昵称的网络操作
+    //修改性别的网络操作
     private void SaveInfoSex(String sex) {
 
         subscriber = new Subscriber<UserInfoResult>() {
@@ -449,10 +438,7 @@ public class UserInfoActivity extends AppCompatActivity {
 
             }
         };
-        SharedPreferences sharedPreferences = getSharedPreferences("userinfo", Activity.MODE_APPEND);
-        final SharedPreferences.Editor editor = sharedPreferences.edit();
-        String phone = sharedPreferences.getString("phone", "");
-        String id = "";
+
         SaveUserInfoMethods.saveUserInfoMethods().editSex(subscriber, id, phone, sex);
 
 
@@ -477,10 +463,7 @@ public class UserInfoActivity extends AppCompatActivity {
 
             }
         };
-        SharedPreferences sharedPreferences = getSharedPreferences("userinfo", Activity.MODE_APPEND);
-        final SharedPreferences.Editor editor = sharedPreferences.edit();
-        String phone = sharedPreferences.getString("phone", "");
-        String id = "";
+
         SaveUserInfoMethods.saveUserInfoMethods().editHome(subscriber, id, phone, home);
 
 
@@ -505,11 +488,7 @@ public class UserInfoActivity extends AppCompatActivity {
 
             }
         };
-        SharedPreferences sharedPreferences = getSharedPreferences("userinfo", Activity.MODE_APPEND);
-        final SharedPreferences.Editor editor = sharedPreferences.edit();
-        String phone = sharedPreferences.getString("phone", "");
 
-        String id = "";
 
         SaveUserInfoMethods.saveUserInfoMethods().editSchool(subscriber, id, phone, school);
 
@@ -534,10 +513,7 @@ public class UserInfoActivity extends AppCompatActivity {
 
             }
         };
-        SharedPreferences sharedPreferences = getSharedPreferences("userinfo", Activity.MODE_APPEND);
-        final SharedPreferences.Editor editor = sharedPreferences.edit();
-        String phone = sharedPreferences.getString("phone", "");
-        String id = "";
+
         SaveUserInfoMethods.saveUserInfoMethods().editClass(subscriber, id, phone, Class);
 
     }
@@ -561,10 +537,7 @@ public class UserInfoActivity extends AppCompatActivity {
 
             }
         };
-        SharedPreferences sharedPreferences = getSharedPreferences("userinfo", Activity.MODE_APPEND);
-        final SharedPreferences.Editor editor = sharedPreferences.edit();
-        String phone = sharedPreferences.getString("phone", "");
-        String id = "";
+
         SaveUserInfoMethods.saveUserInfoMethods().editMajor(subscriber, id, phone, mjor);
 
     }
@@ -578,15 +551,18 @@ public class UserInfoActivity extends AppCompatActivity {
                         data.getStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS);
             }
         }
-        if (upIcon!=null&&!upIcon.equals("")){
-            upIcon=null;
+        if (upIcon != null && !upIcon.equals("")) {
+            upIcon = null;
         }
-        upIcon=selectedPhotos.get(0).toString();
+        upIcon = selectedPhotos.get(0).toString();
         Glide.with(UserInfoActivity.this).load(upIcon).into(circleImageView);
-
         UploadIcon();
     }
 
 
-
+    @OnClick(R.id.my_title_back)
+    public void onViewClicked() {
+        Intent intent=new Intent(UserInfoActivity.this,MainActivity.class);
+        startActivity(intent);
+    }
 }

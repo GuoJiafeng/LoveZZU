@@ -2,6 +2,7 @@ package com.gjf.lovezzu.activity.taoyu;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -72,13 +73,14 @@ public class TaoyuChildConmmentsActivity extends AppCompatActivity {
     private TaoyuGoodsChildCommentsAdapter goodsChildCommentsAdapter;
     private List<GoodsChildCommentsDateBridging> goodsChildCommentsDateBridgingList = new ArrayList<>();
     private String SessionID;
-
+    public static TaoyuChildConmmentsActivity taoyuChildConmmentsActivity;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.goods_child_comments);
         zan = (LinearLayout) findViewById(R.id.child_zan);
         ButterKnife.bind(this);
+        taoyuChildConmmentsActivity=this;
         parentComments = (GoodsCommentsDataBridging) getIntent().getSerializableExtra("parentComm");
         SharedPreferences sharedPreferences = getSharedPreferences("userinfo", Activity.MODE_APPEND);
         SessionID = sharedPreferences.getString("SessionID", "");
@@ -104,7 +106,7 @@ public class TaoyuChildConmmentsActivity extends AppCompatActivity {
     private void showChildComments() {
         goodsChildCommentsAdapter = new TaoyuGoodsChildCommentsAdapter(goodsChildCommentsDateBridgingList, this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         chileComment.setLayoutManager(layoutManager);
         chileComment.setAdapter(goodsChildCommentsAdapter);
     }
@@ -253,9 +255,12 @@ public class TaoyuChildConmmentsActivity extends AppCompatActivity {
                 addThnum();
                 break;
             case  R.id.goods_child_refresh:
+                goodsChildRefresh.setTextColor(Color.parseColor("#CDC9C9"));
                 Toast.makeText(getApplicationContext(),"正在刷新，请稍候",Toast.LENGTH_SHORT).show();
                 goodsChildCommentsDateBridgingList.clear();
                 getChildCommetns();
+                goodsChildCommentsAdapter.notifyDataSetChanged();
+                goodsChildRefresh.setTextColor(Color.parseColor("#fa851e"));
                 break;
 
         }

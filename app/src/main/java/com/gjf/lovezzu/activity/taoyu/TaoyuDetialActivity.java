@@ -1,6 +1,8 @@
 package com.gjf.lovezzu.activity.taoyu;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -29,6 +31,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import rx.Subscriber;
 
 import static com.gjf.lovezzu.constant.Url.LOGIN_URL;
@@ -58,7 +61,7 @@ public class TaoyuDetialActivity extends AppCompatActivity {
     EditText editComments;
     @BindView(R.id.send)
     TextView send;
-
+    Unbinder unbinder;
     private SwipeRefreshLayout refreshLayout;
 
     private Goods goods;
@@ -76,7 +79,7 @@ public class TaoyuDetialActivity extends AppCompatActivity {
         setContentView(R.layout.activity_goods_detail);
         taoyuDetialActivity = this;
         refreshLayout= (SwipeRefreshLayout) findViewById(R.id.goods_datail_refresh);
-        ButterKnife.bind(this);
+        unbinder=ButterKnife.bind(this);
         SharedPreferences sharedPreferences = getSharedPreferences("userinfo", Activity.MODE_APPEND);
         SessionID = sharedPreferences.getString("SessionID", "");
         goods = (Goods) getIntent().getSerializableExtra("goods");
@@ -102,6 +105,7 @@ public class TaoyuDetialActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.buybutton:
+
                 addShopCar();
                 break;
             case R.id.send:
@@ -189,6 +193,7 @@ public class TaoyuDetialActivity extends AppCompatActivity {
         x.http().post(requestParams, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
+                Log.e("级评论------------------发布", result);
                if (result!=null){
                    Toast.makeText(TaoyuDetialActivity.taoyuDetialActivity,"评论成功！",Toast.LENGTH_SHORT).show();
                    editComments.setText("");
@@ -199,6 +204,7 @@ public class TaoyuDetialActivity extends AppCompatActivity {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
+                Log.e("二级评论------------------发布", ex.getMessage());
             }
 
             @Override
@@ -252,5 +258,9 @@ public class TaoyuDetialActivity extends AppCompatActivity {
         });
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbinder.unbind();
+    }
 }
