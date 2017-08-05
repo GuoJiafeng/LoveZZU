@@ -1,6 +1,8 @@
 package com.gjf.lovezzu.activity.taoyu;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -103,6 +105,7 @@ public class TaoyuDetialActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.buybutton:
+
                 addShopCar();
                 break;
             case R.id.send:

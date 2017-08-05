@@ -1,10 +1,12 @@
 package com.gjf.lovezzu.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by zhao on 2017/8/4.
  */
 
-public class Order {
+public class Order implements Serializable{
     private String address;
     private String buyerOrseller;
     private String name;
@@ -67,5 +69,19 @@ public class Order {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public Order(   String address,String buyerOrseller,String name, String order_date,Integer order_id, String order_status, String phone){
+        this.address=address;
+        this.buyerOrseller=buyerOrseller;
+        this.name=name;
+        this.order_date=order_date;
+        this.order_id=order_id;
+        this.order_status=order_status;
+        this.phone=phone;
+    }
+
+    public Order(){
+        super();
     }
 }

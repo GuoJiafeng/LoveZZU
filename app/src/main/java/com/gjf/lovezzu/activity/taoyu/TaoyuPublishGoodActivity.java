@@ -199,7 +199,6 @@ public class TaoyuPublishGoodActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(String result) {
-                Log.e("上传商品图片+++++++++++",result);
                 try {
                     JSONObject jsonObject=new JSONObject(result);
                     Boolean res=jsonObject.getBoolean("isSuccessful");
