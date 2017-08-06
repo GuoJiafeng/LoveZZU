@@ -20,6 +20,7 @@ import com.gjf.lovezzu.activity.UserLoginActivity;
 import com.gjf.lovezzu.activity.UserSettingActivity;
 import com.gjf.lovezzu.activity.saylvoeActivity.SayLoveActivity;
 import com.gjf.lovezzu.activity.taoyu.ShopcartActivity;
+import com.gjf.lovezzu.activity.taoyu.TaoyuOrderActivity;
 import com.gjf.lovezzu.entity.CheckLoginApplication;
 import com.gjf.lovezzu.view.CircleImageView;
 
@@ -124,6 +125,8 @@ public class PersonFragment extends Fragment {
                 startActivity(intent);
                 break;
             case R.id.user_shop_list:
+                Intent intent2 = new Intent(getContext(), TaoyuOrderActivity.class);
+                startActivity(intent2);
                 break;
         }
     }

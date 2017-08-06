@@ -71,10 +71,7 @@ public class School_shoolfragment extends Fragment {
     private RecyclerView recyclerView1;
     private SwipeRefreshLayout swipeRefreshLayout;
     private Subscriber subscriber;
-    private GridLayoutManager gridLayoutManager;
     SchoolLastAdapter adapter1;
-    private LinearLayoutManager linearLayoutManager;
-    private int lastVisibleItem;
     ListView listView;
     String urlString;
     Map<String,String> links=new HashMap<String,String>();;
@@ -84,26 +81,9 @@ public class School_shoolfragment extends Fragment {
     ByteArrayOutputStream outputStream;
     Handler handler;
     String html;
-    float x1=0,y1=0,x2=0,y2=0;
-    boolean isLastItem=false;   //是不是最后一项
-    SwipeRefreshLayout swipeRefreshLayout1; //下拉刷新
-    int temp_data_count_page = 0;//临时存放当前加载页对应的pos
-    int data_count_page_all = 2;//模拟3页数据
-
-    boolean isLoading=false;    //是否正在加载中
-    boolean isComp=false;       //标记一次是否加载完成
     LinearLayout id_rl_loading;
     ProgressBar id_pull_to_refresh_load_progress;
     TextView id_pull_to_refresh_loadmore_text;
-
-    final String pull_Load_More = "拖动加载";
-    final String loading_Load_More = "加载中...";
-    final String comp_Load_More = "加载完成";
-
-    String nowNormalText = "";//存放当前footview显示的文字
-
-    int page=1;
-
 
     @Nullable
     @Override
@@ -111,7 +91,6 @@ public class School_shoolfragment extends Fragment {
 
         if (view == null) {
             view = inflater.inflate(R.layout.inchool_school_view, container, false);
-
            initSchoolList();
            showTopImage();
             listView=(ListView)view.findViewById(R.id.last_school_listview);
@@ -134,18 +113,13 @@ public class School_shoolfragment extends Fragment {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     String key=parent.getItemAtPosition(position).toString();
-                    Log.i("-----key:",key);
                     String url=links.get(key);
-                    Log.i("----url:",url);
-
                     Intent intent=new Intent();
                     intent.setClass(getActivity(),SchoolNewsWebView.class);
                     intent.putExtra("url",url);
                     startActivity(intent);
                 }
             });
-
-
 
         } else {
             ViewGroup viewGroup = (ViewGroup) view.getParent();
@@ -183,27 +157,6 @@ public class School_shoolfragment extends Fragment {
 
     }
 
-    private void doDownResfresh() {
-        recyclerView1.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem + 1 == adapter1.getItemCount()) {
-                    refreshlast();
-                }
-
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
-            }
-        });
-
-
-    }
 
     private void refreshlast() {
 
@@ -275,14 +228,6 @@ public class School_shoolfragment extends Fragment {
 
     }
 
-    private void showEndImage() {
-        //结尾部分
-        recyclerView1 = (RecyclerView) view.findViewById(R.id.last_school_content);
-        gridLayoutManager = new GridLayoutManager(view.getContext(), 3);
-        recyclerView1.setLayoutManager(gridLayoutManager);
-        adapter1 = new SchoolLastAdapter(schoolNewsResultList, getContext().getApplicationContext());
-        recyclerView1.setAdapter(adapter1);
-    }
 
     private void getSchoolNews(int page) {
 
@@ -317,51 +262,11 @@ public class School_shoolfragment extends Fragment {
     }
 
 
-    //加载逻辑
-    private void loadMore() {
-        id_rl_loading.setVisibility(View.VISIBLE);
-        id_pull_to_refresh_loadmore_text.setText(loading_Load_More);
-        id_pull_to_refresh_loadmore_text.setClickable(false);
-        id_pull_to_refresh_load_progress.setVisibility(View.VISIBLE);
-        isLoading = true;
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                loadData();
-            }
-        }, 3 * 1000);
-    }
 
-    //模拟加载数据
-    private void loadData() {
-        isLoading = false;
-        Log.i("XXX", "loadData");
-        temp_data_count_page=1;
-        if (temp_data_count_page < data_count_page_all) {//模拟加载完成了
 
-            page++;
-            urlString="http://www16.zzu.edu.cn/msgs/vmsgisapi.dll/vmsglist?mtype=m&lan=101,102,103&tts=&tops=&pn="+page;
-            init(urlString);
 
-            temp_data_count_page++;
-            id_pull_to_refresh_loadmore_text.setText(nowNormalText);
-            isComp = false;
-            id_pull_to_refresh_loadmore_text.setClickable(true);
-        } else {
-            isComp = true;
-            id_pull_to_refresh_loadmore_text.setClickable(false);
-            id_pull_to_refresh_loadmore_text.setText(comp_Load_More);
-        }
-        id_pull_to_refresh_load_progress.setVisibility(View.GONE);
-        adapter.notifyDataSetChanged();
-    }
 
-    private void doConfigLinsenerChange() {
 
-        nowNormalText = pull_Load_More;
-
-        id_pull_to_refresh_loadmore_text.setText(nowNormalText);
-    }
 
 
     //加载数据

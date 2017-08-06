@@ -1,86 +1,56 @@
 package com.gjf.lovezzu.entity;
 
-import java.util.List;
-
 /**
- * Created by BlackBeard丶 on 2017/03/17.
+ * Created by zhao on 2017/8/6.
  */
+
 public class SocietyNewsResult {
-
-    private String _id;
-
-    private String createdAt;
-
-    private List<String> images;
-
-    private String desc;
-
-    private String publishedAt;
-
-    private String source;
-
-    private String type;
-
+    private String uniquekey;
+    private String title;
+    private String date;
+    private String category;
+    private String author_name;
     private String url;
+    private String thumbnail_pic_s;
 
-    private boolean used;
-
-    private String who;
-
-    public String get_id() {
-        return _id;
+    public String getUniquekey() {
+        return uniquekey;
     }
 
-    public void set_id(String _id) {
-        this._id = _id;
+    public void setUniquekey(String uniquekey) {
+        this.uniquekey = uniquekey;
     }
 
-    public String getCreatedAt() {
-        return createdAt;
+    public String getTitle() {
+        return title;
     }
 
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public List<String> getImages() {
-        return images;
+    public String getDate() {
+        return date;
     }
 
-    public void setImages(List<String> images) {
-        this.images = images;
+    public void setDate(String date) {
+        this.date = date;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getCategory() {
+        return category;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
-    public String getPublishedAt() {
-        return publishedAt;
+    public String getAuthor_name() {
+        return author_name;
     }
 
-    public void setPublishedAt(String publishedAt) {
-        this.publishedAt = publishedAt;
-    }
-
-    public String getSource() {
-        return source;
-    }
-
-    public void setSource(String source) {
-        this.source = source;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
+    public void setAuthor_name(String author_name) {
+        this.author_name = author_name;
     }
 
     public String getUrl() {
@@ -91,46 +61,11 @@ public class SocietyNewsResult {
         this.url = url;
     }
 
-    public boolean isUsed() {
-        return used;
+    public String getThumbnail_pic_s() {
+        return thumbnail_pic_s;
     }
 
-    public void setUsed(boolean used) {
-        this.used = used;
-    }
-
-    public String getWho() {
-        return who;
-    }
-
-    public void setWho(String who) {
-        this.who = who;
-    }
-
-    private SchoolNewsResult schoolNewsResult;
-
-    public SchoolNewsResult getSchoolNewsResult() {
-        return schoolNewsResult;
-    }
-
-    public void setSchoolNewsResult(SchoolNewsResult schoolNewsResult) {
-        this.schoolNewsResult = schoolNewsResult;
-    }
-
-    @Override
-    public String toString() {
-        return "SocietyNewsResult{" +
-                "_id='" + _id + '\'' +
-                ", createdAt='" + createdAt + '\'' +
-                ", images=" + images +
-                ", desc='" + desc + '\'' +
-                ", publishedAt='" + publishedAt + '\'' +
-                ", source='" + source + '\'' +
-                ", type='" + type + '\'' +
-                ", url='" + url + '\'' +
-                ", used=" + used +
-                ", who='" + who + '\'' +
-                '}';
+    public void setThumbnail_pic_s(String thumbnail_pic_s) {
+        this.thumbnail_pic_s = thumbnail_pic_s;
     }
 }
-

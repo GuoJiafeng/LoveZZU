@@ -90,6 +90,13 @@ public class ShopcartActivity extends AppCompatActivity {
             public void onRefresh() {
                 shoppingCartDateBridgingList.clear();
                 getShopCart();
+                for (int i = 0; i < map.size(); i++) {
+                    map.put(i, false);
+                }
+                shoppingCartAdapter.notifyDataSetChanged();
+                cartAll.setChecked(false);
+                orderItemsList.clear();
+                StrOrderItemsData.clear();
             }
         });
     }
@@ -161,6 +168,7 @@ public class ShopcartActivity extends AppCompatActivity {
                         shoppingCartAdapter.notifyDataSetChanged();
                         cartAll.setChecked(false);
                         orderItemsList.clear();
+                        StrOrderItemsData.clear();
                     }
                 }).show();
                 break;
@@ -177,6 +185,8 @@ public class ShopcartActivity extends AppCompatActivity {
         if (orderItemsList.size()!=0){
             orderItemsList.clear();
         }
+        StrOrderItemsData.clear();
+        orderItemsList.clear();
     }
 
 
@@ -258,6 +268,7 @@ public class ShopcartActivity extends AppCompatActivity {
                 for (int i = 0; i < map.size(); i++) {
                     map.put(i, false);
                 }
+                StrOrderItemsData.clear();
                 shoppingCartAdapter.notifyDataSetChanged();
                 cartAll.setChecked(false);
                 orderItemsList.clear();
@@ -271,5 +282,16 @@ public class ShopcartActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        for (int i = 0; i < map.size(); i++) {
+            map.put(i, false);
+        }
+        StrOrderItemsData.clear();
+        shoppingCartAdapter.notifyDataSetChanged();
+        cartAll.setChecked(false);
+        orderItemsList.clear();
+    }
 }
 

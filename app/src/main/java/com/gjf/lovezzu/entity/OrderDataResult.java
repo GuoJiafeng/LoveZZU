@@ -5,14 +5,14 @@ package com.gjf.lovezzu.entity;
  */
 
 public class OrderDataResult {
-    private Goods goods;
+    private TaoyuGoodsResult goods;
     private UserInfoResult userinfo;
 
-    public Goods getGoods() {
+    public TaoyuGoodsResult getGoods() {
         return goods;
     }
 
-    public void setGoods(Goods goods) {
+    public void setGoods(TaoyuGoodsResult goods) {
         this.goods = goods;
     }
 

@@ -44,11 +44,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FriendFragment friendFragment;
     private MessageFragment messageFragment;
     private PersonFragment personFragment;
-
+    public static MainActivity mainActivity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mainActivity=this;
         checkLoin();
 
 

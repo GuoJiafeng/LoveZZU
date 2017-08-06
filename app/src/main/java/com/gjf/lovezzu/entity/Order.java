@@ -14,6 +14,15 @@ public class Order implements Serializable{
     private Integer order_id;
     private String order_status;
     private String phone;
+    private String total;
+
+    public String getTotal() {
+        return total;
+    }
+
+    public void setTotal(String total) {
+        this.total = total;
+    }
 
     public String getAddress() {
         return address;

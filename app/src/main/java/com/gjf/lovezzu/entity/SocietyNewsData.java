@@ -1,29 +1,35 @@
 package com.gjf.lovezzu.entity;
 
-import java.util.List;
-
 /**
- * Created by BlackBeard丶 on 2017/03/19.
+ * Created by zhao on 2017/8/6.
  */
+
 public class SocietyNewsData {
-    private boolean error;
-    private List<SocietyNewsResult> results;
+    private String reason;
+    private SocietyNewsResultBridging result;
+    private Integer error_code;
 
-    public List<SocietyNewsResult> getResults() {
-        return results;
+    public String getReason() {
+        return reason;
     }
 
-    public void setResults(List<SocietyNewsResult> results) {
-        this.results = results;
+    public void setReason(String reason) {
+        this.reason = reason;
     }
 
-    public boolean isError() {
-        return error;
+    public SocietyNewsResultBridging getResult() {
+        return result;
     }
 
-    public void setError(boolean error) {
-        this.error = error;
+    public void setResult(SocietyNewsResultBridging result) {
+        this.result = result;
     }
 
+    public Integer getError_code() {
+        return error_code;
+    }
 
+    public void setError_code(Integer error_code) {
+        this.error_code = error_code;
+    }
 }

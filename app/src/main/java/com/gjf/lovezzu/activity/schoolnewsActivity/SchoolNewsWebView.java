@@ -10,24 +10,29 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.gjf.lovezzu.R;
+
+import static java.security.AccessController.getContext;
 
 /**
  * Created by BlackBeard丶 on 2017/6/19.
  */
 
 public class SchoolNewsWebView  extends AppCompatActivity {
-
+    FrameLayout frameLayout;
     WebView mWebView;
     ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_school_news2);
-        mWebView = (WebView) findViewById(R.id.news_show);
+        frameLayout= (FrameLayout) findViewById(R.id.webView_frame);
+         mWebView=  new WebView(getApplicationContext());
+        frameLayout.addView(mWebView);
         progressBar= (ProgressBar) findViewById(R.id.news_progress);
         progressBar.setVisibility(View.VISIBLE);
         Intent intent=getIntent();
@@ -36,6 +41,8 @@ public class SchoolNewsWebView  extends AppCompatActivity {
         webSettings.setJavaScriptEnabled(true);//如果访问的页面中要与Javascript交互，则webview必须设置支持Javascript
         webSettings.setUseWideViewPort(true);//将图片调整到适合webview的大小
         webSettings.setLoadWithOverviewMode(true);// 缩放至屏幕的大小
+        webSettings.setBlockNetworkImage(true);
+        webSettings.setRenderPriority(WebSettings.RenderPriority.HIGH);
         webSettings.setLoadsImagesAutomatically(true); //支持自动加载图片
         webSettings.setSupportZoom(true);//支持缩放，默认为true。是下面那个的前提
         webSettings.setBuiltInZoomControls(true); //设置内置的缩放控件。若为false，则该WebView不可缩放
