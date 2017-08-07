@@ -111,7 +111,9 @@
         <activity android:name=".activity.taoyu.TaoyuPublishGoodActivity"
             android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".activity.taoyu.TaoyuDetialActivity" />
-
+        <activity android:name=".activity.taoyu.OrderSellInfoActivity"/>
+        <activity android:name=".activity.taoyu.OrderBuyInfoAcivity"/>
+        <activity android:name=".activity.taoyu.MyPublishGoodsActivity"/>
         <!-- 一起玩 -->
         <activity
             android:name=".activity.palytogether.PlayTogetherActivity"
@@ -187,6 +189,7 @@
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />

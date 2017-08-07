@@ -1,5 +1,6 @@
 package com.gjf.lovezzu.view;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.gjf.lovezzu.R;
+import com.gjf.lovezzu.activity.taoyu.OrderBuyInfoAcivity;
 import com.gjf.lovezzu.activity.taoyu.TaoyuOrderActivity;
 import com.gjf.lovezzu.entity.OrderDataBridging;
 import com.gjf.lovezzu.entity.OrderGoodsImagesItem;
@@ -26,9 +28,9 @@ public class OrderGoodsImagesAdapter extends RecyclerView.Adapter<OrderGoodsImag
 
     private List<OrderGoodsImagesItem> orderGoodsImagesItemList;
     private OrderDataBridging orderDataBridging;
-    public OrderGoodsImagesAdapter(List<OrderGoodsImagesItem> orderGoodsImagesItems, OrderDataBridging orderdataBridging){
+    public OrderGoodsImagesAdapter(List<OrderGoodsImagesItem> orderGoodsImagesItems, OrderDataBridging orderdataBridging1){
         orderGoodsImagesItemList=orderGoodsImagesItems;
-        orderDataBridging=orderdataBridging;
+        orderDataBridging=orderdataBridging1;
     }
 
     @Override
@@ -39,6 +41,10 @@ public class OrderGoodsImagesAdapter extends RecyclerView.Adapter<OrderGoodsImag
             @Override
             public void onClick(View v) {
                 Toast.makeText(TaoyuOrderActivity.taoyuOrderActivity,orderDataBridging.getOrderdata().getAddress(),Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(TaoyuOrderActivity.taoyuOrderActivity, OrderBuyInfoAcivity.class);
+                intent.putExtra("orderDataBridging",orderDataBridging);
+                TaoyuOrderActivity.taoyuOrderActivity.startActivity(intent);
+
             }
         });
         return viewHolder;

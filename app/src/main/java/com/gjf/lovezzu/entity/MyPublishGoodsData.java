@@ -1,14 +1,15 @@
 package com.gjf.lovezzu.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by zhao on 2017/8/6.
+ * Created by zhao on 2017/8/7.
  */
 
-public class OrderSellData {
+public class MyPublishGoodsData implements Serializable{
     private String result;
-    private List<OrderSellDataBridging> values;
+    private List<TaoyuGoodsResult> values;
 
     public String getResult() {
         return result;
@@ -18,11 +19,11 @@ public class OrderSellData {
         this.result = result;
     }
 
-    public List<OrderSellDataBridging> getValues() {
+    public List<TaoyuGoodsResult> getValues() {
         return values;
     }
 
-    public void setValues(List<OrderSellDataBridging> values) {
+    public void setValues(List<TaoyuGoodsResult> values) {
         this.values = values;
     }
 }

@@ -1,10 +1,12 @@
 package com.gjf.lovezzu.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by zhao on 2017/8/6.
  */
 
-public class OrderSellDataBridging {
+public class OrderSellDataBridging implements Serializable{
     private Order order;
     private TaoyuGoodsResult goods;
     private int count;

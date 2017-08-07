@@ -16,12 +16,12 @@ import android.widget.Toast;
 
 import com.gjf.lovezzu.R;
 import com.gjf.lovezzu.activity.taoyu.TaoyuOrderActivity;
-import com.gjf.lovezzu.entity.OrderData;
-import com.gjf.lovezzu.entity.OrderDataBridging;
 import com.gjf.lovezzu.entity.OrderSellData;
 import com.gjf.lovezzu.entity.OrderSellDataBridging;
-import com.gjf.lovezzu.network.OrderDataMethods;
-import com.gjf.lovezzu.view.OrderActivityAdapter;
+
+import com.gjf.lovezzu.network.OrderSellMethods;
+
+import com.gjf.lovezzu.view.OrderSellAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +39,9 @@ public class OrderSellFragment extends Fragment{
     private LinearLayoutManager linearLayoutManager;
     private Subscriber subscriber;
     private String SessionID;
+
     private List<OrderSellDataBridging> sellDataBridgings=new ArrayList<>();
+    private OrderSellAdapter orderSellAdapter;
 
 
     @Nullable
@@ -56,10 +58,13 @@ public class OrderSellFragment extends Fragment{
             refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
                 public void onRefresh() {
-
-
+                    sellDataBridgings.clear();
+                    getSellOrder();
                 }
             });
+            orderSellAdapter=new OrderSellAdapter(sellDataBridgings);
+            recyclerView.setLayoutManager(linearLayoutManager);
+            recyclerView.setAdapter(orderSellAdapter);
 
         }else {
             ViewGroup viewGroup = (ViewGroup) view.getParent();
@@ -73,30 +78,35 @@ public class OrderSellFragment extends Fragment{
     }
 
 
-
-
     private void getSellOrder(){
         subscriber=new Subscriber<OrderSellData>() {
             @Override
             public void onCompleted() {
-
+                if (refreshLayout.isRefreshing()){
+                    refreshLayout.setRefreshing(false);
+                }
             }
 
             @Override
             public void onError(Throwable e) {
-
+                Log.e("订单-------error",e.getMessage());
             }
 
             @Override
             public void onNext(OrderSellData orderSellData) {
-                if (orderSellData.getOrderGoods().size()!=0){
-                    sellDataBridgings.addAll(orderSellData.getOrderGoods());
-
+                Log.e("订单-------卖家",orderSellData.getResult());
+                Log.e("订单-------卖家",orderSellData.getValues().size()+" ");
+                List<OrderSellDataBridging> list=orderSellData.getValues();
+                if (list!=null){
+                    sellDataBridgings.addAll(list);
+                    orderSellAdapter.notifyDataSetChanged();
+                }else {
+                    Toast.makeText(TaoyuOrderActivity.taoyuOrderActivity,"没有订单！",Toast.LENGTH_SHORT).show();
                 }
             }
-
-
         };
+
+        OrderSellMethods.getInstance().getOrderSell(subscriber,"查询卖家订单",SessionID);
 
     }
 }

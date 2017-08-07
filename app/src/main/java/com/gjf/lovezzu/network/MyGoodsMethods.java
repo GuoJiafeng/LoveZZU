@@ -1,8 +1,8 @@
 package com.gjf.lovezzu.network;
 
 import com.gjf.lovezzu.constant.Url;
-import com.gjf.lovezzu.entity.SocietyNewsData;
-import com.gjf.lovezzu.network.api.SchoolSocietyServer;
+import com.gjf.lovezzu.entity.MyPublishGoodsData;
+import com.gjf.lovezzu.network.api.MyGoodsServer;
 
 import java.util.concurrent.TimeUnit;
 
@@ -15,35 +15,36 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by zhao on 2017/8/6.
+ * Created by zhao on 2017/8/7.
  */
 
-public class SchoolSocietyMehods {
-
+public class MyGoodsMethods {
     private Retrofit retrofit;
     private static final int DEFAULT_TIMEOUT=5;
-    private SchoolSocietyServer schoolSocietyServer;
-    private SchoolSocietyMehods(){
+    private MyGoodsServer myGoodsServer;
+    private MyGoodsMethods(){
         OkHttpClient.Builder httpClient=new OkHttpClient.Builder();
         httpClient.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         retrofit=new Retrofit.Builder()
+                .baseUrl(Url.LOGIN_URL)
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(Url.SOCIETY_API)
                 .build();
-        schoolSocietyServer=retrofit.create(SchoolSocietyServer.class);
+        myGoodsServer=retrofit.create(MyGoodsServer.class);
     }
 
     private static class SinglerHolder{
-        private static final SchoolSocietyMehods INSTANCE=new SchoolSocietyMehods();
+        private static final MyGoodsMethods INSTANCE=new MyGoodsMethods();
+
     }
 
-    public static SchoolSocietyMehods getInstance(){
-        return  SinglerHolder.INSTANCE;
+    public static MyGoodsMethods getInstance(){
+        return SinglerHolder.INSTANCE;
     }
 
-    public void getSocietyNews(Subscriber<SocietyNewsData> subscriber,String key,String type){
-        schoolSocietyServer.getSocietyNews(key,type)
+
+    public void getMyGoods(Subscriber<MyPublishGoodsData> subscriber,String sessionID,String action){
+        myGoodsServer.getMyGoods(sessionID,action)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);

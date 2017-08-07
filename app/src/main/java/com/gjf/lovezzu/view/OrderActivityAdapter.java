@@ -51,6 +51,7 @@ public class OrderActivityAdapter extends RecyclerView.Adapter<OrderActivityAdap
                 deleteOder(orderDataBridgingl.getOrderdata().getOrder_id()+"");
             }
         });
+
         linearLayoutManager=new LinearLayoutManager(view.getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         viewHolder.order_goods_imaes.setLayoutManager(linearLayoutManager);

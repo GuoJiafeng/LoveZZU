@@ -1,5 +1,6 @@
 package com.gjf.lovezzu.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -7,7 +8,7 @@ import java.util.ArrayList;
  * zhao 8.2
  */
 
-public class TaoyuGoodsResult {
+public class TaoyuGoodsResult implements Serializable{
 
     private Integer goods_id ;//商品id
     private String gtype;// 商品分类

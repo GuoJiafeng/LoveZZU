@@ -19,6 +19,7 @@ import com.gjf.lovezzu.activity.UserInfoActivity;
 import com.gjf.lovezzu.activity.UserLoginActivity;
 import com.gjf.lovezzu.activity.UserSettingActivity;
 import com.gjf.lovezzu.activity.saylvoeActivity.SayLoveActivity;
+import com.gjf.lovezzu.activity.taoyu.MyPublishGoodsActivity;
 import com.gjf.lovezzu.activity.taoyu.ShopcartActivity;
 import com.gjf.lovezzu.activity.taoyu.TaoyuOrderActivity;
 import com.gjf.lovezzu.entity.CheckLoginApplication;
@@ -54,7 +55,8 @@ public class PersonFragment extends Fragment {
     TextView userNickName;
     @BindView(R.id.user_state)
     TextView userState;
-
+    @BindView(R.id.user_publish_goods_list)
+    LinearLayout publish_goods_list;
     private View view;
 
     @Override
@@ -102,7 +104,7 @@ public class PersonFragment extends Fragment {
         startActivity(intent);
     }
 
-    @OnClick({R.id.user_image, R.id.person_usersetting, R.id.person_saylove, R.id.user_shop_car, R.id.user_shop_list})
+    @OnClick({R.id.user_image, R.id.person_usersetting, R.id.person_saylove, R.id.user_shop_car, R.id.user_shop_list,R.id.user_publish_goods_list})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.user_image:
@@ -127,6 +129,10 @@ public class PersonFragment extends Fragment {
             case R.id.user_shop_list:
                 Intent intent2 = new Intent(getContext(), TaoyuOrderActivity.class);
                 startActivity(intent2);
+                break;
+            case R.id.user_publish_goods_list:
+                Intent intent1=new Intent(getContext(), MyPublishGoodsActivity.class);
+                startActivity(intent1);
                 break;
         }
     }

@@ -1,12 +1,13 @@
 package com.gjf.lovezzu.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by zhao on 2017/8/5.
  */
 
-public class OrderDataBridging {
+public class OrderDataBridging implements Serializable{
     private Order orderdata;
     private List<OrderDataResult> ugoods;
 
