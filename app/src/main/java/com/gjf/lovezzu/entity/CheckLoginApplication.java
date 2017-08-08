@@ -27,7 +27,6 @@ public class CheckLoginApplication extends Application {
     @Override
     public void onCreate() {
         isLogin = false;
-
         super.onCreate();
         RongIM.init(this);
         x.Ext.init(this);

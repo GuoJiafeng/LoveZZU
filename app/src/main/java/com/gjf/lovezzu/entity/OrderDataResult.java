@@ -9,7 +9,8 @@ import java.io.Serializable;
 public class OrderDataResult implements Serializable{
     private TaoyuGoodsResult goods;
     private UserInfoResult userinfo;
-
+    private int count;
+    private int total;
     public TaoyuGoodsResult getGoods() {
         return goods;
     }
@@ -24,5 +25,21 @@ public class OrderDataResult implements Serializable{
 
     public void setUserinfo(UserInfoResult userinfo) {
         this.userinfo = userinfo;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
     }
 }

@@ -94,8 +94,6 @@ public class OrderSellFragment extends Fragment{
 
             @Override
             public void onNext(OrderSellData orderSellData) {
-                Log.e("订单-------卖家",orderSellData.getResult());
-                Log.e("订单-------卖家",orderSellData.getValues().size()+" ");
                 List<OrderSellDataBridging> list=orderSellData.getValues();
                 if (list!=null){
                     sellDataBridgings.addAll(list);

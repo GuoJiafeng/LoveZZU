@@ -1,6 +1,8 @@
 package com.gjf.lovezzu.view;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.gjf.lovezzu.R;
 import com.gjf.lovezzu.activity.taoyu.MyPublishGoodsActivity;
 import com.gjf.lovezzu.activity.taoyu.TaoyuDetialActivity;
+import com.gjf.lovezzu.activity.taoyu.TaoyuOrderActivity;
 import com.gjf.lovezzu.entity.Goods;
 import com.gjf.lovezzu.entity.TaoyuGoodsResult;
 
@@ -65,9 +68,19 @@ public class MyPublishOGoodsAdapter extends RecyclerView.Adapter<MyPublishOGoods
         holder.goods_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TaoyuGoodsResult result=taoyuGoodsResultList.get(holder.getAdapterPosition());
-                String id=result.getGoods_id()+"";
-                deleteGoods(id);
+                final AlertDialog.Builder builder=new AlertDialog.Builder(MyPublishGoodsActivity.myPublishGoodsActivity);
+                builder.setTitle("删除发布商品");
+                builder.setMessage("将从用户购物车和购买的订单中移除该商品！");
+                builder.setCancelable(true);
+                builder.setPositiveButton("狠心删除", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        TaoyuGoodsResult result=taoyuGoodsResultList.get(holder.getAdapterPosition());
+                        String id=result.getGoods_id()+"";
+                        deleteGoods(id);
+                    }
+                });
+                builder.show();
             }
         });
         return holder;

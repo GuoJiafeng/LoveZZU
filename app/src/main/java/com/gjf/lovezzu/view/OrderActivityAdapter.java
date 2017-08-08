@@ -1,5 +1,7 @@
 package com.gjf.lovezzu.view;
 
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gjf.lovezzu.R;
+import com.gjf.lovezzu.activity.taoyu.ShopcartActivity;
 import com.gjf.lovezzu.activity.taoyu.TaoyuOrderActivity;
 import com.gjf.lovezzu.constant.Url;
 import com.gjf.lovezzu.entity.OrderDataBridging;
@@ -46,9 +49,18 @@ public class OrderActivityAdapter extends RecyclerView.Adapter<OrderActivityAdap
         viewHolder.order_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(TaoyuOrderActivity.taoyuOrderActivity,"删除订单",Toast.LENGTH_SHORT).show();
-                OrderDataBridging orderDataBridgingl=orderDataBridgingList.get(viewHolder.getAdapterPosition());
-                deleteOder(orderDataBridgingl.getOrderdata().getOrder_id()+"");
+                final AlertDialog.Builder builder=new AlertDialog.Builder(TaoyuOrderActivity.taoyuOrderActivity);
+                builder.setTitle("删除订单");
+                builder.setMessage("确定要删除该订单吗？该订单包含的所用商品都将清除！");
+                builder.setCancelable(true);
+                builder.setPositiveButton("狠心删除", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        OrderDataBridging orderDataBridgingl=orderDataBridgingList.get(viewHolder.getAdapterPosition());
+                        deleteOder(orderDataBridgingl.getOrderdata().getOrder_id()+"");
+                    }
+                });
+                builder.show();
             }
         });
 
