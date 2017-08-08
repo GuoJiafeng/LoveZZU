@@ -48,7 +48,10 @@ public class Shool_societyfragment extends Fragment {
             getSocietyNews();
             showNews();
         }else{
-            view=container.getRootView();
+            ViewGroup viewGroup = (ViewGroup) view.getParent();
+            if (viewGroup != null) {
+                viewGroup.removeView(view);
+            }
         }
 
         return view;

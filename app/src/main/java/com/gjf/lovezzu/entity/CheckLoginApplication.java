@@ -6,7 +6,6 @@ import android.app.Application;
 
 import org.xutils.x;
 
-import io.rong.imkit.RongIM;
 
 
 /**
@@ -28,7 +27,7 @@ public class CheckLoginApplication extends Application {
     public void onCreate() {
         isLogin = false;
         super.onCreate();
-        RongIM.init(this);
+
         x.Ext.init(this);
     }
 

@@ -53,5 +53,5 @@ dependencies {
     compile 'cn.bingoogolapple:bga-refreshlayout:1.1.7@aar'
     compile 'org.xutils:xutils:3.5.0'
     compile 'org.jsoup:jsoup:1.10.2'
-    compile project(':IMKit')
+   
 }

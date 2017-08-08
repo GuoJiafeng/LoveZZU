@@ -67,7 +67,6 @@ public class School_shoolfragment extends Fragment {
     private ArrayList<String> imageUrls = new ArrayList<String>();
     private List<SchoolNewsResult> schoolNewsResultList = new ArrayList<>();
     private int Page;
-    public static final String TAG = "Fragment";
     private RecyclerView recyclerView1;
     private SwipeRefreshLayout swipeRefreshLayout;
     private Subscriber subscriber;
@@ -107,7 +106,6 @@ public class School_shoolfragment extends Fragment {
             id_pull_to_refresh_loadmore_text.setClickable(false);
 
             listView.addFooterView(listview_footer_view);
-
 
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -189,7 +187,6 @@ public class School_shoolfragment extends Fragment {
     }
 
     private void showTopImage() {
-
         flashView = (FlashView) view.findViewById(R.id.flash_view);
         flashView.setImageUris(imageUrls);
         flashView.setEffect(EffectConstants.DEFAULT_EFFECT);//更改图片切换的动画效果
@@ -228,7 +225,6 @@ public class School_shoolfragment extends Fragment {
 
     }
 
-
     private void getSchoolNews(int page) {
 
         subscriber = new Subscriber<SchoolNewsData>() {
@@ -254,22 +250,12 @@ public class School_shoolfragment extends Fragment {
         SchoolNewsMethods.getInstance().getSchoolNews(subscriber, page);
     }
 
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
 
     }
 
-
-
-
-
-
-
-
-
-    //加载数据
     public void init(String urlString){
         try {
             send(urlString);
@@ -283,12 +269,11 @@ public class School_shoolfragment extends Fragment {
                 byte b[]=date.getByteArray("html");
                 try {
                     html=new String(b,"utf-8");
-                    // Log.i("--------",html);
+
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
                 links=getLinks(html,links);
-                //Log.i("------links.size:",links.size()+"");
                 String []array=new String[links.size()];
                 int i=0;
                 for(String key:links.keySet()){
@@ -313,9 +298,9 @@ public class School_shoolfragment extends Fragment {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                // 1K的数据缓冲
+
                 byte[] bs = new byte[1024];
-                // 读取到的数据长度
+
                 int len;
                 outputStream=new ByteArrayOutputStream();
                 try {

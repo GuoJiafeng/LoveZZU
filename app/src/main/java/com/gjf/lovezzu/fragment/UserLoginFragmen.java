@@ -18,11 +18,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.gjf.lovezzu.R;
 import com.gjf.lovezzu.activity.MainActivity;
 import com.gjf.lovezzu.activity.UserInfoActivity;
-import com.gjf.lovezzu.activity.UserLoginActivity;
-import com.gjf.lovezzu.constant.Url;
 import com.gjf.lovezzu.entity.CheckLoginApplication;
 import com.gjf.lovezzu.entity.LoginResult;
 import com.gjf.lovezzu.network.LoginMethods;
@@ -30,12 +29,10 @@ import com.gjf.lovezzu.network.LoginMethods;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.rong.imkit.RongIM;
-import io.rong.imlib.RongIMClient;
-import io.rong.imlib.model.UserInfo;
+
 import rx.Subscriber;
 
-import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
+
 
 
 /**
@@ -127,7 +124,7 @@ public class UserLoginFragmen extends Fragment {
                 String SessionID = loginResult.getSessionID();
                 if (SessionID != null) {
                     String phone = user_reg_phone.getText().toString();
-                    connect(getToken());
+
                     saveUserInfo(SessionID, phone);
                 } else {
                     Toast.makeText(getContext(), "账号或者密码错误！", Toast.LENGTH_LONG).show();
@@ -175,59 +172,6 @@ public class UserLoginFragmen extends Fragment {
     }
 
 
-    private void connect(String token) {
-        RongIM.connect(token, new RongIMClient.ConnectCallback() {
 
-            /**
-             * Token 错误。可以从下面两点检查 1.  Token 是否过期，如果过期您需要向 App Server 重新请求一个新的 Token
-             *                  2.  token 对应的 appKey 和工程里设置的 appKey 是否一致
-             */
-            @Override
-            public void onTokenIncorrect() {
-
-            }
-
-            /**
-             * 连接融云成功
-             * @param userid 当前 token 对应的用户 id
-             */
-            @Override
-            public void onSuccess(String userid) {
-                Log.e("融云连接", "--onSuccess:" + userid);
-                if (RongIM.getInstance()!=null){
-                    RongIM.getInstance().setCurrentUserInfo(
-                            new UserInfo(
-                                    userid.equals("13283701885")?"13283701885":"18838185470",
-                                    userid.equals("13283701885")?"移动二班":"传媒三班",
-                                    userid.equals("13283701885")?
-                                            Uri.parse("https://www.zhuangbi.info/uploads/i/2017-07-13-1dd0d8268463835bdc2b1fbcfb350439.jpeg"):
-                                            Uri.parse("https://www.zhuangbi.info/uploads/i/2017-07-01-d52ad518ea2bb361183211204ee0d73f.jpg")
-                            ));
-                    RongIM.getInstance().setMessageAttachedUserInfo(true);
-                }
-            }
-
-            /**
-             * 连接融云失败
-             * @param errorCode 错误码，可到官网 查看错误码对应的注释
-             */
-            @Override
-            public void onError(RongIMClient.ErrorCode errorCode) {
-                Log.e("融云",errorCode.getMessage()+errorCode.toString());
-            }
-        });
-    }
-
-
-
-    private String  getToken(){
-        //从服务器获取token
-        if (user_reg_phone.getText().toString().equals("13283701885")){
-            token="dziAn/ZKSIo+8/WPYF41dU/1v4r/WO73IghY4ul0T0qqnLKdVqgbMK9xULPy8pg2lWEmrk863tzeutRR0mEwi5vJCbmUH/n6";
-        }else if(user_reg_phone.getText().toString().equals("18838185470")){
-            token="QyaSIMOnCzf0rluYWc+neE/1v4r/WO73IghY4ul0T0qqnLKdVqgbMLQJX6tUzdD3iEhvXlzvhu7eutRR0mEwi5vJCbmUH/n6";
-        }
-        return token;
-    }
 
 }
