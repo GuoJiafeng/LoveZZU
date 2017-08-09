@@ -6,13 +6,14 @@
     android:orientation="vertical">
 
 
-    <com.gc.flashview.FlashView
-        android:id="@+id/flash_view"
+    <com.bigkoo.convenientbanner.ConvenientBanner
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/school_flush"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="200dp"
         android:layout_margin="5dp"
-        app:effect="cube" />
-
+        app:canLoop="true"
+    />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,7 +24,6 @@
 
 
         <LinearLayout
-            android:id="@+id/in_school_last"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"

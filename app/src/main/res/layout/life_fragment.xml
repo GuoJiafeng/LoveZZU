@@ -23,20 +23,28 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="3">
+        android:layout_weight="0.17">
 
-        <com.gc.flashview.FlashView
+        <!--<com.gc.flashview.FlashView
             android:id="@+id/life_flush"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:layout_weight="1" />
+            android:layout_weight="1" />-->
+        <com.bigkoo.convenientbanner.ConvenientBanner
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/life_flush"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_weight="1"
+            app:canLoop="true"
+        />
     </LinearLayout>
 
     <LinearLayout
+        android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:layout_weight="6"
         android:background="#fff"
         android:orientation="horizontal">
 
@@ -173,7 +181,6 @@
             android:background="#DCDCDC" />
 
         <LinearLayout
-            android:id="@+id/life_huati"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"

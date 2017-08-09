@@ -60,7 +60,6 @@
             android:layout_height="1dp"
             android:background="#999999" />
         <LinearLayout
-            android:id="@+id/order_goods_body"
             android:layout_weight="9"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

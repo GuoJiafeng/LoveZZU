@@ -6,7 +6,6 @@
     android:layout_margin="5dp"
     app:cardCornerRadius="5dp">
     <LinearLayout
-        android:id="@+id/order_goods_images_item"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">

@@ -1,12 +1,15 @@
 package com.gjf.lovezzu.activity;
 
+import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -163,8 +166,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void checkLoin() {
 
-        CheckLoginApplication checkLoginApplication = (CheckLoginApplication) getApplication();
-        if (checkLoginApplication.isLogin() == false) {
+       app = (CheckLoginApplication) getApplication();
+        if (app.isLogin() == false) {
             Intent startintent = new Intent(MainActivity.this, CheckLogin.class);
             startService(startintent);
         }

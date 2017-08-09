@@ -9,6 +9,7 @@ android {
         applicationId "com.gjf.lovezzu"
         minSdkVersion 15
         targetSdkVersion 23
+        multiDexEnabled true
         versionCode 1
         versionName "1.0"
     }
@@ -30,7 +31,6 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:25.0.0'
     compile 'com.android.support:recyclerview-v7:25.0.0'
     compile 'io.reactivex:rxjava:1.1.0'
     compile 'io.reactivex:rxandroid:1.0.1'
@@ -43,7 +43,6 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.4.0'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
     compile 'me.iwf.photopicker:PhotoPicker:0.9.5@aar'
-    compile project(':flashview')
     compile 'me.iwf.photopicker:PhotoPicker:0.9.5@aar'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.yancy.imageselector:imageselector:1.2.0'
@@ -53,5 +52,6 @@ dependencies {
     compile 'cn.bingoogolapple:bga-refreshlayout:1.1.7@aar'
     compile 'org.xutils:xutils:3.5.0'
     compile 'org.jsoup:jsoup:1.10.2'
-   
+    compile 'com.thefinestartist:finestwebview:1.2.7'
+    compile 'com.bigkoo:convenientbanner:2.0.5'
 }

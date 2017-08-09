@@ -27,7 +27,6 @@ public class CheckLoginApplication extends Application {
     public void onCreate() {
         isLogin = false;
         super.onCreate();
-
         x.Ext.init(this);
     }
 

@@ -80,7 +80,6 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:id="@+id/g_play_tags"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
@@ -118,7 +117,6 @@
                     android:text="小漠国服第一系列的第一螳螂丶第一大眼,国服最高排名第八,曾任CC战队教练击败OMG战队,现为国服第一金牌讲师长驻斗鱼.." />
 
                 <LinearLayout
-                    android:id="@+id/g_group_info_images"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
@@ -150,7 +148,6 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/play_group_joiners"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
@@ -162,7 +159,6 @@
                         android:text="群组成员" />
 
                     <LinearLayout
-                        android:id="@+id/joiners_images"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp">
@@ -215,7 +211,6 @@
                     android:src="@drawable/group_location" />
 
                 <TextView
-                    android:id="@+id/g_group_location"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -225,7 +220,6 @@
                     android:textSize="10sp" />
 
                 <TextView
-                    android:id="@+id/g_group_distance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"

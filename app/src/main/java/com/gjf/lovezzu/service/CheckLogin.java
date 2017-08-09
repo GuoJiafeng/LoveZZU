@@ -20,7 +20,6 @@ import rx.Subscriber;
 public class CheckLogin extends Service {
     private Subscriber subscriber;
     private CheckLoginApplication checkLoginApplication;
-    private boolean issuccrssful;
 
     public CheckLogin() {
 
@@ -34,35 +33,28 @@ public class CheckLogin extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        // Toast.makeText(this,"创建",Toast.LENGTH_LONG).show();
-        Log.d("My", "start");
-
 
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         checkLogin();
-        //Toast.makeText(this,"启动",Toast.LENGTH_LONG).show();
+
 
         return super.onStartCommand(intent, flags, startId);
     }
 
     @Override
     public void onDestroy() {
-        //  Toast.makeText(this,"销毁",Toast.LENGTH_LONG).show();
         super.onDestroy();
 
     }
 
     private void checkLogin() {
-        SharedPreferences sharedPreferences = getSharedPreferences("userinfo", Activity.MODE_APPEND);
+        SharedPreferences sharedPreferences = getSharedPreferences("userinfo", Activity.MODE_PRIVATE);
         final SharedPreferences.Editor editor = sharedPreferences.edit();
         String SessionID = sharedPreferences.getString("SessionID", "");
-        //String password = sharedPreferences.getString("password","");
-        Toast.makeText(this, "电话是：" + SessionID.toString().trim(), Toast.LENGTH_LONG).show();
         if (!SessionID.equals("")) {
-            //Toast.makeText(getApplicationContext(),"1",Toast.LENGTH_LONG).show();
 
             subscriber = new Subscriber<LoginResult>() {
                 @Override
@@ -72,7 +64,6 @@ public class CheckLogin extends Service {
 
                 @Override
                 public void onError(Throwable e) {
-                    //  Toast.makeText(getApplicationContext(),e.getMessage().toString()+"网络错误！",Toast.LENGTH_LONG).show();
                 }
 
                 @Override
@@ -81,27 +72,23 @@ public class CheckLogin extends Service {
                     if (!SessionID.equals("")) {
                         checkLoginApplication = (CheckLoginApplication) getApplication();
                         checkLoginApplication.setIsLogin(true);
-                        Toast.makeText(getApplicationContext(), "2", Toast.LENGTH_LONG).show();
-
                     } else {
                         checkLoginApplication = (CheckLoginApplication) getApplication();
                         checkLoginApplication.setIsLogin(false);
-                        editor.clear().commit();
+                        editor.remove("SessionID");
+                        editor.remove("phone");
+                        editor.apply();
 
                     }
                 }
             };
-
             LoginMethods.getInstance().checkLogin(subscriber, SessionID);
         } else {
             checkLoginApplication = (CheckLoginApplication) getApplication();
             checkLoginApplication.setIsLogin(false);
-            editor.clear().commit();
-            // Toast.makeText(getApplicationContext(),"清除成功",Toast.LENGTH_LONG).show();
-
+            editor.clear().apply();
 
         }
-
 
     }
 

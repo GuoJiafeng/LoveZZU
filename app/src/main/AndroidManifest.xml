@@ -84,12 +84,14 @@
         <activity android:name=".activity.parttimejob.JobInfoActivity" />
 
 
+        <!--WebView-->
+        <activity
+            android:name="com.thefinestartist.finestwebview.FinestWebViewActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="sensor"
+            android:theme="@style/FinestWebViewTheme.Light" />
 
-        <activity android:name=".activity.schoolnewsActivity.SchoolNewsWebView" />
 
-        <!--会话列表-->
-
-        <!--会话界面-->
 
 
     </application>

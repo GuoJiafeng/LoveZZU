@@ -11,7 +11,6 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/user_info_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1">
@@ -64,7 +63,6 @@
 
 
                             <LinearLayout
-                                android:id="@+id/user_info_icon"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentRight="true"
@@ -214,7 +212,6 @@
                                 android:layout_weight="1">
 
                                 <TextView
-                                    android:id="@+id/user_info_qr_text"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
@@ -223,7 +220,6 @@
 
                                 <ImageView
 
-                                    android:id="@+id/user_info_qricon"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:src="@drawable/two_dimension_code" />
@@ -350,7 +346,6 @@
 
 
                 <LinearLayout
-                    android:id="@+id/_info_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/_info_2"
@@ -453,7 +448,6 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/user_info_school_major"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/user_info_school_class"

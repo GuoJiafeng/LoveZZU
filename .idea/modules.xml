@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/LoveZZU.iml" filepath="$PROJECT_DIR$/LoveZZU.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/flashview/flashview.iml" filepath="$PROJECT_DIR$/flashview/flashview.iml" />
     </modules>
   </component>
 </project>

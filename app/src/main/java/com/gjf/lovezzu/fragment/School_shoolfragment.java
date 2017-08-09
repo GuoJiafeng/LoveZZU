@@ -1,14 +1,12 @@
 package com.gjf.lovezzu.fragment;
 
 import android.app.Fragment;
-import android.content.Intent;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,15 +20,18 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.gc.flashview.FlashView;
-import com.gc.flashview.constants.EffectConstants;
-import com.gc.flashview.listener.FlashViewListener;
+import com.bigkoo.convenientbanner.ConvenientBanner;
+import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
+import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.gjf.lovezzu.R;
-import com.gjf.lovezzu.activity.schoolnewsActivity.SchoolNewsWebView;
+import com.gjf.lovezzu.activity.MainActivity;
 import com.gjf.lovezzu.entity.SchoolNewsData;
 import com.gjf.lovezzu.entity.SchoolNewsResult;
+import com.gjf.lovezzu.entity.TopNewsResult;
 import com.gjf.lovezzu.network.SchoolNewsMethods;
+import com.gjf.lovezzu.view.ImageViewHolder;
 import com.gjf.lovezzu.view.SchoolLastAdapter;
+import com.thefinestartist.finestwebview.FinestWebView;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -52,7 +53,6 @@ import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import rx.Subscriber;
 
 /**
@@ -63,8 +63,8 @@ public class School_shoolfragment extends Fragment {
     @BindView(R.id.last_school_listview)
     ListView lastSchoolListview;
     private View view;
-    private FlashView flashView;
-    private ArrayList<String> imageUrls = new ArrayList<String>();
+    private ConvenientBanner convenientBanner;
+    private List<TopNewsResult> topNewsResults=new ArrayList<>();
     private List<SchoolNewsResult> schoolNewsResultList = new ArrayList<>();
     private int Page;
     private RecyclerView recyclerView1;
@@ -73,8 +73,8 @@ public class School_shoolfragment extends Fragment {
     SchoolLastAdapter adapter1;
     ListView listView;
     String urlString;
-    Map<String,String> links=new HashMap<String,String>();;
-    ArrayAdapter<String> adapter;
+    Map<String,String> links=new HashMap<String,String>();
+
     URLConnection con;
     InputStream inputStream;
     ByteArrayOutputStream outputStream;
@@ -90,14 +90,13 @@ public class School_shoolfragment extends Fragment {
 
         if (view == null) {
             view = inflater.inflate(R.layout.inchool_school_view, container, false);
-           initSchoolList();
-           showTopImage();
             listView=(ListView)view.findViewById(R.id.last_school_listview);
-
+            convenientBanner= (ConvenientBanner) view.findViewById(R.id.school_flush);
             urlString="http://www16.zzu.edu.cn/msgs/vmsgisapi.dll/vmsglist?mtype=m&lan=101,102,103&pn=1";
-
             init(urlString);
-
+            initSchoolList();
+            getTopSchoolNews();
+            showTopImage();
             View listview_footer_view = LayoutInflater.from(getActivity()).inflate(R.layout.listview_footer, null);
             id_rl_loading=(LinearLayout)listview_footer_view.findViewById(R.id.id_rl_loading);
             id_pull_to_refresh_load_progress = (ProgressBar) listview_footer_view.findViewById(R.id.id_pull_to_refresh_load_progress);
@@ -112,10 +111,10 @@ public class School_shoolfragment extends Fragment {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     String key=parent.getItemAtPosition(position).toString();
                     String url=links.get(key);
-                    Intent intent=new Intent();
-                    intent.setClass(getActivity(),SchoolNewsWebView.class);
-                    intent.putExtra("url",url);
-                    startActivity(intent);
+                    new  FinestWebView.Builder(MainActivity.mainActivity)
+                            .webViewSupportZoom(true)
+                            .webViewBuiltInZoomControls(true)
+                            .show(url);
                 }
             });
 
@@ -178,52 +177,42 @@ public class School_shoolfragment extends Fragment {
 
     private void initSchoolList() {
 
-        imageUrls.add("http://202.196.64.199/zzupic/p005.jpg");
-        imageUrls.add("http://202.196.64.199/zzupic/p034.jpg");
-        imageUrls.add("http://202.196.64.199/zzupic/p003.jpg");
 
         getSchoolNews(Page);
 
     }
 
     private void showTopImage() {
-        flashView = (FlashView) view.findViewById(R.id.flash_view);
-        flashView.setImageUris(imageUrls);
-        flashView.setEffect(EffectConstants.DEFAULT_EFFECT);//更改图片切换的动画效果
-        flashView.setOnPageClickListener(new FlashViewListener() {
+        convenientBanner.setPages(new CBViewHolderCreator<ImageViewHolder>() {
             @Override
-            public void onClick(int position) {
-                String mUrl;
-                Intent mintent=new Intent();
-                mintent.setClass(getActivity(),SchoolNewsWebView.class);
-                switch (position){
-                    case 0:
-                        Toast.makeText(view.getContext(), "郑大官网",
-                                Toast.LENGTH_SHORT).show();
-                        mUrl="http://202.196.64.199/";
-                        mintent.putExtra("url",mUrl);
-                        startActivity(mintent);
-                        break;
-                    case 1:
-                        Toast.makeText(view.getContext(), "学校简介",
-                                Toast.LENGTH_SHORT).show();
-                        mUrl="http://202.196.64.199/gaikuang.htm";
-                        mintent.putExtra("url",mUrl);
-                        startActivity(mintent);
-                        break;
-                    case 2:
-                        Toast.makeText(view.getContext(), "郑大教务在线",
-                                Toast.LENGTH_SHORT).show();
-                        mUrl="http://jw.zzu.edu.cn/";
-                        mintent.putExtra("url",mUrl);
-                        startActivity(mintent);
-                        break;
-                }
-
+            public ImageViewHolder createHolder() {
+                return new ImageViewHolder();
+            }
+        },topNewsResults).setPageIndicator(new int[]{R.drawable.ic_page_indicator, R.drawable.ic_page_indicator_focused})
+                    .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL);
+        convenientBanner.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                webView(topNewsResults.get(position).getNewsUrl());
             }
         });
 
     }
+
+    private void webView(String url){
+        new  FinestWebView.Builder(MainActivity.mainActivity)
+                .webViewSupportZoom(true)
+                .webViewBuiltInZoomControls(true)
+                .show(url);
+    }
+    //获取轮播
+    private void getTopSchoolNews(){
+        if (topNewsResults!=null){
+            topNewsResults.clear();
+        }
+        /*===========================*/
+    }
+
 
     private void getSchoolNews(int page) {
 
@@ -256,6 +245,20 @@ public class School_shoolfragment extends Fragment {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        convenientBanner.startTurning(2000);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (convenientBanner!=null){
+            convenientBanner.stopTurning();
+        }
+    }
+
     public void init(String urlString){
         try {
             send(urlString);
@@ -280,7 +283,7 @@ public class School_shoolfragment extends Fragment {
                     array[i]=key;
                     i++;
                 }
-                adapter=new ArrayAdapter<String>(getActivity(),R.layout.support_simple_spinner_dropdown_item,array);
+                ArrayAdapter<String> adapter=new ArrayAdapter<String>(MainActivity.mainActivity,R.layout.support_simple_spinner_dropdown_item,array);
                 listView.setAdapter(adapter);
             }
         };
@@ -336,10 +339,8 @@ public class School_shoolfragment extends Fragment {
         if(matcher.find()){
             doc=matcher.group(1);
         }
-        links=new HashMap<String,String>();
         Document doc2= Jsoup.parse(doc);
         Elements hrefs=doc2.select("a[href]");         //获取带有href属性的a标签
-        int i=0;
         for(Element link : hrefs){                   //遍历每个链接
             String linkHref=link.attr("href");          //得到href属性的值，即URL地址
             String linkText=link.text();                //获取链接文本

@@ -121,12 +121,12 @@ public class TaoyuChildConmmentsActivity extends AppCompatActivity {
 
             @Override
             public void onError(Throwable e) {
-                Log.e("二级评论-----------------查询", e.getMessage());
+
             }
 
             @Override
             public void onNext(GoodsChildCommentsData goodsChildCommentsData) {
-                Log.e("二级评论-----------------查询", "查询");
+
                 List<GoodsChildCommentsDateBridging> list = goodsChildCommentsData.getValues();
                 if (list.size() == 0) {
                     Toast.makeText(getApplicationContext(), "还没有评论，快来吐槽吧！", Toast.LENGTH_SHORT).show();
@@ -150,7 +150,7 @@ public class TaoyuChildConmmentsActivity extends AppCompatActivity {
         x.http().post(requestParams, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.e("二级评论-----------------发布", result);
+
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     Boolean res = jsonObject.getBoolean("isSuccessful");
@@ -168,7 +168,7 @@ public class TaoyuChildConmmentsActivity extends AppCompatActivity {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("二级评论-----------------发布", ex.getMessage());
+
             }
 
             @Override
@@ -199,7 +199,7 @@ public class TaoyuChildConmmentsActivity extends AppCompatActivity {
         x.http().post(requestParams, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.e("二级评论-----------------点赞", result);
+
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     Boolean res = jsonObject.getBoolean("isSuccessful");
@@ -219,7 +219,6 @@ public class TaoyuChildConmmentsActivity extends AppCompatActivity {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("二级评论-----------------点赞", ex.getMessage());
             }
 
             @Override

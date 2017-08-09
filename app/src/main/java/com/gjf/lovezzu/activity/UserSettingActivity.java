@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -46,14 +47,14 @@ public class UserSettingActivity extends AppCompatActivity {
     private void cleanUserLoinInfo() {
         checkLoginApplication = (CheckLoginApplication) getApplication();
         if (checkLoginApplication.isLogin()) {
-            SharedPreferences sharedPreferences = getSharedPreferences("userinfo", Activity.MODE_APPEND);
+            SharedPreferences sharedPreferences = getSharedPreferences("userinfo", Activity.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.clear().commit();
-
+            editor.remove("SessionID");
+            editor.remove("phone");
+            editor.clear().apply();
             checkLoginApplication.setIsLogin(false);
             Toast.makeText(getApplicationContext(), "已退出登录！", Toast.LENGTH_LONG).show();
             finish();
-
         } else {
             Toast.makeText(getApplicationContext(), "您还未登录！", Toast.LENGTH_LONG).show();
         }

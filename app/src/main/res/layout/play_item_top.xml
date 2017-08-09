@@ -19,7 +19,6 @@
             android:src="@drawable/life_fire" />
 
         <TextView
-            android:id="@+id/play_item_top_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"

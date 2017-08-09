@@ -16,7 +16,6 @@
 
 
             <LinearLayout
-                android:id="@+id/my_user_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
@@ -25,7 +24,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/my_user_reg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="180dp"
@@ -82,7 +80,6 @@
                         android:src="@drawable/login_code" />
 
                     <EditText
-                        android:id="@+id/user_reg_code"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"

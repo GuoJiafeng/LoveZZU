@@ -26,7 +26,6 @@
                 android:orientation="horizontal">
 
                 <com.gjf.lovezzu.view.CircleImageView
-                    android:id="@+id/topic_comm_user_icon"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center_vertical"
@@ -34,7 +33,6 @@
                     android:src="@drawable/def_avatar" />
 
                 <TextView
-                    android:id="@+id/topic_comm_user_nickname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -60,7 +58,6 @@
                     android:layout_marginTop="12dp">
 
                     <TextView
-                        android:id="@+id/topic_comm_content"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:ellipsize="end"
@@ -86,7 +83,6 @@
 
 
                         <TextView
-                            android:id="@+id/topic_comm_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -108,7 +104,6 @@
                             android:background="@drawable/comment" />
 
                         <TextView
-                            android:id="@+id/topic_comm_num"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -121,7 +116,6 @@
                             android:background="@drawable/life_zan" />
 
                         <TextView
-                            android:id="@+id/topic_comm_zan"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"

@@ -1,8 +1,6 @@
 package com.gjf.lovezzu.view;
 
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +11,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.gjf.lovezzu.R;
 import com.gjf.lovezzu.activity.MainActivity;
-import com.gjf.lovezzu.activity.schoolnewsActivity.SchoolNewsWebView;
 import com.gjf.lovezzu.entity.SocietyNewsResult;
+import com.thefinestartist.finestwebview.FinestWebView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,10 +39,10 @@ public class SchoolSocietyAdapter extends RecyclerView.Adapter<SchoolSocietyAdap
             public void onClick(View v) {
                 SocietyNewsResult societyNewsResult1=societyNewsResultList.get(holder.getAdapterPosition());
                 String url=societyNewsResult1.getUrl();
-                Intent intent=new Intent();
-                intent.setClass(MainActivity.mainActivity,SchoolNewsWebView.class);
-                intent.putExtra("url",url);
-                MainActivity.mainActivity.startActivity(intent);
+                new  FinestWebView.Builder(MainActivity.mainActivity)
+                        .webViewSupportZoom(true)
+                        .webViewBuiltInZoomControls(true)
+                        .show(url);
             }
         });
         return holder;

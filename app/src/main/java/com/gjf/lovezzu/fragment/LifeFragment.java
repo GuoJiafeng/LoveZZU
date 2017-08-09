@@ -10,18 +10,23 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.gc.flashview.FlashView;
-import com.gc.flashview.constants.EffectConstants;
-import com.gc.flashview.listener.FlashViewListener;
+
+import com.bigkoo.convenientbanner.ConvenientBanner;
+import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
+import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.gjf.lovezzu.R;
+import com.gjf.lovezzu.activity.MainActivity;
 import com.gjf.lovezzu.activity.parttimejob.PartTimeJobActivity;
 import com.gjf.lovezzu.activity.palytogether.PlayTogetherActivity;
-import com.gjf.lovezzu.activity.schoolnewsActivity.SchoolNewsWebView;
 import com.gjf.lovezzu.activity.taoyu.TaoyuActivity;
 import com.gjf.lovezzu.activity.tapictalk.TopicTalkActivity;
 import com.gjf.lovezzu.activity.treehole.TreeHoleActivity;
+import com.gjf.lovezzu.entity.TopNewsResult;
+import com.gjf.lovezzu.view.ImageViewHolder;
+import com.thefinestartist.finestwebview.FinestWebView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,8 +48,8 @@ public class LifeFragment extends Fragment {
     LinearLayout lifeShudong;
     @BindView(R.id.life_jianzhi)
     LinearLayout lifeJianzhi;
-    private FlashView flashView;
-    private ArrayList<String> imageUrl = new ArrayList<String>();
+    private List<TopNewsResult> topNewsResults=new ArrayList<>();
+   private ConvenientBanner convenientBanner;
     private View view;
 
 
@@ -53,7 +58,8 @@ public class LifeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (view == null) {
             view = inflater.inflate(R.layout.life_fragment, container, false);
-            initImage();
+            convenientBanner= (ConvenientBanner) view.findViewById(R.id.life_flush);
+            getTopNews();
             showTopView();
         } else {
             ViewGroup viewGroup = (ViewGroup) view.getParent();
@@ -67,50 +73,34 @@ public class LifeFragment extends Fragment {
     }
 
     //加载轮播图片
-    private void initImage() {
-        imageUrl.add("http://202.196.64.199/zzupic/p025.jpg");
-        imageUrl.add("http://202.196.64.199/zzupic/p038.jpg");
-        imageUrl.add("http://202.196.64.199/zzupic/p010.jpg");
-
+    private void getTopNews() {
+        if (topNewsResults!=null){
+            topNewsResults.clear();
+        }
+        /*=========================*/
     }
 
     //显示轮播
     private void showTopView() {
-        flashView = (FlashView) view.findViewById(R.id.life_flush);
-        flashView.setImageUris(imageUrl);
-        flashView.setEffect(EffectConstants.DEFAULT_EFFECT);
-        flashView.setOnPageClickListener(new FlashViewListener() {
+        convenientBanner.setPages(new CBViewHolderCreator<ImageViewHolder>() {
             @Override
-            public void onClick(int position) {
-                String mUrl;
-                Intent mintent=new Intent();
-                mintent.setClass(getActivity(),SchoolNewsWebView.class);
-                switch (position){
-                    case 0:
-                        Toast.makeText(view.getContext(), "北校区",
-                                Toast.LENGTH_SHORT).show();
-                        mUrl="http://www5.zzu.edu.cn/soft/";
-                        mintent.putExtra("url",mUrl);
-                        startActivity(mintent);
-                        break;
-                    case 1:
-                        Toast.makeText(view.getContext(), "南校区",
-                                Toast.LENGTH_SHORT).show();
-                        mUrl="http://www5.zzu.edu.cn/gjxy/";
-                        mintent.putExtra("url",mUrl);
-                        startActivity(mintent);
-                        break;
-                    case 2:
-                        Toast.makeText(view.getContext(), "新闻中心",
-                                Toast.LENGTH_SHORT).show();
-                        mUrl="http://news.zzu.edu.cn/";
-                        mintent.putExtra("url",mUrl);
-                        startActivity(mintent);
-                        break;
-                }
-
+            public ImageViewHolder createHolder() {
+                return new ImageViewHolder();
+            }
+        },topNewsResults).setPageIndicator(new int[]{R.drawable.ic_page_indicator, R.drawable.ic_page_indicator_focused})
+                .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL);
+        convenientBanner.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                webView(topNewsResults.get(position).getNewsUrl());
             }
         });
+    }
+    private void webView(String url){
+        new  FinestWebView.Builder(MainActivity.mainActivity)
+                .webViewSupportZoom(true)
+                .webViewBuiltInZoomControls(true)
+                .show(url);
     }
 
     @OnClick({R.id.life_taoyu, R.id.life_play, R.id.life_talk, R.id.life_shudong, R.id.life_jianzhi})
@@ -139,9 +129,22 @@ public class LifeFragment extends Fragment {
         }
     }
 
-
     private void goToTaoYu() {
         Intent intent = new Intent(getContext(), TaoyuActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        convenientBanner.startTurning(2000);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (convenientBanner!=null){
+            convenientBanner.stopTurning();
+        }
     }
 }

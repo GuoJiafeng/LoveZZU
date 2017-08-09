@@ -37,7 +37,7 @@ import rx.Subscriber;
 import static com.gjf.lovezzu.constant.Url.LOGIN_URL;
 
 /**
- * Created by BlackBeard丶 on 2017/04/18.
+ *
  * finished by zhao on 2017/08/1
  */
 
@@ -84,7 +84,7 @@ public class TaoyuDetialActivity extends AppCompatActivity {
         SessionID = sharedPreferences.getString("SessionID", "");
         goods = (Goods) getIntent().getSerializableExtra("goods");
         goods_id=goods.getGoods_id().toString();
-        Log.e("商品详情---------------", goods.getGoods_id() + "");
+
         initView();
         getGoodsComments();
         showComments();
@@ -193,7 +193,7 @@ public class TaoyuDetialActivity extends AppCompatActivity {
         x.http().post(requestParams, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.e("级评论------------------发布", result);
+
                if (result!=null){
                    Toast.makeText(TaoyuDetialActivity.taoyuDetialActivity,"评论成功！",Toast.LENGTH_SHORT).show();
                    editComments.setText("");
@@ -204,7 +204,7 @@ public class TaoyuDetialActivity extends AppCompatActivity {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("二级评论------------------发布", ex.getMessage());
+
             }
 
             @Override

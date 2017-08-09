@@ -43,7 +43,6 @@ public class UserLoginFragmen extends Fragment {
     private UserSingUpFragment userSingUpFragment;
     private Subscriber subscriber;
     private CheckLoginApplication checkLoginApplication;
-    private static String token;
 
     @BindView(R.id.new_user_reg)
     TextView new_user_reg;
@@ -106,10 +105,8 @@ public class UserLoginFragmen extends Fragment {
     private void goTologin() {
         subscriber = new Subscriber<LoginResult>() {
 
-
             @Override
             public void onCompleted() {
-                //Toast.makeText(getContext(),"连接成功！",Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -119,12 +116,9 @@ public class UserLoginFragmen extends Fragment {
 
             @Override
             public void onNext(LoginResult loginResult) {
-
-
                 String SessionID = loginResult.getSessionID();
                 if (SessionID != null) {
                     String phone = user_reg_phone.getText().toString();
-
                     saveUserInfo(SessionID, phone);
                 } else {
                     Toast.makeText(getContext(), "账号或者密码错误！", Toast.LENGTH_LONG).show();
@@ -139,26 +133,23 @@ public class UserLoginFragmen extends Fragment {
 
         String phone = user_reg_phone.getText().toString().trim();
         String password = user_reg_password.getText().toString().trim();
-        boolean issuccessful = false;
-        String identifier = "0";
+
         LoginMethods.getInstance().goToLogin(subscriber, phone, password);
 
     }
 
     private void saveUserInfo(String SessionID, String phone) {
-        SharedPreferences sharedPreferences = getContext().getSharedPreferences("userinfo", getContext().MODE_APPEND);
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("userinfo", getContext().MODE_PRIVATE);
         SharedPreferences.Editor editUserInfo = sharedPreferences.edit();
         editUserInfo.putString("phone", phone);
         editUserInfo.putString("SessionID", SessionID);
         editUserInfo.apply();
         Toast.makeText(getContext(), "登录成功！", Toast.LENGTH_LONG).show();
-
         checkLoginApplication = (CheckLoginApplication) getActivity().getApplication();
         checkLoginApplication.setIsLogin(true);
         Intent intent = new Intent(getContext(), UserInfoActivity.class);
         startActivity(intent);
     }
-
     private void checkInput() {
         String checkphone = user_reg_password.getText().toString();
         String checkpassword = user_reg_password.getText().toString();
