@@ -39,7 +39,7 @@
             android:launchMode="singleTask" />
         <activity android:name=".activity.tapictalk.TopicInfoActivity"/>
         <activity android:name=".activity.tapictalk.TopicPublishActivity"/>
-
+        <activity android:name=".activity.tapictalk.ThemePublishActivity"/>
         <!-- 淘鱼 -->
         <activity android:name=".activity.taoyu.TaoyuActivity" />
         <activity android:name=".activity.taoyu.ShopcartActivity"/>

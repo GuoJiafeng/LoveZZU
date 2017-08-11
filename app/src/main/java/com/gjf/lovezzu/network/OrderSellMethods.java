@@ -29,6 +29,7 @@ public class OrderSellMethods {
         OkHttpClient.Builder okHttpClient=new OkHttpClient.Builder();
         okHttpClient.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         retrofit=new Retrofit.Builder()
+                .client(okHttpClient.build())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .baseUrl(Url.LOGIN_URL)

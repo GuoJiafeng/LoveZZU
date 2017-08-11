@@ -1,19 +1,30 @@
 package com.gjf.lovezzu.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by zhao on 2017/8/9.
  */
 
-public class TopNewsResult {
-    private String imgesUrl;
+public class TopNewsResult implements Serializable{
+    private String imageUrl;
     private String newsUrl;
+    private String  moduleIdentifier;
 
-    public String getImgesUrl() {
-        return imgesUrl;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImgesUrl(String imgesUrl) {
-        this.imgesUrl = imgesUrl;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getModuleIdentifier() {
+        return moduleIdentifier;
+    }
+
+    public void setModuleIdentifier(String moduleIdentifier) {
+        this.moduleIdentifier = moduleIdentifier;
     }
 
     public String getNewsUrl() {

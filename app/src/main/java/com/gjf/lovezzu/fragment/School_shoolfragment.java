@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
@@ -14,11 +15,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
@@ -27,10 +30,14 @@ import com.gjf.lovezzu.R;
 import com.gjf.lovezzu.activity.MainActivity;
 import com.gjf.lovezzu.entity.SchoolNewsData;
 import com.gjf.lovezzu.entity.SchoolNewsResult;
+import com.gjf.lovezzu.entity.TopNewsData;
 import com.gjf.lovezzu.entity.TopNewsResult;
 import com.gjf.lovezzu.network.SchoolNewsMethods;
+import com.gjf.lovezzu.network.TopNewsMethods;
+
 import com.gjf.lovezzu.view.ImageViewHolder;
 import com.gjf.lovezzu.view.SchoolLastAdapter;
+
 import com.thefinestartist.finestwebview.FinestWebView;
 
 import org.jsoup.Jsoup;
@@ -63,12 +70,15 @@ public class School_shoolfragment extends Fragment {
     @BindView(R.id.last_school_listview)
     ListView lastSchoolListview;
     private View view;
-    private ConvenientBanner convenientBanner;
+
     private List<TopNewsResult> topNewsResults=new ArrayList<>();
     private List<SchoolNewsResult> schoolNewsResultList = new ArrayList<>();
+
+
+    private ConvenientBanner convenientBanner;
+
+
     private int Page;
-    private RecyclerView recyclerView1;
-    private SwipeRefreshLayout swipeRefreshLayout;
     private Subscriber subscriber;
     SchoolLastAdapter adapter1;
     ListView listView;
@@ -96,7 +106,7 @@ public class School_shoolfragment extends Fragment {
             init(urlString);
             initSchoolList();
             getTopSchoolNews();
-            showTopImage();
+
             View listview_footer_view = LayoutInflater.from(getActivity()).inflate(R.layout.listview_footer, null);
             id_rl_loading=(LinearLayout)listview_footer_view.findViewById(R.id.id_rl_loading);
             id_pull_to_refresh_load_progress = (ProgressBar) listview_footer_view.findViewById(R.id.id_pull_to_refresh_load_progress);
@@ -123,80 +133,36 @@ public class School_shoolfragment extends Fragment {
             if (viewGroup != null) {
                 viewGroup.removeView(view);
             }
-            onRefresh();
-            doUpResfresh();
         }
         ButterKnife.bind(this, view);
         return view;
     }
 
-
-    //下拉刷新操作
-    private void onRefresh() {
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.last_school_content_flash);
-        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                refreshlast();
-            }
-        });
-    }
-
-
-    //上拉加载
-
-
-    private void doUpResfresh() {
-        if (recyclerView1 == null) {
-            recyclerView1 = (RecyclerView) view.findViewById(R.id.last_school_content);
-        }
-
-    }
-
-
-    private void refreshlast() {
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        getSchoolNews(Page++);
-                        adapter1.notifyDataSetChanged();
-                        swipeRefreshLayout.setRefreshing(false);
-                    }
-                });
-
-
-            }
-        }).start();
-    }
-
     private void initSchoolList() {
-
-
         getSchoolNews(Page);
 
     }
 
     private void showTopImage() {
-        convenientBanner.setPages(new CBViewHolderCreator<ImageViewHolder>() {
-            @Override
-            public ImageViewHolder createHolder() {
-                return new ImageViewHolder();
-            }
-        },topNewsResults).setPageIndicator(new int[]{R.drawable.ic_page_indicator, R.drawable.ic_page_indicator_focused})
-                    .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL);
+        List<String> top=new ArrayList<>();
+        for (TopNewsResult r:topNewsResults){
+            top.add(r.getImageUrl());
+        }
+        convenientBanner.setPages(
+                new CBViewHolderCreator<ImageViewHolder>() {
+                    @Override
+                    public ImageViewHolder createHolder() {
+                        return new ImageViewHolder();
+                    }
+                },top).setPageIndicator(new int[]{R.drawable.ic_page_indicator, R.drawable.ic_page_indicator_focused})
+                .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.ALIGN_PARENT_RIGHT);
         convenientBanner.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                webView(topNewsResults.get(position).getNewsUrl());
+                TopNewsResult t=topNewsResults.get(position);
+                webView(t.getNewsUrl());
             }
         });
-
     }
 
     private void webView(String url){
@@ -210,7 +176,26 @@ public class School_shoolfragment extends Fragment {
         if (topNewsResults!=null){
             topNewsResults.clear();
         }
-        /*===========================*/
+        subscriber=new Subscriber<TopNewsData>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+            }
+
+            @Override
+            public void onNext(TopNewsData topNewsData) {
+                List<TopNewsResult> list=topNewsData.getValues();
+                if (!list.isEmpty()){
+                    topNewsResults.addAll(list);
+                    showTopImage();
+                }
+            }
+        };
+        TopNewsMethods.getInstance().getTopNews(subscriber,"首页");
     }
 
 
@@ -224,7 +209,7 @@ public class School_shoolfragment extends Fragment {
 
             @Override
             public void onError(Throwable e) {
-                Log.d("ggggg", e.getMessage().toString());
+
             }
 
             @Override
@@ -239,24 +224,19 @@ public class School_shoolfragment extends Fragment {
         SchoolNewsMethods.getInstance().getSchoolNews(subscriber, page);
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
 
-    }
 
     @Override
     public void onResume() {
         super.onResume();
-        convenientBanner.startTurning(2000);
+        convenientBanner.startTurning(4000);
     }
+
 
     @Override
     public void onPause() {
         super.onPause();
-        if (convenientBanner!=null){
-            convenientBanner.stopTurning();
-        }
+        convenientBanner.stopTurning();
     }
 
     public void init(String urlString){

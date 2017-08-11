@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,9 @@ import com.gjf.lovezzu.activity.palytogether.PlayTogetherActivity;
 import com.gjf.lovezzu.activity.taoyu.TaoyuActivity;
 import com.gjf.lovezzu.activity.tapictalk.TopicTalkActivity;
 import com.gjf.lovezzu.activity.treehole.TreeHoleActivity;
+import com.gjf.lovezzu.entity.TopNewsData;
 import com.gjf.lovezzu.entity.TopNewsResult;
+import com.gjf.lovezzu.network.TopNewsMethods;
 import com.gjf.lovezzu.view.ImageViewHolder;
 import com.thefinestartist.finestwebview.FinestWebView;
 
@@ -31,6 +34,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Subscriber;
 
 /**
  * Created by BlackBeard丶 on 2017/03/01.
@@ -49,9 +53,9 @@ public class LifeFragment extends Fragment {
     @BindView(R.id.life_jianzhi)
     LinearLayout lifeJianzhi;
     private List<TopNewsResult> topNewsResults=new ArrayList<>();
-   private ConvenientBanner convenientBanner;
+    private ConvenientBanner convenientBanner;
     private View view;
-
+    private Subscriber subscriber;
 
     @Nullable
     @Override
@@ -60,7 +64,7 @@ public class LifeFragment extends Fragment {
             view = inflater.inflate(R.layout.life_fragment, container, false);
             convenientBanner= (ConvenientBanner) view.findViewById(R.id.life_flush);
             getTopNews();
-            showTopView();
+
         } else {
             ViewGroup viewGroup = (ViewGroup) view.getParent();
             if (viewGroup != null) {
@@ -77,22 +81,48 @@ public class LifeFragment extends Fragment {
         if (topNewsResults!=null){
             topNewsResults.clear();
         }
-        /*=========================*/
+        subscriber=new Subscriber<TopNewsData>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.e("轮播======生活",e.getMessage());
+            }
+
+            @Override
+            public void onNext(TopNewsData topNewsData) {
+                List<TopNewsResult> list=topNewsData.getValues();
+                if (!list.isEmpty()){
+                    topNewsResults.addAll(list);
+                    showTopView();
+                }
+            }
+        };
+        TopNewsMethods.getInstance().getTopNews(subscriber,"生活");
     }
 
     //显示轮播
     private void showTopView() {
-        convenientBanner.setPages(new CBViewHolderCreator<ImageViewHolder>() {
-            @Override
-            public ImageViewHolder createHolder() {
-                return new ImageViewHolder();
-            }
-        },topNewsResults).setPageIndicator(new int[]{R.drawable.ic_page_indicator, R.drawable.ic_page_indicator_focused})
-                .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL);
+        List<String> top=new ArrayList<>();
+        for (TopNewsResult r:topNewsResults){
+            top.add(r.getImageUrl());
+        }
+        convenientBanner.setPages(
+                new CBViewHolderCreator<ImageViewHolder>() {
+                    @Override
+                    public ImageViewHolder createHolder() {
+                        return new ImageViewHolder();
+                    }
+                },top).setPageIndicator(new int[]{R.drawable.ic_page_indicator, R.drawable.ic_page_indicator_focused})
+                .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.ALIGN_PARENT_RIGHT);
         convenientBanner.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                webView(topNewsResults.get(position).getNewsUrl());
+                TopNewsResult t=topNewsResults.get(position);
+                webView(t.getNewsUrl());
             }
         });
     }
@@ -107,8 +137,8 @@ public class LifeFragment extends Fragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.life_taoyu:
-                Toast.makeText(getActivity().getApplicationContext(), "淘鱼", Toast.LENGTH_SHORT).show();
-                goToTaoYu();
+                Intent toayu_intent = new Intent(getActivity().getApplicationContext(), TaoyuActivity.class);
+                startActivity(toayu_intent);
                 break;
             case R.id.life_play:
                 Intent play_intent = new Intent(getActivity().getApplicationContext(), PlayTogetherActivity.class);
@@ -129,22 +159,17 @@ public class LifeFragment extends Fragment {
         }
     }
 
-    private void goToTaoYu() {
-        Intent intent = new Intent(getContext(), TaoyuActivity.class);
-        startActivity(intent);
-    }
 
     @Override
     public void onResume() {
         super.onResume();
-        convenientBanner.startTurning(2000);
+        convenientBanner.startTurning(4000);
     }
+
 
     @Override
     public void onPause() {
         super.onPause();
-        if (convenientBanner!=null){
-            convenientBanner.stopTurning();
-        }
+        convenientBanner.stopTurning();
     }
 }

@@ -15,7 +15,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/topic_pub_back"
+                android:id="@+id/theme_pub_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -28,11 +28,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="发表话题"
+                android:text="发表话题圈"
                 android:textSize="22sp" />
 
             <TextView
-                android:id="@+id/topic_pub_commit"
+                android:id="@+id/theme_pub_commit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -68,10 +68,10 @@
                     android:layout_margin="5dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="话题标题:" />
+                    android:text="话题圈:" />
 
                 <EditText
-                    android:id="@+id/topic_name"
+                    android:id="@+id/theme_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -90,19 +90,6 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <EditText
-                    android:id="@+id/topic_content"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:enabled="true"
-                    android:gravity="top"
-                    android:hint="发布话题的内容"
-                    android:inputType="textMultiLine"
-                    android:maxLength="140"
-                    android:maxLines="10"
-                    android:minLines="8"
-                    android:scrollbars="vertical" />
-
                 <include
                     layout="@layout/item_cut"
                     android:layout_width="match_parent"
@@ -115,7 +102,7 @@
                     android:orientation="horizontal">
 
                     <FrameLayout
-                        android:id="@+id/topic_publish_addimage"
+                        android:id="@+id/theme_publish_addimage"
                         android:layout_width="100dp"
                         android:layout_height="67dp"
                         android:layout_marginBottom="10dp"
@@ -146,7 +133,7 @@
                         android:layout_weight="1">
 
                         <android.support.v7.widget.RecyclerView
-                            android:id="@+id/topic_publish_images"
+                            android:id="@+id/theme_publish_images"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent" />
                     </LinearLayout>

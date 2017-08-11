@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.ThemedSpinnerAdapter;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -91,11 +92,12 @@ public class TopicTalkActivity extends AppCompatActivity {
             case R.id.topic_back:
                 break;
             case R.id.topic_first_add:
-                Intent intent=new Intent(this,TopicPublishActivity.class);
-                intent.putExtra("type","一级话题");
+                Intent intent=new Intent(this, ThemePublishActivity.class);
                 startActivity(intent);
                 break;
             case R.id.topic_child_add:
+                Intent intent1=new Intent(this,TopicPublishActivity.class);
+                startActivity(intent1);
                 break;
         }
     }

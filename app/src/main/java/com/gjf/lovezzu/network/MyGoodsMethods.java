@@ -26,6 +26,7 @@ public class MyGoodsMethods {
         OkHttpClient.Builder httpClient=new OkHttpClient.Builder();
         httpClient.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         retrofit=new Retrofit.Builder()
+                .client(httpClient.build())
                 .baseUrl(Url.LOGIN_URL)
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())

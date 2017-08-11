@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gjf.lovezzu.R;
+import com.gjf.lovezzu.activity.tapictalk.TopicTalkActivity;
 import com.gjf.lovezzu.fragment.taoyu.TaoyuGoodsStudyTypeFragment;
 import com.gjf.lovezzu.view.PhotoAdapter;
 import com.gjf.lovezzu.view.RecyclerItemClickListener;
@@ -205,6 +206,8 @@ public class TaoyuPublishGoodActivity extends AppCompatActivity {
                     if (res){
                         progressDialog.dismiss();
                         Toast.makeText(getApplicationContext(),"发布成功！",Toast.LENGTH_SHORT).show();
+                        Intent intent=new Intent(TaoyuPublishGoodActivity.this,TaoyuActivity.class);
+                        startActivity(intent);
                         onStop();
 
                     }else{

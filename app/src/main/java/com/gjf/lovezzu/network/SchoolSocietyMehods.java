@@ -27,6 +27,7 @@ public class SchoolSocietyMehods {
         OkHttpClient.Builder httpClient=new OkHttpClient.Builder();
         httpClient.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         retrofit=new Retrofit.Builder()
+                .client(httpClient.build())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .baseUrl(Url.SOCIETY_API)

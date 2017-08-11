@@ -27,6 +27,7 @@ public class ShoppingCartMethods {
         httpClient.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
 
         retrofit=new Retrofit.Builder()
+                .client(httpClient.build())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .baseUrl(Url.LOGIN_URL)

@@ -30,10 +30,10 @@ public class DownloadIconMethods {
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
         httpClientBuilder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
 
-        retrofit = new Retrofit.Builder().
-                baseUrl(Url.LOGIN_URL).
+        retrofit = new Retrofit.Builder()
+                .client(httpClientBuilder.build())
+                .baseUrl(Url.LOGIN_URL).
                 addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-
                 .build();
         downloadIconServer = retrofit.create(DownloadIconServer.class);
     }

@@ -42,9 +42,8 @@ public class TaoyuGoodsChildCommentsAdapter extends RecyclerView.Adapter<TaoyuGo
     private Context mContext;
     private GoodsChildCommentsDateBridging goodsChildCommentsDateBridging;
     private  GoodsChildCommentsDateBridging goodsChildCommentsDateBridgingNew;
-    private Subscriber subscriber;
 
-    private String sonson;
+    private String type="1";
     private String SeesionID;
 
     public TaoyuGoodsChildCommentsAdapter(List<GoodsChildCommentsDateBridging> list, Context context){
@@ -83,7 +82,14 @@ public class TaoyuGoodsChildCommentsAdapter extends RecyclerView.Adapter<TaoyuGo
             @Override
             public void onClick(View v) {
                 goodsChildCommentsDateBridgingNew=goodsChildCommentsDateBridgings.get(holder.getAdapterPosition());
-                addThnum();
+                Integer th=Integer.parseInt(holder.child_comments_thumbnum.getText().toString());
+
+                if (type.equals("1")){
+                    holder.child_comments_thumbnum.setText(th+1+"");
+                }else {
+                    holder.child_comments_thumbnum.setText(th-1+"");
+                }
+                addThnum(type);
             }
         });
         holder.do_comm.setOnClickListener(new View.OnClickListener() {
@@ -198,23 +204,28 @@ public class TaoyuGoodsChildCommentsAdapter extends RecyclerView.Adapter<TaoyuGo
         });
     }
 
-    private void addThnum() {
+    private void addThnum(String num) {
         RequestParams requestParams = new RequestParams(LOGIN_URL + "comments_L2Action");
         requestParams.addBodyParameter("action", "postcomments_L2");
         requestParams.addBodyParameter("L1_Cid", "");
         requestParams.addBodyParameter("L2_Cid", goodsChildCommentsDateBridgingNew.getComments_l2().getL2_Cid().toString());
         requestParams.addBodyParameter("SessionID", SeesionID);
         requestParams.addBodyParameter("comments", "");
-        requestParams.addBodyParameter("ThumbNum", "1");
+        requestParams.addBodyParameter("ThumbNum", num);
         x.http().post(requestParams, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.e("二级评论-孙----------------点赞", result);
+
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     Boolean res = jsonObject.getBoolean("isSuccessful");
                     if (res) {
-                        Toast.makeText(TaoyuChildConmmentsActivity.taoyuChildConmmentsActivity,"点赞成功！",Toast.LENGTH_SHORT).show();
+                        if (type.equals("1")){
+                            Toast.makeText(TaoyuChildConmmentsActivity.taoyuChildConmmentsActivity,"+1 再点取消点赞",Toast.LENGTH_SHORT).show();
+
+                        }else {
+                            Toast.makeText(TaoyuChildConmmentsActivity.taoyuChildConmmentsActivity,"-1 ",Toast.LENGTH_SHORT).show();
+                        }
                         notifyDataSetChanged();
                     }
                 } catch (Exception e) {
@@ -236,7 +247,11 @@ public class TaoyuGoodsChildCommentsAdapter extends RecyclerView.Adapter<TaoyuGo
 
             @Override
             public void onFinished() {
-
+                if (type.equals("1")){
+                    type="0";
+                }else {
+                    type="1";
+                }
             }
 
             @Override

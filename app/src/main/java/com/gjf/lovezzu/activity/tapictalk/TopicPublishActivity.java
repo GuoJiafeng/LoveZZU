@@ -62,14 +62,15 @@ public class TopicPublishActivity extends AppCompatActivity {
     private static List<String> photosURL=new ArrayList<String>();
     private Integer parentId;
     private String type;
-    private String phone;
+    private String SessionID;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.topic_publish_activity);
         ButterKnife.bind(this);
         type=getIntent().getStringExtra("type");
         SharedPreferences sharedPreferences = getSharedPreferences("userinfo", Activity.MODE_APPEND);
-        phone=sharedPreferences.getString("phone","");
+        SessionID=sharedPreferences.getString("SessionID","");
+
     }
 
     @OnClick({R.id.topic_pub_back, R.id.topic_pub_commit, R.id.topic_publish_addimage})
@@ -80,13 +81,8 @@ public class TopicPublishActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.topic_pub_commit:
-                if (type.equals("一级话题")){
-                    upLoadImages();
-                    publishFirstTopic();
-                }else if (type.equals("二级话题")){
                     upLoadImages();
                     publishChildTopic();
-                }
                 break;
             case R.id.topic_publish_addimage:
                 getImages();
@@ -95,64 +91,15 @@ public class TopicPublishActivity extends AppCompatActivity {
     }
 
 
-    private void publishFirstTopic(){
 
-
-            if (topicName.getText().toString()!=null&&topicContent.getText().toString()!=null){
-            RequestParams requestParams=new RequestParams(LOGIN_URL+"addSubjectAction");
-            requestParams.addBodyParameter("title",topicName.getText().toString());
-            requestParams.addBodyParameter("content",topicContent.getText().toString());
-            requestParams.addBodyParameter("phone",phone);
-            requestParams.addParameter("myUpload",photoList);
-            x.http().post(requestParams, new Callback.CacheCallback<String>() {
-                @Override
-                public void onSuccess(String result) {
-                    Log.e("话题圈============一级发布result",result);
-                    try{
-                        JSONObject jsonObject=new JSONObject(result);
-                        Boolean res=jsonObject.getBoolean("isSuccessful");
-                        if (res){
-                            Toast.makeText(getApplicationContext(),"发布成功",Toast.LENGTH_SHORT).show();
-                        }else {
-                            Toast.makeText(getApplicationContext(),"请检查网络是否通畅！",Toast.LENGTH_SHORT).show();
-                        }
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-                }
-
-                @Override
-                public void onError(Throwable ex, boolean isOnCallback) {
-                    Log.e("话题圈===============以及发布error",ex.getMessage());
-                }
-
-                @Override
-                public void onCancelled(CancelledException cex) {
-
-                }
-
-                @Override
-                public void onFinished() {
-                    photoList.clear();
-                }
-
-                @Override
-                public boolean onCache(String result) {
-                    return false;
-                }
-            });
-        }
-
-
-    }
 
     private void publishChildTopic(){
         if (topicName.getText().toString()!=null&&topicContent.getText().toString()!=null){
             RequestParams requestParams=new RequestParams(LOGIN_URL+"addSubjectAction");
-            requestParams.addBodyParameter("title",topicName.getText().toString());
-            requestParams.addBodyParameter("content",topicContent.getText().toString());
-            requestParams.addParameter("subjectid",parentId);
-            requestParams.addParameter("myUpload",photoList);
+            requestParams.addBodyParameter(" TopicTitle",topicName.getText().toString());
+            requestParams.addBodyParameter("TopicText",topicContent.getText().toString());
+            requestParams.addBodyParameter("SessionID",SessionID);
+            requestParams.addBodyParameter("action","发布话题");
             x.http().post(requestParams, new Callback.CacheCallback<String>() {
                 @Override
                 public void onSuccess(String result) {
@@ -201,6 +148,8 @@ public class TopicPublishActivity extends AppCompatActivity {
                 photoList.add(file);
             }
         }
+
+        /*===============上传图片===============*/
 
     }
 
