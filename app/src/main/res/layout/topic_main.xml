@@ -11,9 +11,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
             android:layout_marginTop="15dp"
-            android:text="这是话题圈的总名字"
+            android:text="话题的标题"
             android:textColor="#000000"
-            android:textSize="25sp" />
+            android:textSize="20sp" />
 
         <LinearLayout
             android:layout_margin="5dp"
@@ -24,13 +24,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="XX天前" />
+                android:text="2015744" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
-                android:text="这是名字"
+                android:text="凹凸"
                 android:textColor="#0099ff" />
 
 
@@ -41,10 +41,10 @@
             android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:maxEms="18"
+                android:maxEms="25"
                 android:maxLines="4"
-                android:text="这是内容,有很多字呀骄傲的技巧我都哇文化低奇偶发动机佛平均哦评价佛牌绝望坡附近哦陪我减肥哦评价我二姐夫"
-                android:textSize="18sp" />
+                android:text="话题的主要内容"
+                android:textSize="15sp" />
 
         <LinearLayout
             android:layout_gravity="right"

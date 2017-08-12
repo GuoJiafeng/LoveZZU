@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -17,9 +16,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.gjf.lovezzu.R;
-import com.gjf.lovezzu.entity.GoodsChildCommentsData;
-import com.gjf.lovezzu.entity.GoodsChildCommentsDateBridging;
-import com.gjf.lovezzu.entity.GoodsCommentsDataBridging;
+import com.gjf.lovezzu.entity.taoyu.GoodsChildCommentsData;
+import com.gjf.lovezzu.entity.taoyu.GoodsChildCommentsDateBridging;
+import com.gjf.lovezzu.entity.taoyu.GoodsCommentsDataBridging;
 import com.gjf.lovezzu.network.TaoyuGoodsChildCommetnsMethods;
 import com.gjf.lovezzu.view.CircleImageView;
 import com.gjf.lovezzu.view.TaoyuGoodsChildCommentsAdapter;
@@ -169,7 +168,7 @@ public class TaoyuChildConmmentsActivity extends AppCompatActivity {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-
+                Toast.makeText(getApplicationContext(),"请重新登录并检查网络是否通畅！",Toast.LENGTH_SHORT).show();
             }
 
             @Override

@@ -18,8 +18,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.gjf.lovezzu.R;
-import com.gjf.lovezzu.entity.Goods;
-import com.gjf.lovezzu.entity.OrderSellDataBridging;
+import com.gjf.lovezzu.entity.taoyu.Goods;
+import com.gjf.lovezzu.entity.taoyu.OrderSellDataBridging;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

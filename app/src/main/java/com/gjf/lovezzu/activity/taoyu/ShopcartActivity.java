@@ -19,16 +19,14 @@ import android.widget.Toast;
 
 import com.gjf.lovezzu.R;
 import com.gjf.lovezzu.activity.MainActivity;
-import com.gjf.lovezzu.entity.Order;
-import com.gjf.lovezzu.entity.OrderAndItems;
-import com.gjf.lovezzu.entity.OrderItems;
-import com.gjf.lovezzu.entity.ShoppingCartDate;
-import com.gjf.lovezzu.entity.ShoppingCartDateBridging;
+import com.gjf.lovezzu.entity.taoyu.Order;
+import com.gjf.lovezzu.entity.taoyu.OrderItems;
+import com.gjf.lovezzu.entity.taoyu.ShoppingCartDate;
+import com.gjf.lovezzu.entity.taoyu.ShoppingCartDateBridging;
 import com.gjf.lovezzu.network.ShoppingCartMethods;
 import com.gjf.lovezzu.view.ShoppingCartAdapter;
 import com.google.gson.Gson;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;

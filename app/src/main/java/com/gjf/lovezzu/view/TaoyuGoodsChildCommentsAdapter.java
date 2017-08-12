@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +16,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.gjf.lovezzu.R;
-import com.gjf.lovezzu.activity.UserInfoActivity;
 import com.gjf.lovezzu.activity.taoyu.TaoyuChildConmmentsActivity;
-import com.gjf.lovezzu.entity.GoodsChildCommentsDateBridging;
+import com.gjf.lovezzu.entity.taoyu.GoodsChildCommentsDateBridging;
 
 import org.json.JSONObject;
 import org.xutils.common.Callback;
@@ -28,10 +26,9 @@ import org.xutils.x;
 
 import java.util.List;
 
-import rx.Subscriber;
-
 import static com.gjf.lovezzu.R.id.child_comm_user_icon;
 import static com.gjf.lovezzu.constant.Url.LOGIN_URL;
+import static com.thefinestartist.utils.content.ContextUtil.getApplicationContext;
 
 /**
  * Created by zhao on 2017/8/3.
@@ -184,7 +181,7 @@ public class TaoyuGoodsChildCommentsAdapter extends RecyclerView.Adapter<TaoyuGo
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-
+                Toast.makeText(getApplicationContext(),"请重新登录并检查网络是否通畅！",Toast.LENGTH_SHORT).show();
             }
 
             @Override

@@ -1,7 +1,7 @@
 package com.gjf.lovezzu.network;
 
 import com.gjf.lovezzu.constant.Url;
-import com.gjf.lovezzu.entity.OrderSellData;
+import com.gjf.lovezzu.entity.taoyu.OrderSellData;
 import com.gjf.lovezzu.network.api.OrderSellServer;
 
 import java.util.concurrent.TimeUnit;

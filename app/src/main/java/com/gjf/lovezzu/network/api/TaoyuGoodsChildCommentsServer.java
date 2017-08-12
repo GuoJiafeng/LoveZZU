@@ -1,6 +1,6 @@
 package com.gjf.lovezzu.network.api;
 
-import com.gjf.lovezzu.entity.GoodsChildCommentsData;
+import com.gjf.lovezzu.entity.taoyu.GoodsChildCommentsData;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;

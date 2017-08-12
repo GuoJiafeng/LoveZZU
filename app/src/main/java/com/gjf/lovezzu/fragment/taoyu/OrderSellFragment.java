@@ -16,8 +16,8 @@ import android.widget.Toast;
 
 import com.gjf.lovezzu.R;
 import com.gjf.lovezzu.activity.taoyu.TaoyuOrderActivity;
-import com.gjf.lovezzu.entity.OrderSellData;
-import com.gjf.lovezzu.entity.OrderSellDataBridging;
+import com.gjf.lovezzu.entity.taoyu.OrderSellData;
+import com.gjf.lovezzu.entity.taoyu.OrderSellDataBridging;
 
 import com.gjf.lovezzu.network.OrderSellMethods;
 
@@ -27,6 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import rx.Subscriber;
+
+import static com.thefinestartist.utils.content.ContextUtil.getApplicationContext;
 
 /**
  * Created by zhao on 2017/8/5.
@@ -90,6 +92,7 @@ public class OrderSellFragment extends Fragment{
             @Override
             public void onError(Throwable e) {
                 Log.e("订单-------error",e.getMessage());
+                Toast.makeText(getApplicationContext(),"请重新登录并检查网络是否通畅！",Toast.LENGTH_SHORT).show();
             }
 
             @Override

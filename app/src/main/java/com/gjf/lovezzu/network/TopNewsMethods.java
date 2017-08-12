@@ -1,7 +1,7 @@
 package com.gjf.lovezzu.network;
 
 import com.gjf.lovezzu.constant.Url;
-import com.gjf.lovezzu.entity.TopNewsData;
+import com.gjf.lovezzu.entity.school.TopNewsData;
 import com.gjf.lovezzu.network.api.TopNewsServer;
 
 import java.util.concurrent.TimeUnit;

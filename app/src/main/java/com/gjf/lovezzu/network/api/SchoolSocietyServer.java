@@ -1,6 +1,6 @@
 package com.gjf.lovezzu.network.api;
 
-import com.gjf.lovezzu.entity.SocietyNewsData;
+import com.gjf.lovezzu.entity.school.SocietyNewsData;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;

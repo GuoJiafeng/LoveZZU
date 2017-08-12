@@ -1,6 +1,6 @@
 package com.gjf.lovezzu.network.api;
 
-import com.gjf.lovezzu.entity.GoodsCommentsData;
+import com.gjf.lovezzu.entity.taoyu.GoodsCommentsData;
 
 
 

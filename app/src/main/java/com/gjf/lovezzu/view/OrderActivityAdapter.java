@@ -11,12 +11,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gjf.lovezzu.R;
-import com.gjf.lovezzu.activity.taoyu.ShopcartActivity;
 import com.gjf.lovezzu.activity.taoyu.TaoyuOrderActivity;
 import com.gjf.lovezzu.constant.Url;
-import com.gjf.lovezzu.entity.OrderDataBridging;
-import com.gjf.lovezzu.entity.OrderDataResult;
-import com.gjf.lovezzu.entity.OrderGoodsImagesItem;
+import com.gjf.lovezzu.entity.taoyu.OrderDataBridging;
+import com.gjf.lovezzu.entity.taoyu.OrderDataResult;
+import com.gjf.lovezzu.entity.taoyu.OrderGoodsImagesItem;
 
 import org.json.JSONObject;
 import org.xutils.common.Callback;
@@ -25,7 +24,6 @@ import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.jar.JarEntry;
 
 /**
  * Created by zhao on 2017/8/6.

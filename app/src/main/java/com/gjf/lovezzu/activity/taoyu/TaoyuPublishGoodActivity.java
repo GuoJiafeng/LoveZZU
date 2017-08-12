@@ -158,7 +158,7 @@ public class TaoyuPublishGoodActivity extends AppCompatActivity {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-
+                Toast.makeText(getApplicationContext(),"请重新登录并检查网络是否通畅！",Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -256,16 +256,10 @@ public class TaoyuPublishGoodActivity extends AppCompatActivity {
 
                         if (photoAdapter.getItemViewType(position) == PhotoAdapter.TYPE_ADD) {
                             PhotoPicker.builder()
-                                    .setPhotoCount(PhotoAdapter.MAX)
+                                    .setPhotoCount(5)
                                     .setShowCamera(true)
                                     .setPreviewEnabled(false)
                                     .setSelected(selectedPhotos)
-                                    .start(TaoyuPublishGoodActivity.this);
-                            photoAdapter.notifyDataSetChanged();
-                        } else {
-                            PhotoPreview.builder()
-                                    .setPhotos(selectedPhotos)
-                                    .setCurrentItem(position)
                                     .start(TaoyuPublishGoodActivity.this);
                             photoAdapter.notifyDataSetChanged();
                         }

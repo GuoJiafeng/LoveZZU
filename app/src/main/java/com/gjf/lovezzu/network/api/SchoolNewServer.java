@@ -1,6 +1,6 @@
 package com.gjf.lovezzu.network.api;
 
-import com.gjf.lovezzu.entity.SchoolNewsData;
+import com.gjf.lovezzu.entity.school.SchoolNewsData;
 
 import retrofit2.http.GET;
 import retrofit2.http.Query;

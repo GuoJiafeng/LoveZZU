@@ -13,8 +13,8 @@ import com.bumptech.glide.Glide;
 import com.gjf.lovezzu.R;
 import com.gjf.lovezzu.activity.taoyu.OrderBuyInfoAcivity;
 import com.gjf.lovezzu.activity.taoyu.TaoyuOrderActivity;
-import com.gjf.lovezzu.entity.OrderDataBridging;
-import com.gjf.lovezzu.entity.OrderGoodsImagesItem;
+import com.gjf.lovezzu.entity.taoyu.OrderDataBridging;
+import com.gjf.lovezzu.entity.taoyu.OrderGoodsImagesItem;
 
 import java.util.List;
 

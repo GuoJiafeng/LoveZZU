@@ -15,8 +15,8 @@ import android.widget.Toast;
 
 import com.gjf.lovezzu.R;
 import com.gjf.lovezzu.activity.MainActivity;
-import com.gjf.lovezzu.entity.MyPublishGoodsData;
-import com.gjf.lovezzu.entity.TaoyuGoodsResult;
+import com.gjf.lovezzu.entity.taoyu.MyPublishGoodsData;
+import com.gjf.lovezzu.entity.taoyu.TaoyuGoodsResult;
 import com.gjf.lovezzu.network.MyGoodsMethods;
 import com.gjf.lovezzu.view.MyPublishOGoodsAdapter;
 

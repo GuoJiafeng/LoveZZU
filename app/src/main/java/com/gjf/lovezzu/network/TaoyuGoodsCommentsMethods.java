@@ -1,7 +1,7 @@
 package com.gjf.lovezzu.network;
 
 import com.gjf.lovezzu.constant.Url;
-import com.gjf.lovezzu.entity.GoodsCommentsData;
+import com.gjf.lovezzu.entity.taoyu.GoodsCommentsData;
 import com.gjf.lovezzu.network.api.TaoyuGoodsCommentsServer;
 
 import java.util.concurrent.TimeUnit;

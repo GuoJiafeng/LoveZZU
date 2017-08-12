@@ -13,7 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gjf.lovezzu.R;
-import com.gjf.lovezzu.entity.OrderDataBridging;
+import com.gjf.lovezzu.entity.taoyu.OrderDataBridging;
 import com.gjf.lovezzu.view.OrderBuyInfoAdapter;
 
 import butterknife.BindView;

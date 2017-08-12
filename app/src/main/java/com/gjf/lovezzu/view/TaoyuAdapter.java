@@ -2,27 +2,21 @@ package com.gjf.lovezzu.view;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.gjf.lovezzu.R;
 import com.gjf.lovezzu.activity.taoyu.TaoyuActivity;
 import com.gjf.lovezzu.activity.taoyu.TaoyuDetialActivity;
-import com.gjf.lovezzu.entity.Goods;
-import com.gjf.lovezzu.entity.TaoyuDataBridging;
-import com.gjf.lovezzu.network.DownloadIconMethods;
+import com.gjf.lovezzu.entity.taoyu.Goods;
+import com.gjf.lovezzu.entity.taoyu.TaoyuDataBridging;
 
 import java.util.List;
-
-import rx.Subscriber;
 
 import static com.gjf.lovezzu.constant.Url.LOGIN_URL;
 
@@ -80,7 +74,6 @@ public class TaoyuAdapter extends RecyclerView.Adapter<TaoyuAdapter.ViewHolder> 
                 goods.setImages(imagesURL);
                 goods.setGprice(taoyuResultNew.getGoods().getGprice());
                 intent.putExtra("goods", goods);
-                Log.e("商品详情--------onCreateViewHolder", goods.getGoods_id() + "  点击位置" + holder.getAdapterPosition());
                 TaoyuActivity.taoyuActivity.startActivity(intent);
             }
         });

@@ -16,10 +16,8 @@ import android.widget.Toast;
 
 import com.gjf.lovezzu.R;
 import com.gjf.lovezzu.activity.taoyu.TaoyuOrderActivity;
-import com.gjf.lovezzu.entity.Order;
-import com.gjf.lovezzu.entity.OrderData;
-import com.gjf.lovezzu.entity.OrderDataBridging;
-import com.gjf.lovezzu.entity.OrderDataResult;
+import com.gjf.lovezzu.entity.taoyu.OrderData;
+import com.gjf.lovezzu.entity.taoyu.OrderDataBridging;
 import com.gjf.lovezzu.network.OrderDataMethods;
 import com.gjf.lovezzu.view.OrderActivityAdapter;
 
@@ -27,6 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import rx.Subscriber;
+
+import static com.thefinestartist.utils.content.ContextUtil.getApplicationContext;
 
 /**
  * Created by zhao on 2017/8/5.
@@ -92,6 +92,7 @@ public class OrderBuyFragment extends Fragment {
             @Override
             public void onError(Throwable e) {
                 Log.e("订单-------------error",e.getMessage());
+                Toast.makeText(getApplicationContext(),"请重新登录并检查网络是否通畅！",Toast.LENGTH_SHORT).show();
             }
 
             @Override

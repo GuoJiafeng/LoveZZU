@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
@@ -22,8 +21,8 @@ import com.gjf.lovezzu.activity.palytogether.PlayTogetherActivity;
 import com.gjf.lovezzu.activity.taoyu.TaoyuActivity;
 import com.gjf.lovezzu.activity.tapictalk.TopicTalkActivity;
 import com.gjf.lovezzu.activity.treehole.TreeHoleActivity;
-import com.gjf.lovezzu.entity.TopNewsData;
-import com.gjf.lovezzu.entity.TopNewsResult;
+import com.gjf.lovezzu.entity.school.TopNewsData;
+import com.gjf.lovezzu.entity.school.TopNewsResult;
 import com.gjf.lovezzu.network.TopNewsMethods;
 import com.gjf.lovezzu.view.ImageViewHolder;
 import com.thefinestartist.finestwebview.FinestWebView;

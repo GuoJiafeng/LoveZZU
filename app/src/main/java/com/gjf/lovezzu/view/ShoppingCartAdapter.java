@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,11 +21,9 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.gjf.lovezzu.R;
 import com.gjf.lovezzu.activity.taoyu.ShopcartActivity;
-import com.gjf.lovezzu.activity.taoyu.TaoyuChildConmmentsActivity;
 import com.gjf.lovezzu.activity.taoyu.TaoyuDetialActivity;
-import com.gjf.lovezzu.entity.Goods;
-import com.gjf.lovezzu.entity.ShoppingCartDateBridging;
-import com.gjf.lovezzu.entity.TaoyuGoodsResult;
+import com.gjf.lovezzu.entity.taoyu.Goods;
+import com.gjf.lovezzu.entity.taoyu.ShoppingCartDateBridging;
 
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
@@ -37,6 +34,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.gjf.lovezzu.constant.Url.LOGIN_URL;
+import static com.thefinestartist.utils.content.ContextUtil.getApplicationContext;
 
 
 /**
@@ -175,6 +173,7 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
+                Toast.makeText(getApplicationContext(),"请重新登录并检查网络是否通畅！",Toast.LENGTH_SHORT).show();
             }
 
             @Override

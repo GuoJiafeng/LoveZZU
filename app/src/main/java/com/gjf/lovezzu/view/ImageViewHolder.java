@@ -8,10 +8,6 @@ import com.bigkoo.convenientbanner.holder.Holder;
 import com.bumptech.glide.Glide;
 import com.gjf.lovezzu.R;
 import com.gjf.lovezzu.activity.MainActivity;
-import com.gjf.lovezzu.entity.TopNewsResult;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by zhao on 2017/8/9.

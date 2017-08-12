@@ -13,8 +13,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.gjf.lovezzu.R;
-import com.gjf.lovezzu.entity.TaoyuDataBridging;
-import com.gjf.lovezzu.entity.TaoyuGoodsData;
+import com.gjf.lovezzu.entity.taoyu.TaoyuDataBridging;
+import com.gjf.lovezzu.entity.taoyu.TaoyuGoodsData;
 import com.gjf.lovezzu.network.TaoyuGoodsListMethods;
 import com.gjf.lovezzu.view.TaoyuAdapter;
 

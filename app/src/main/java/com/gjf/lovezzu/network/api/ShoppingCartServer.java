@@ -1,6 +1,6 @@
 package com.gjf.lovezzu.network.api;
 
-import com.gjf.lovezzu.entity.ShoppingCartDate;
+import com.gjf.lovezzu.entity.taoyu.ShoppingCartDate;
 
 
 

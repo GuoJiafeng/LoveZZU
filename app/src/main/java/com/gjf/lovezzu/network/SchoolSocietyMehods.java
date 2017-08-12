@@ -1,7 +1,7 @@
 package com.gjf.lovezzu.network;
 
 import com.gjf.lovezzu.constant.Url;
-import com.gjf.lovezzu.entity.SocietyNewsData;
+import com.gjf.lovezzu.entity.school.SocietyNewsData;
 import com.gjf.lovezzu.network.api.SchoolSocietyServer;
 
 import java.util.concurrent.TimeUnit;

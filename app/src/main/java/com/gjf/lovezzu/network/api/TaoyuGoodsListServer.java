@@ -1,6 +1,6 @@
 package com.gjf.lovezzu.network.api;
 
-import com.gjf.lovezzu.entity.TaoyuGoodsData;
+import com.gjf.lovezzu.entity.taoyu.TaoyuGoodsData;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;

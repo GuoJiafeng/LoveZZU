@@ -68,6 +68,7 @@ public class ThemePublishActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         SharedPreferences sharedPreferences = getSharedPreferences("userinfo", Activity.MODE_APPEND);
         SessionID=sharedPreferences.getString("SessionID","");
+
     }
 
     @OnClick({R.id.theme_pub_back, R.id.theme_pub_commit, R.id.theme_name, R.id.theme_publish_addimage})
@@ -82,6 +83,7 @@ public class ThemePublishActivity extends AppCompatActivity {
                 break;
             case R.id.theme_publish_addimage:
                 getImages();
+                Toast.makeText(getApplicationContext(),"只可上传一张主题图片！",Toast.LENGTH_LONG).show();
                 break;
         }
     }
@@ -114,6 +116,7 @@ public class ThemePublishActivity extends AppCompatActivity {
 
                 @Override
                 public void onError(Throwable ex, boolean isOnCallback) {
+                    Toast.makeText(getApplicationContext(),"请重新登录并检查网络是否通畅！",Toast.LENGTH_SHORT).show();
                     Log.e("话题圈============主题发布error",ex.getMessage());
                 }
 
@@ -147,6 +150,7 @@ public class ThemePublishActivity extends AppCompatActivity {
             }
         }
         RequestParams requestParams=new RequestParams(LOGIN_URL+"imagesupload");
+        requestParams.setMultipart(true);
         requestParams.addBodyParameter("ThemeId",theme);
         requestParams.addBodyParameter("action","上传主题图片");
         requestParams.addParameter("images",photoList);
@@ -177,7 +181,7 @@ public class ThemePublishActivity extends AppCompatActivity {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("话题圈============主题发布error图片",ex.getMessage());
+                Log.e("话题圈============主题发布error图片",ex.getMessage()+ex.toString());
             }
 
             @Override
@@ -200,9 +204,12 @@ public class ThemePublishActivity extends AppCompatActivity {
 
     private void getImages(){
         photoAdapter=new PhotoAdapter(this,selectedPhotos);
-        themePublishImages.setLayoutManager(new StaggeredGridLayoutManager(1, OrientationHelper.VERTICAL));
+
+        themePublishImages.setLayoutManager(new StaggeredGridLayoutManager(1, OrientationHelper.HORIZONTAL));
         themePublishImages.setAdapter(photoAdapter);
+
         PhotoPicker.builder()
+                .setShowGif(true)
                 .setPhotoCount(1)
                 .start(ThemePublishActivity.this);
         themePublishImages.addOnItemTouchListener(new RecyclerItemClickListener(this,
@@ -212,16 +219,10 @@ public class ThemePublishActivity extends AppCompatActivity {
 
                         if (photoAdapter.getItemViewType(position) == PhotoAdapter.TYPE_ADD) {
                             PhotoPicker.builder()
-                                    .setPhotoCount(PhotoAdapter.MAX)
+                                    .setPhotoCount(1)
                                     .setShowCamera(true)
                                     .setPreviewEnabled(false)
                                     .setSelected(selectedPhotos)
-                                    .start(ThemePublishActivity.this);
-                            photoAdapter.notifyDataSetChanged();
-                        } else {
-                            PhotoPreview.builder()
-                                    .setPhotos(selectedPhotos)
-                                    .setCurrentItem(position)
                                     .start(ThemePublishActivity.this);
                             photoAdapter.notifyDataSetChanged();
                         }
