@@ -14,7 +14,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:id="@+id/biaobai_wall"
             android:background="@drawable/love_card"
         />
 
@@ -43,7 +42,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:id="@+id/start_biaobai"
             android:background="@drawable/love_pro"
             />
 

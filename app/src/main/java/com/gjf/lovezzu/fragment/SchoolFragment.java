@@ -35,14 +35,6 @@ public class SchoolFragment extends Fragment {
     private School_shoolfragment school_shoolfragment;
     private Shool_societyfragment shool_societyfragment;
     private View view;
-    final int RIGHT = 0;
-    final int LEFT = 1;
-    private FragmentTabHost mTabHost;
-    private LayoutInflater layoutInflater;
-    private Class fragmentArray[] = {School_shoolfragment.class, Shool_societyfragment.class};
-    private String textViewArray[] = {"学校", "社会"};
-    private List<android.support.v4.app.Fragment> list = new ArrayList<android.support.v4.app.Fragment>();
-    private ViewPager vp;
 
     @Nullable
     @Override

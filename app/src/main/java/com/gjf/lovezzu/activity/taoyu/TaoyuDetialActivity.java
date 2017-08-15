@@ -1,25 +1,22 @@
 package com.gjf.lovezzu.activity.taoyu;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.gjf.lovezzu.R;
-import com.gjf.lovezzu.entity.Goods;
-import com.gjf.lovezzu.entity.GoodsCommentsData;
-import com.gjf.lovezzu.entity.GoodsCommentsDataBridging;
-import com.gjf.lovezzu.entity.GoodsImages;
+import com.gjf.lovezzu.entity.taoyu.Goods;
+import com.gjf.lovezzu.entity.taoyu.GoodsCommentsData;
+import com.gjf.lovezzu.entity.taoyu.GoodsCommentsDataBridging;
+import com.gjf.lovezzu.entity.taoyu.GoodsImages;
 import com.gjf.lovezzu.network.TaoyuGoodsCommentsMethods;
 import com.gjf.lovezzu.view.TaoyuGoodsCommentsAdapter;
 import com.gjf.lovezzu.view.TaoyuGoodsImagesAdapter;
@@ -37,7 +34,7 @@ import rx.Subscriber;
 import static com.gjf.lovezzu.constant.Url.LOGIN_URL;
 
 /**
- * Created by BlackBeard丶 on 2017/04/18.
+ *
  * finished by zhao on 2017/08/1
  */
 
@@ -84,7 +81,7 @@ public class TaoyuDetialActivity extends AppCompatActivity {
         SessionID = sharedPreferences.getString("SessionID", "");
         goods = (Goods) getIntent().getSerializableExtra("goods");
         goods_id=goods.getGoods_id().toString();
-        Log.e("商品详情---------------", goods.getGoods_id() + "");
+
         initView();
         getGoodsComments();
         showComments();
@@ -193,7 +190,7 @@ public class TaoyuDetialActivity extends AppCompatActivity {
         x.http().post(requestParams, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.e("级评论------------------发布", result);
+
                if (result!=null){
                    Toast.makeText(TaoyuDetialActivity.taoyuDetialActivity,"评论成功！",Toast.LENGTH_SHORT).show();
                    editComments.setText("");
@@ -204,7 +201,7 @@ public class TaoyuDetialActivity extends AppCompatActivity {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("二级评论------------------发布", ex.getMessage());
+
             }
 
             @Override

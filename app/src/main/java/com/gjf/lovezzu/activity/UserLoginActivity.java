@@ -17,7 +17,6 @@ import com.gjf.lovezzu.fragment.UserSingUpFragment;
  */
 public class UserLoginActivity extends AppCompatActivity {
     private UserLoginFragmen userLoginFragmen;
-    private UserSingUpFragment userSingUpFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -5,6 +5,7 @@
     <file url="file://$PROJECT_DIR$/flashview/src/main/java/com/gc/flashview/effect/DepthPageTransformer.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/flashview/src/main/java/com/gc/flashview/effect/InRightDownTransformer.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/flashview/src/main/java/com/gc/flashview/effect/InRightUpTransformer.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/flashview/src/main/java/com/gc/flashview/effect/RotateTransformer.java" charset="GBK" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

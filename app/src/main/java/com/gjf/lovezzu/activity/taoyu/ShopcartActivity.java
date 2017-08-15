@@ -19,16 +19,14 @@ import android.widget.Toast;
 
 import com.gjf.lovezzu.R;
 import com.gjf.lovezzu.activity.MainActivity;
-import com.gjf.lovezzu.entity.Order;
-import com.gjf.lovezzu.entity.OrderAndItems;
-import com.gjf.lovezzu.entity.OrderItems;
-import com.gjf.lovezzu.entity.ShoppingCartDate;
-import com.gjf.lovezzu.entity.ShoppingCartDateBridging;
+import com.gjf.lovezzu.entity.taoyu.Order;
+import com.gjf.lovezzu.entity.taoyu.OrderItems;
+import com.gjf.lovezzu.entity.taoyu.ShoppingCartDate;
+import com.gjf.lovezzu.entity.taoyu.ShoppingCartDateBridging;
 import com.gjf.lovezzu.network.ShoppingCartMethods;
 import com.gjf.lovezzu.view.ShoppingCartAdapter;
 import com.google.gson.Gson;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
@@ -90,6 +88,13 @@ public class ShopcartActivity extends AppCompatActivity {
             public void onRefresh() {
                 shoppingCartDateBridgingList.clear();
                 getShopCart();
+                for (int i = 0; i < map.size(); i++) {
+                    map.put(i, false);
+                }
+                shoppingCartAdapter.notifyDataSetChanged();
+                cartAll.setChecked(false);
+                orderItemsList.clear();
+                StrOrderItemsData.clear();
             }
         });
     }
@@ -161,6 +166,7 @@ public class ShopcartActivity extends AppCompatActivity {
                         shoppingCartAdapter.notifyDataSetChanged();
                         cartAll.setChecked(false);
                         orderItemsList.clear();
+                        StrOrderItemsData.clear();
                     }
                 }).show();
                 break;
@@ -177,6 +183,8 @@ public class ShopcartActivity extends AppCompatActivity {
         if (orderItemsList.size()!=0){
             orderItemsList.clear();
         }
+        StrOrderItemsData.clear();
+        orderItemsList.clear();
     }
 
 
@@ -258,6 +266,7 @@ public class ShopcartActivity extends AppCompatActivity {
                 for (int i = 0; i < map.size(); i++) {
                     map.put(i, false);
                 }
+                StrOrderItemsData.clear();
                 shoppingCartAdapter.notifyDataSetChanged();
                 cartAll.setChecked(false);
                 orderItemsList.clear();
@@ -271,5 +280,16 @@ public class ShopcartActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        for (int i = 0; i < map.size(); i++) {
+            map.put(i, false);
+        }
+        StrOrderItemsData.clear();
+        shoppingCartAdapter.notifyDataSetChanged();
+        cartAll.setChecked(false);
+        orderItemsList.clear();
+    }
 }
 

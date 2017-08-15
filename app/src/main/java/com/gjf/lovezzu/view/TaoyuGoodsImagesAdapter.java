@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.gjf.lovezzu.R;
 import com.gjf.lovezzu.activity.taoyu.TaoyuDetialActivity;
-import com.gjf.lovezzu.entity.GoodsImages;
+import com.gjf.lovezzu.entity.taoyu.GoodsImages;
 
 import java.util.List;
 

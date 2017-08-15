@@ -15,18 +15,24 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.gjf.lovezzu.R;
+import com.gjf.lovezzu.activity.MainActivity;
 import com.gjf.lovezzu.activity.UserInfoActivity;
 import com.gjf.lovezzu.activity.UserLoginActivity;
 import com.gjf.lovezzu.activity.UserSettingActivity;
 import com.gjf.lovezzu.activity.saylvoeActivity.SayLoveActivity;
+import com.gjf.lovezzu.activity.taoyu.MyPublishGoodsActivity;
 import com.gjf.lovezzu.activity.taoyu.ShopcartActivity;
+import com.gjf.lovezzu.activity.taoyu.TaoyuOrderActivity;
 import com.gjf.lovezzu.entity.CheckLoginApplication;
 import com.gjf.lovezzu.view.CircleImageView;
+import com.gjf.lovezzu.view.WheelView;
+import com.thefinestartist.finestwebview.FinestWebView;
+
+import java.util.Arrays;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 import static com.gjf.lovezzu.constant.Url.LOGIN_URL;
 
@@ -53,8 +59,15 @@ public class PersonFragment extends Fragment {
     TextView userNickName;
     @BindView(R.id.user_state)
     TextView userState;
-
+    @BindView(R.id.user_publish_goods_list)
+    LinearLayout publish_goods_list;
+    @BindView(R.id.user_mark)
+    LinearLayout user_mark;
     private View view;
+    private static final String[] MARK={"期末成绩","四六级"};
+    private String type="四六级";
+    private String markUrl="";
+    private android.app.AlertDialog markDialog;
 
     @Override
 
@@ -101,7 +114,7 @@ public class PersonFragment extends Fragment {
         startActivity(intent);
     }
 
-    @OnClick({R.id.user_image, R.id.person_usersetting, R.id.person_saylove, R.id.user_shop_car, R.id.user_shop_list})
+    @OnClick({R.id.user_image, R.id.person_usersetting, R.id.person_saylove, R.id.user_shop_car, R.id.user_shop_list,R.id.user_publish_goods_list,R.id.user_mark})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.user_image:
@@ -124,6 +137,61 @@ public class PersonFragment extends Fragment {
                 startActivity(intent);
                 break;
             case R.id.user_shop_list:
+                Intent intent2 = new Intent(getContext(), TaoyuOrderActivity.class);
+                startActivity(intent2);
+                break;
+            case R.id.user_publish_goods_list:
+                Intent intent1=new Intent(getContext(), MyPublishGoodsActivity.class);
+                startActivity(intent1);
+                break;
+            case R.id.user_mark:
+                View outerView = LayoutInflater.from(MainActivity.mainActivity).inflate(R.layout.wheel_view, null);
+                WheelView wv = (WheelView) outerView.findViewById(R.id.wheel_view_wv);
+                wv.setOffset(1);
+                wv.setItems(Arrays.asList(MARK));
+                wv.setSeletion(1);
+                wv.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
+                    @Override
+                    public void onSelected(int selectedIndex, String item) {
+                        type=item;
+                    }
+                });
+
+                markDialog=new android.app.AlertDialog.Builder(MainActivity.mainActivity)
+                    .setTitle("查询成绩")
+                    .setView(outerView)
+                    .show();
+                TextView txtSure= (TextView) outerView.findViewById(R.id.txt_sure);
+                txtSure.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                       if (type.equals("四六级")){
+                           markUrl="http://cet.superdaxue.com/";
+                       }else if (type.equals("期末成绩")){
+                           markUrl="http://jw.zzu.edu.cn/";
+                       }
+                        markDialog.dismiss();
+                        new  FinestWebView.Builder(MainActivity.mainActivity)
+                                .stringResCopiedToClipboard(R.string.copied_to_clipboard)
+                                .stringResRefresh(R.string.refresh)
+                                .stringResShareVia(R.string.share_via)
+                                .stringResCopyLink(R.string.copy_link)
+                                .stringResOpenWith(R.string.open_with)
+                                .webViewSupportZoom(true)
+                                .webViewBuiltInZoomControls(true)
+                                .show(markUrl);
+
+                    }
+                });
+                TextView txtCancle= (TextView) outerView.findViewById(R.id.txt_cancel);
+                txtCancle.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        markDialog.dismiss();
+                    }
+                });
+
+
                 break;
         }
     }
@@ -132,5 +200,6 @@ public class PersonFragment extends Fragment {
     public void onResume() {
         super.onResume();
         initView();
+        type="四六级";
     }
 }

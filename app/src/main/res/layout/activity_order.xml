@@ -14,7 +14,7 @@
             android:layout_marginRight="5dp"
             android:layout_weight="1"
             android:gravity="right"
-            android:text="喜新"
+            android:text="购买"
             android:textSize="20sp" />
 
         <TextView
@@ -23,14 +23,14 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_weight="1"
-            android:text="换旧"
+            android:text="售出"
             android:textSize="20sp" />
     </LinearLayout>
     <FrameLayout
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:id="@+id/order_activity"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"/>
 
-    </FrameLayout>
+
 </LinearLayout>

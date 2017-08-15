@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -17,9 +16,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.gjf.lovezzu.R;
-import com.gjf.lovezzu.entity.GoodsChildCommentsData;
-import com.gjf.lovezzu.entity.GoodsChildCommentsDateBridging;
-import com.gjf.lovezzu.entity.GoodsCommentsDataBridging;
+import com.gjf.lovezzu.entity.taoyu.GoodsChildCommentsData;
+import com.gjf.lovezzu.entity.taoyu.GoodsChildCommentsDateBridging;
+import com.gjf.lovezzu.entity.taoyu.GoodsCommentsDataBridging;
 import com.gjf.lovezzu.network.TaoyuGoodsChildCommetnsMethods;
 import com.gjf.lovezzu.view.CircleImageView;
 import com.gjf.lovezzu.view.TaoyuGoodsChildCommentsAdapter;
@@ -74,6 +73,7 @@ public class TaoyuChildConmmentsActivity extends AppCompatActivity {
     private List<GoodsChildCommentsDateBridging> goodsChildCommentsDateBridgingList = new ArrayList<>();
     private String SessionID;
     public static TaoyuChildConmmentsActivity taoyuChildConmmentsActivity;
+    private String type="1";
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,12 +121,12 @@ public class TaoyuChildConmmentsActivity extends AppCompatActivity {
 
             @Override
             public void onError(Throwable e) {
-                Log.e("二级评论-----------------查询", e.getMessage());
+
             }
 
             @Override
             public void onNext(GoodsChildCommentsData goodsChildCommentsData) {
-                Log.e("二级评论-----------------查询", "查询");
+
                 List<GoodsChildCommentsDateBridging> list = goodsChildCommentsData.getValues();
                 if (list.size() == 0) {
                     Toast.makeText(getApplicationContext(), "还没有评论，快来吐槽吧！", Toast.LENGTH_SHORT).show();
@@ -150,7 +150,7 @@ public class TaoyuChildConmmentsActivity extends AppCompatActivity {
         x.http().post(requestParams, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.e("二级评论-----------------发布", result);
+
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     Boolean res = jsonObject.getBoolean("isSuccessful");
@@ -168,7 +168,7 @@ public class TaoyuChildConmmentsActivity extends AppCompatActivity {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("二级评论-----------------发布", ex.getMessage());
+                Toast.makeText(getApplicationContext(),"请重新登录并检查网络是否通畅！",Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -188,25 +188,35 @@ public class TaoyuChildConmmentsActivity extends AppCompatActivity {
         });
     }
 
-    private void addThnum() {
+    private void addThnum(String num) {
+
         RequestParams requestParams = new RequestParams(LOGIN_URL + "comments_L2Action");
         requestParams.addBodyParameter("action", "postcomments_L2");
         requestParams.addBodyParameter("L1_Cid", parentComments.getComments_L1().getL1_Cid() + "");
         requestParams.addBodyParameter("L2_Cid", "");
         requestParams.addBodyParameter("SessionID", SessionID);
         requestParams.addBodyParameter("comments", "");
-        requestParams.addBodyParameter("ThumbNum", "1");
+        requestParams.addBodyParameter("ThumbNum",num);
         x.http().post(requestParams, new Callback.CacheCallback<String>() {
+
             @Override
             public void onSuccess(String result) {
-                Log.e("二级评论-----------------点赞", result);
+
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     Boolean res = jsonObject.getBoolean("isSuccessful");
+
                     if (res) {
-                        Toast.makeText(getApplicationContext(), "+1", Toast.LENGTH_SHORT).show();
-                        Integer zanNum = Integer.parseInt(parentCommZan.getText().toString());
-                        parentCommZan.setText(zanNum + 1);
+                        if (type.equals("1")){
+                            Toast.makeText(getApplicationContext(), "+1 再点取消点赞", Toast.LENGTH_SHORT).show();
+                            Integer zanNum = Integer.parseInt(parentCommZan.getText().toString());
+                            parentCommZan.setText((zanNum + 1)+"");
+                        }else {
+                            Toast.makeText(getApplicationContext(), "-1", Toast.LENGTH_SHORT).show();
+                            Integer zanNum = Integer.parseInt(parentCommZan.getText().toString());
+                            parentCommZan.setText((zanNum - 1)+"");
+                        }
+
                     } else {
                         Toast.makeText(getApplicationContext(), "请重新登录或检查网络是否通畅！", Toast.LENGTH_SHORT).show();
                     }
@@ -219,7 +229,6 @@ public class TaoyuChildConmmentsActivity extends AppCompatActivity {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("二级评论-----------------点赞", ex.getMessage());
             }
 
             @Override
@@ -229,7 +238,11 @@ public class TaoyuChildConmmentsActivity extends AppCompatActivity {
 
             @Override
             public void onFinished() {
-
+                if (type.equals("1")){
+                    type="0";
+                }else {
+                    type="1";
+                }
             }
 
             @Override
@@ -252,7 +265,8 @@ public class TaoyuChildConmmentsActivity extends AppCompatActivity {
 
                 break;
             case R.id.child_zan:
-                addThnum();
+                    addThnum(type);
+
                 break;
             case  R.id.goods_child_refresh:
                 goodsChildRefresh.setTextColor(Color.parseColor("#CDC9C9"));

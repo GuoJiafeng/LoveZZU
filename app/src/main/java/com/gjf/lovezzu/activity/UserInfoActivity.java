@@ -88,15 +88,13 @@ public class UserInfoActivity extends AppCompatActivity {
     @BindView(R.id.userinfo_major_layout)
     RelativeLayout userinfo_major_layout;
 
-    private static String userPhone;
-    private static String userName;
-    private String token;
+
     private SharedPreferences sharedPreferences;
     private String phone;
     private String id = "";
 
 
-    private static String userIcon, imageURL = null;
+    private static String userIcon;
     private static String upIcon;
     private String SessionID;
 
@@ -294,6 +292,7 @@ public class UserInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 SaveInfoNcikNmae(text.getText().toString());
+                user_info_nickname_text.setText(text.getText().toString());
             }
         }).setNegativeButton("取消", null).show();
 
@@ -313,7 +312,7 @@ public class UserInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 SaveInfoSex(text.getText().toString());
-                user_info_nickname_text.setText(text.getText().toString());
+                user_info_sex_text.setText(text.getText().toString());
 
             }
         }).setNegativeButton("取消", null).show();

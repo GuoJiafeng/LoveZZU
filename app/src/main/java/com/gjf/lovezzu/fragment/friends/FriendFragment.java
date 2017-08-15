@@ -1,9 +1,7 @@
 package com.gjf.lovezzu.fragment.friends;
 
 import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.content.Intent;
+
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -36,14 +34,12 @@ public class FriendFragment extends Fragment {
     Unbinder unbinder;
     @Nullable
     private View view;
-    private ContactListFragment contactListFragment;
-    private ConversationListFragment conversationFragment;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        contactListFragment = new ContactListFragment();
-        conversationFragment = new ConversationListFragment();
+
     }
 
     @Override
@@ -51,7 +47,7 @@ public class FriendFragment extends Fragment {
         view = inflater.inflate(R.layout.friend_fragment, container, false);
         ButterKnife.bind(this, view);
         friendsMessages.setTextColor(Color.parseColor("#0090FD"));
-        replaceFragment(conversationFragment);
+
         return view;
 
     }
@@ -60,25 +56,19 @@ public class FriendFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        //unbinder.unbind();
+
     }
 
     @OnClick({R.id.friends_messages, R.id.friends_people, R.id.add_friends})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.friends_messages:
-                if (conversationFragment == null) {
-                    conversationFragment = new ConversationListFragment();
-                }
-                replaceFragment(conversationFragment);
+
                 friendsMessages.setTextColor(Color.parseColor("#0090FD"));
                 friendsPeople.setTextColor(Color.parseColor("#000000"));
                 break;
             case R.id.friends_people:
-                if (contactListFragment == null) {
-                    contactListFragment = new ContactListFragment();
-                }
-                replaceFragment(contactListFragment);
+
                 friendsMessages.setTextColor(Color.parseColor("#000000"));
                 friendsPeople.setTextColor(Color.parseColor("#0090FD"));
                 //startActivity(new Intent(getActivity(),ConversationActivity.class));
@@ -89,12 +79,6 @@ public class FriendFragment extends Fragment {
         }
     }
 
-    private void replaceFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getChildFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.friends_main, fragment);
-        fragmentTransaction.commit();
 
-    }
 
 }

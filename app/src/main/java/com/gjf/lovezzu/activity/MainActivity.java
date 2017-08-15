@@ -1,8 +1,10 @@
 package com.gjf.lovezzu.activity;
 
+import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,10 +22,7 @@ import com.gjf.lovezzu.fragment.PersonFragment;
 import com.gjf.lovezzu.fragment.SchoolFragment;
 import com.gjf.lovezzu.service.CheckLogin;
 
-import io.rong.imkit.RongIM;
-import io.rong.imlib.RongIMClient;
 
-import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -44,11 +43,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FriendFragment friendFragment;
     private MessageFragment messageFragment;
     private PersonFragment personFragment;
-
+    public static MainActivity mainActivity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mainActivity=this;
         checkLoin();
 
 
@@ -166,8 +166,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void checkLoin() {
 
-        CheckLoginApplication checkLoginApplication = (CheckLoginApplication) getApplication();
-        if (checkLoginApplication.isLogin() == false) {
+       app = (CheckLoginApplication) getApplication();
+        if (app.isLogin() == false) {
             Intent startintent = new Intent(MainActivity.this, CheckLogin.class);
             startService(startintent);
         }

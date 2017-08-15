@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.gjf.lovezzu.R;
-import com.gjf.lovezzu.entity.SchoolNewsResult;
+import com.gjf.lovezzu.entity.school.SchoolNewsResult;
 
 import java.util.List;
 

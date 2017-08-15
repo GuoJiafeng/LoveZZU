@@ -14,10 +14,8 @@ import com.bumptech.glide.Glide;
 import com.gjf.lovezzu.R;
 import com.gjf.lovezzu.activity.taoyu.TaoyuChildConmmentsActivity;
 import com.gjf.lovezzu.activity.taoyu.TaoyuDetialActivity;
-import com.gjf.lovezzu.entity.GoodsCommentsDataBridging;
-import com.gjf.lovezzu.entity.GoodsCommentsResult;
+import com.gjf.lovezzu.entity.taoyu.GoodsCommentsDataBridging;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.gjf.lovezzu.constant.Url.LOGIN_URL;

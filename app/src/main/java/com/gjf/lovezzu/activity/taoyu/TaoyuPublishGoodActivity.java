@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gjf.lovezzu.R;
+import com.gjf.lovezzu.activity.tapictalk.TopicTalkActivity;
 import com.gjf.lovezzu.fragment.taoyu.TaoyuGoodsStudyTypeFragment;
 import com.gjf.lovezzu.view.PhotoAdapter;
 import com.gjf.lovezzu.view.RecyclerItemClickListener;
@@ -157,7 +158,7 @@ public class TaoyuPublishGoodActivity extends AppCompatActivity {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-
+                Toast.makeText(getApplicationContext(),"请重新登录并检查网络是否通畅！",Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -205,6 +206,8 @@ public class TaoyuPublishGoodActivity extends AppCompatActivity {
                     if (res){
                         progressDialog.dismiss();
                         Toast.makeText(getApplicationContext(),"发布成功！",Toast.LENGTH_SHORT).show();
+                        Intent intent=new Intent(TaoyuPublishGoodActivity.this,TaoyuActivity.class);
+                        startActivity(intent);
                         onStop();
 
                     }else{
@@ -253,16 +256,10 @@ public class TaoyuPublishGoodActivity extends AppCompatActivity {
 
                         if (photoAdapter.getItemViewType(position) == PhotoAdapter.TYPE_ADD) {
                             PhotoPicker.builder()
-                                    .setPhotoCount(PhotoAdapter.MAX)
+                                    .setPhotoCount(5)
                                     .setShowCamera(true)
                                     .setPreviewEnabled(false)
                                     .setSelected(selectedPhotos)
-                                    .start(TaoyuPublishGoodActivity.this);
-                            photoAdapter.notifyDataSetChanged();
-                        } else {
-                            PhotoPreview.builder()
-                                    .setPhotos(selectedPhotos)
-                                    .setCurrentItem(position)
                                     .start(TaoyuPublishGoodActivity.this);
                             photoAdapter.notifyDataSetChanged();
                         }

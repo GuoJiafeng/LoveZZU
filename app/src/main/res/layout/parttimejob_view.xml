@@ -59,7 +59,6 @@
         android:layout_height="1dp" />
     <LinearLayout
         android:layout_weight="1"
-        android:id="@+id/part_time_job"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <FrameLayout

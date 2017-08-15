@@ -1,7 +1,7 @@
 package com.gjf.lovezzu.network;
 
 import com.gjf.lovezzu.constant.Url;
-import com.gjf.lovezzu.entity.ShoppingCartDate;
+import com.gjf.lovezzu.entity.taoyu.ShoppingCartDate;
 import com.gjf.lovezzu.network.api.ShoppingCartServer;
 
 import java.util.concurrent.TimeUnit;
@@ -27,6 +27,7 @@ public class ShoppingCartMethods {
         httpClient.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
 
         retrofit=new Retrofit.Builder()
+                .client(httpClient.build())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .baseUrl(Url.LOGIN_URL)

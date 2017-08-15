@@ -1,7 +1,7 @@
 package com.gjf.lovezzu.network;
 
 import com.gjf.lovezzu.constant.Url;
-import com.gjf.lovezzu.entity.OrderData;
+import com.gjf.lovezzu.entity.taoyu.OrderData;
 import com.gjf.lovezzu.network.api.OrderDataServer;
 
 import java.util.concurrent.TimeUnit;
@@ -27,6 +27,7 @@ public class OrderDataMethods {
         httpClient.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
 
         retrofit=new Retrofit.Builder()
+                .client(httpClient.build())
                 .baseUrl(Url.LOGIN_URL)
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())

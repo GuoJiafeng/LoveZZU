@@ -13,8 +13,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.gjf.lovezzu.R;
-import com.gjf.lovezzu.entity.TaoyuDataBridging;
-import com.gjf.lovezzu.entity.TaoyuGoodsData;
+import com.gjf.lovezzu.entity.taoyu.TaoyuDataBridging;
+import com.gjf.lovezzu.entity.taoyu.TaoyuGoodsData;
 import com.gjf.lovezzu.network.TaoyuGoodsListMethods;
 import com.gjf.lovezzu.view.TaoyuAdapter;
 
@@ -80,7 +80,6 @@ public class TaoyuGoodsStudyTypeFragment extends Fragment {
                     //获取最后一个完全显示的ItemPosition
                     int lastVisibleItem = manager.findLastCompletelyVisibleItemPosition();
                     int totalItemCount = manager.getItemCount();
-
                     // 判断是否滚动到底部，并且是向下滚动
                     if (lastVisibleItem == (totalItemCount - 1) && isSlidingToLast) {
                         Toast.makeText(getContext(), "加载中", Toast.LENGTH_SHORT).show();
