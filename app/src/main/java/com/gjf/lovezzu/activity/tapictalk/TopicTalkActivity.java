@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.gjf.lovezzu.R;
+import com.gjf.lovezzu.activity.MainActivity;
 import com.gjf.lovezzu.entity.topic.TopicData;
 import com.gjf.lovezzu.entity.topic.TopicDataBridging;
 import com.gjf.lovezzu.entity.topic.TopicThemeBridging;
@@ -163,6 +164,8 @@ public class TopicTalkActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.topic_back:
+                Intent intent2=new Intent(this, MainActivity.class);
+                startActivity(intent2);
                 break;
             case R.id.topic_first_add:
                 Intent intent=new Intent(this, ThemePublishActivity.class);

@@ -55,14 +55,19 @@ public class TopicTopicAdapter extends RecyclerView.Adapter<TopicTopicAdapter.Vi
         holder.zan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                TopicDataBridging bridging=topicDataBridgingList.get(holder.getAdapterPosition());
+                String topicId=bridging.getTopic().getTopicId().toString();
                 int zan=Integer.parseInt(holder.zan_num.getText().toString());
-                if (typeZan.equals("1")){
-                    addThum();
-                    holder.zan_num.setText((zan+1)+"");
-                }else {
-                    addThum();
-                    holder.zan_num.setText((zan-1)+"");
-                }
+                    if (typeZan.equals("1")){
+                        holder.zan_num.setText((zan+1)+"");
+                        addThum(topicId);
+                    }else {
+                        holder.zan_num.setText((zan-1)+"");
+                        addThum(topicId);
+                    }
+
+
             }
         });
         holder.comm.setOnClickListener(new View.OnClickListener() {
@@ -79,7 +84,6 @@ public class TopicTopicAdapter extends RecyclerView.Adapter<TopicTopicAdapter.Vi
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-
             TopicDataBridging bridging=topicDataBridgingList.get(position);
             holder.comm_num.setText(bridging.getTopic().getTopicCommentCount()+"");
             holder.content.setText(bridging.getTopic().getTopicText());
@@ -124,9 +128,11 @@ public class TopicTopicAdapter extends RecyclerView.Adapter<TopicTopicAdapter.Vi
     }
 
 
-    private void addThum(){
+    private boolean addThum(String topicId){
+        boolean res=false;
             RequestParams requestParams=new RequestParams(LOGIN_URL+"TopicCommentAction");
             requestParams.addBodyParameter("ThumbNum",typeZan);
+            requestParams.addBodyParameter("TopicId",topicId);
             requestParams.addBodyParameter("action","话题点赞");
             x.http().post(requestParams, new Callback.CacheCallback<String>() {
                 @Override
@@ -136,15 +142,17 @@ public class TopicTopicAdapter extends RecyclerView.Adapter<TopicTopicAdapter.Vi
                         JSONObject jsonObject=new JSONObject(result);
                         Boolean res=jsonObject.getBoolean("isSuccessful");
                         if (res){
+                            res=true;
                             if (typeZan.equals("1")){
-                                Toast.makeText(TopicInfoActivity.topicInfoActivity,"+1 再点一次取消点赞！",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(TopicTalkActivity.topicTalkActivity,"+1 再点一次取消点赞！",Toast.LENGTH_SHORT).show();
                                 typeZan="0";
                             }else {
-                                Toast.makeText(TopicInfoActivity.topicInfoActivity,"-1",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(TopicTalkActivity.topicTalkActivity,"-1",Toast.LENGTH_SHORT).show();
                                 typeZan="1";
                             }
                         }else {
-                            Toast.makeText(TopicInfoActivity.topicInfoActivity,"请重新登录并检查网络是否通畅!",Toast.LENGTH_SHORT).show();
+                            res=false;
+                            Toast.makeText(TopicTalkActivity.topicTalkActivity,"请重新登录!",Toast.LENGTH_SHORT).show();
                         }
                     }catch (Exception e){
                         e.printStackTrace();
@@ -154,7 +162,7 @@ public class TopicTopicAdapter extends RecyclerView.Adapter<TopicTopicAdapter.Vi
                 @Override
                 public void onError(Throwable ex, boolean isOnCallback) {
                     Log.e("话题点赞",ex.getMessage());
-                    Toast.makeText(TopicInfoActivity.topicInfoActivity,"请重新登录并检查网络是否通畅!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TopicTalkActivity.topicTalkActivity,"请重新登录并检查网络是否通畅!",Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
@@ -172,6 +180,8 @@ public class TopicTopicAdapter extends RecyclerView.Adapter<TopicTopicAdapter.Vi
                     return false;
                 }
             });
+        return res;
     }
+
 
 }

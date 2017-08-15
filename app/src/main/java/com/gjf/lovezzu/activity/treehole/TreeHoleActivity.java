@@ -1,14 +1,11 @@
 package com.gjf.lovezzu.activity.treehole;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,18 +13,10 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.gjf.lovezzu.R;
-import com.gjf.lovezzu.entity.TreeHoleData;
-import com.gjf.lovezzu.entity.TreeHoleResult;
-import com.gjf.lovezzu.network.TreeHoleMethods;
-import com.gjf.lovezzu.view.TreeHoleAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rx.Subscriber;
 
 /**
  * Created by zhao on 2017/5/4.
@@ -36,7 +25,6 @@ import rx.Subscriber;
 public class TreeHoleActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener{
 
     public static TreeHoleActivity treeHoleActivity;
-    private Subscriber subscriber;
 
     @BindView(R.id.tree_title_back)
     ImageView treeTitleBack;
@@ -49,52 +37,16 @@ public class TreeHoleActivity extends AppCompatActivity implements PopupMenu.OnM
     @BindView(R.id.tree_fab)
     ImageView treeFab;
 
-    private List<TreeHoleResult> treeHoleResultList = new ArrayList<>();
-    TreeHoleAdapter treeHoleAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tree_hole_view);
         ButterKnife.bind(this);
-        treeHoleActivity = this;
-        initDate();
-        LinearLayoutManager layoutManager=new LinearLayoutManager(this);
-        treeItemView.setLayoutManager(layoutManager);
-        treeHoleAdapter=new TreeHoleAdapter(treeHoleResultList);
-        treeItemView.setAdapter(treeHoleAdapter);
-
-        treeRefresh.setColorSchemeColors(Color.GREEN);
-        treeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                //刷新菜单
-                treeRefresh();
-            }
-        });
+        treeHoleActivity=this;
 
     }
 
-    private void treeRefresh() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        //刷新数据
-                        initDate();
-                        treeHoleAdapter.notifyDataSetChanged();
-                        treeRefresh.setRefreshing(false);
-                    }
-                });
-            }
-        }).start();
-    }
+
 
     @OnClick({R.id.tree_title_back, R.id.tree_menu, R.id.tree_refresh, R.id.tree_fab})
     public void onViewClicked(View view) {
@@ -136,32 +88,5 @@ public class TreeHoleActivity extends AppCompatActivity implements PopupMenu.OnM
         return false;
     }
 
-    private void initDate(){
-//        //服务器获取
-//        //测试数据
-//        for (int i = 1; i <= 5; i++){
-//            TreeHoleResult treeHole=new TreeHoleResult("发布我的树洞主体美容","啥用？","100","101");
-//            treeHoleResultList.add(treeHole);
-//        }
 
-        subscriber = new Subscriber<TreeHoleData>() {
-            @Override
-            public void onCompleted() {
-            Log.d("ggggg","显示成功!");
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.d("ggggg",e.getMessage().toString());
-            }
-
-            @Override
-            public void onNext(TreeHoleData treeHoleData) {
-                List<TreeHoleResult> list = treeHoleData.getResults();
-                treeHoleResultList.addAll(list);
-
-            }
-        };
-        TreeHoleMethods.getInstance().getHomePageList(subscriber,1);
-    }
 }

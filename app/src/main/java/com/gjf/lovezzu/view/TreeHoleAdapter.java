@@ -5,14 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gjf.lovezzu.R;
-import com.gjf.lovezzu.activity.treehole.TreeHoleActivity;
-import com.gjf.lovezzu.entity.TreeHoleResult;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.gjf.lovezzu.R.id.tree_item_view;
 
@@ -22,52 +16,28 @@ import static com.gjf.lovezzu.R.id.tree_item_view;
 
     public class TreeHoleAdapter extends RecyclerView.Adapter<TreeHoleAdapter.ViewHolder> {
 
-    private List<TreeHoleResult> treeHoleResultList = new ArrayList<>();
-    private TreeHoleResult treeHoleResult;
 
-    public TreeHoleAdapter(List<TreeHoleResult> treeHoleResultList) {
-        this.treeHoleResultList = treeHoleResultList;
+
+    public TreeHoleAdapter() {
+
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.tree_hole_item, parent, false);
         final ViewHolder viewHolder = new ViewHolder(view);
-        viewHolder.contentView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //单条详情
-                Toast.makeText(TreeHoleActivity.treeHoleActivity, "详情评论页", Toast.LENGTH_SHORT).show();
-            }
-        });
-        viewHolder.zanView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //点赞增加的逻辑
-                Toast.makeText(TreeHoleActivity.treeHoleActivity, "点赞增加", Toast.LENGTH_SHORT).show();
-            }
-        });
-        viewHolder.talkView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //讨论操作的操作
-                Toast.makeText(TreeHoleActivity.treeHoleActivity, "评论操作", Toast.LENGTH_SHORT).show();
-            }
-        });
+
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        treeHoleResult = treeHoleResultList.get(position);
-        holder.contentView.setText(treeHoleResult.getTreeContent());
-        holder.zanView.setText(treeHoleResult.getZanNumber());
-        holder.talkView.setText(treeHoleResult.getTalkNumber());
+
     }
 
     @Override
     public int getItemCount() {
-        return treeHoleResultList.size();
+        return 0;
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

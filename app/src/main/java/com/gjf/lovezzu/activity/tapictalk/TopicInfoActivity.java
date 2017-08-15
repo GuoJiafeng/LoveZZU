@@ -84,6 +84,7 @@ public class TopicInfoActivity extends AppCompatActivity {
     private TopicInfoImagesAdapter topicInfoImagesAdapter;
     private List<GoodsImages> goodsImages=new ArrayList<>();
     private String typeZan="1";
+    private String topicId;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,6 +94,7 @@ public class TopicInfoActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("userinfo", Activity.MODE_APPEND);
         SessionID=sharedPreferences.getString("SessionID","");
         topicDataBridging= (TopicDataBridging) getIntent().getSerializableExtra("topicInfo");
+        topicId=topicDataBridging.getTopic().getTopicId().toString();
         initView();
         getComm();
         showComm();
@@ -192,7 +194,7 @@ public class TopicInfoActivity extends AppCompatActivity {
 
     private void addComm(){
         RequestParams requestParams=new RequestParams(LOGIN_URL+"TopicCommentAction");
-        requestParams.addBodyParameter("TopicId",topicDataBridging.getTopic().getTopicId().toString());
+        requestParams.addBodyParameter("TopicId",topicId);
         requestParams.addBodyParameter("SessionID",SessionID);
         requestParams.addBodyParameter("action","发布话题评论");
         requestParams.addBodyParameter("TopicComment",editComments.getText().toString());
@@ -242,11 +244,11 @@ public class TopicInfoActivity extends AppCompatActivity {
     private void addThum(){
         RequestParams requestParams=new RequestParams(LOGIN_URL+"TopicCommentAction");
         requestParams.addBodyParameter("ThumbNum",typeZan);
+        requestParams.addBodyParameter("TopicId",topicId);
         requestParams.addBodyParameter("action","话题点赞");
         x.http().post(requestParams, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.e("话题点赞",result);
                 try{
                     JSONObject jsonObject=new JSONObject(result);
                     Boolean res=jsonObject.getBoolean("isSuccessful");
@@ -255,12 +257,9 @@ public class TopicInfoActivity extends AppCompatActivity {
                         if (typeZan.equals("1")){
                             Toast.makeText(TopicInfoActivity.topicInfoActivity,"+1 再点一次取消点赞！",Toast.LENGTH_SHORT).show();
                             topicInfoZan.setText((zan+1)+"");
-                            typeZan="0";
-                            getComm();
                         }else {
                             Toast.makeText(TopicInfoActivity.topicInfoActivity,"-1",Toast.LENGTH_SHORT).show();
                             topicInfoZan.setText((zan-1)+"");
-                            typeZan="1";
                         }
                     }else {
                         Toast.makeText(TopicInfoActivity.topicInfoActivity,"请重新登录并检查网络是否通畅!",Toast.LENGTH_SHORT).show();
@@ -283,7 +282,11 @@ public class TopicInfoActivity extends AppCompatActivity {
 
             @Override
             public void onFinished() {
-
+                if (typeZan.equals("1")){
+                    typeZan="0";
+                }else {
+                    typeZan="1";
+                }
             }
 
             @Override
