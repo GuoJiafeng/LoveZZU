@@ -26,6 +26,7 @@
                 android:orientation="horizontal">
 
                 <com.gjf.lovezzu.view.CircleImageView
+                    android:id="@+id/topic_info_comm_user_image"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center_vertical"
@@ -33,6 +34,7 @@
                     android:src="@drawable/def_avatar" />
 
                 <TextView
+                    android:id="@+id/topic_info_comm_user_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -58,6 +60,7 @@
                     android:layout_marginTop="12dp">
 
                     <TextView
+                        android:id="@+id/topic_info_comm_text"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:ellipsize="end"
@@ -81,46 +84,14 @@
                         android:layout_height="match_parent"
                         android:layout_weight="2.5">
 
-
                         <TextView
+                            android:id="@+id/topic_info_comm_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginLeft="5dp"
                             android:text="XXXX.XX.XX" />
 
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1">
-
-                        <ImageView
-                            android:id="@+id/do_comm"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/comment" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="8dp"
-                            android:text="XXX" />
-                        <ImageView
-                            android:id="@+id/do_zan"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/life_zan" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="8dp"
-                            android:text="XXX" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

@@ -72,7 +72,6 @@ public class TopicPublishActivity extends AppCompatActivity {
         setContentView(R.layout.topic_publish_activity);
         ButterKnife.bind(this);
         theme= getIntent().getIntExtra("theme",0);
-        Log.e("话题==============话题发布ThemeID",theme+"?null");
         SharedPreferences sharedPreferences = getSharedPreferences("userinfo", Activity.MODE_APPEND);
         SessionID=sharedPreferences.getString("SessionID","");
 
@@ -159,13 +158,9 @@ public class TopicPublishActivity extends AppCompatActivity {
         requestParams.addBodyParameter("TopicId",topicID);
         requestParams.addBodyParameter("action","上传话题图片");
         requestParams.addParameter("images",photoList);
-        if (photoList.isEmpty()){
-            Log.e("话题圈===========话题","图片为空");
-        }
         x.http().post(requestParams, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.e("话题圈===========话题result",result);
                 try{
                     JSONObject jsonObject=new JSONObject(result);
                     Boolean res=jsonObject.getBoolean("isSuccessful");

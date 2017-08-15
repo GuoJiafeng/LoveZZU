@@ -40,7 +40,6 @@ public class TopicThemeAdapter extends RecyclerView.Adapter<TopicThemeAdapter.Vi
             @Override
             public void onClick(View v) {
                 themeId=topicThemeBridgingList.get(holder.getAdapterPosition()).getTheme().getThemeId();
-                Log.e("话题=========",themeId+"?id");
                 TopicTalkActivity.topicTalkActivity.getTopics();
             }
         });
@@ -48,7 +47,7 @@ public class TopicThemeAdapter extends RecyclerView.Adapter<TopicThemeAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         TopicThemeBridging bridging=topicThemeBridgingList.get(position);
         holder.theme_title.setText(bridging.getTheme().getThemeTitle());
         holder.theme_count.setText(bridging.getTheme().getTopicCount()+"");

@@ -55,7 +55,7 @@ public class TopicTalkActivity extends AppCompatActivity {
     private TopicThemeAdapter topicThemeAdapter;
 
     private List<TopicDataBridging> topicDataBridgingList=new ArrayList<>();
-    private static TopicTopicAdapter topicTopicAdapter;
+    private TopicTopicAdapter topicTopicAdapter;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +65,6 @@ public class TopicTalkActivity extends AppCompatActivity {
         onRefresh();
         getTopicTheme();
         showTheme();
-
 
     }
     private void onRefresh() {
@@ -99,7 +98,6 @@ public class TopicTalkActivity extends AppCompatActivity {
                     topicThemeBridgingList.clear();
                     topicThemeBridgingList.addAll(list);
                     TopicThemeBridging themeBridging=topicThemeBridgingList.get(0);
-                    Log.e("话题",themeBridging.getTheme().getThemeTitle());
                     topicThemeAdapter.setTheme(themeBridging.getTheme().getThemeId());
                     topicThemeAdapter.notifyDataSetChanged();
                     getTopics();
@@ -127,14 +125,13 @@ public class TopicTalkActivity extends AppCompatActivity {
 
             @Override
             public void onNext(TopicData topicData) {
-                Log.e("话题",topicData.getResult());
-                Log.e("话题",topicData.getValues().size()+"");
+
                 List<TopicDataBridging> list=topicData.getValues();
                 if (!list.isEmpty()){
                     topicDataBridgingList.clear();
                     topicDataBridgingList.addAll(list);
-                    Log.e("话题",topicDataBridgingList.size()+"");
                     topicTopicAdapter.notifyDataSetChanged();
+
                 }else {
                     Toast.makeText(TopicTalkActivity.topicTalkActivity,"还没有话题，快来吐槽吧!",Toast.LENGTH_SHORT).show();
                 }
@@ -158,7 +155,6 @@ public class TopicTalkActivity extends AppCompatActivity {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         topicChildRecycler.setLayoutManager(layoutManager);
         topicTopicAdapter=new TopicTopicAdapter(topicDataBridgingList);
-        Log.e("话题",topicDataBridgingList.size()+" size");
         topicChildRecycler.setAdapter(topicTopicAdapter);
     }
 
