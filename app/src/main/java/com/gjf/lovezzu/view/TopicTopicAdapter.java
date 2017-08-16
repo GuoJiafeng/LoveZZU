@@ -12,8 +12,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.gjf.lovezzu.R;
-import com.gjf.lovezzu.activity.tapictalk.TopicInfoActivity;
-import com.gjf.lovezzu.activity.tapictalk.TopicTalkActivity;
+import com.gjf.lovezzu.activity.topictalk.TopicInfoActivity;
+import com.gjf.lovezzu.activity.topictalk.TopicTalkActivity;
 import com.gjf.lovezzu.entity.topic.TopicDataBridging;
 
 import org.json.JSONObject;

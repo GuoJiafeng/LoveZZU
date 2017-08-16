@@ -10,7 +10,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.gjf.lovezzu.R;
-import com.gjf.lovezzu.activity.tapictalk.TopicInfoActivity;
+import com.gjf.lovezzu.activity.topictalk.TopicInfoActivity;
 import com.gjf.lovezzu.entity.taoyu.GoodsImages;
 
 import java.util.List;

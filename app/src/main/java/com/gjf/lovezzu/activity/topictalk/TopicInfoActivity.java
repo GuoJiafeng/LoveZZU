@@ -1,4 +1,4 @@
-package com.gjf.lovezzu.activity.tapictalk;
+package com.gjf.lovezzu.activity.topictalk;
 
 import android.app.Activity;
 import android.content.SharedPreferences;

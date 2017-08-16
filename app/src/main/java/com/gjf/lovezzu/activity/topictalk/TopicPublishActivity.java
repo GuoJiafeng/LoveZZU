@@ -1,4 +1,4 @@
-package com.gjf.lovezzu.activity.tapictalk;
+package com.gjf.lovezzu.activity.topictalk;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -18,7 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gjf.lovezzu.R;
-import com.gjf.lovezzu.entity.topic.TopicThemeBridging;
 import com.gjf.lovezzu.view.PhotoAdapter;
 import com.gjf.lovezzu.view.RecyclerItemClickListener;
 

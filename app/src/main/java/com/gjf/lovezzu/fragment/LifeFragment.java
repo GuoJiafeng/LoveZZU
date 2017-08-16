@@ -19,7 +19,7 @@ import com.gjf.lovezzu.activity.MainActivity;
 import com.gjf.lovezzu.activity.parttimejob.PartTimeJobActivity;
 import com.gjf.lovezzu.activity.palytogether.PlayTogetherActivity;
 import com.gjf.lovezzu.activity.taoyu.TaoyuActivity;
-import com.gjf.lovezzu.activity.tapictalk.TopicTalkActivity;
+import com.gjf.lovezzu.activity.topictalk.TopicTalkActivity;
 import com.gjf.lovezzu.activity.treehole.TreeHoleActivity;
 import com.gjf.lovezzu.entity.school.TopNewsData;
 import com.gjf.lovezzu.entity.school.TopNewsResult;

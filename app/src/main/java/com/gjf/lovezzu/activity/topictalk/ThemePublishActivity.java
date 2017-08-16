@@ -1,4 +1,4 @@
-package com.gjf.lovezzu.activity.tapictalk;
+package com.gjf.lovezzu.activity.topictalk;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -18,7 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gjf.lovezzu.R;
-import com.gjf.lovezzu.activity.taoyu.TaoyuPublishGoodActivity;
 import com.gjf.lovezzu.view.PhotoAdapter;
 import com.gjf.lovezzu.view.RecyclerItemClickListener;
 

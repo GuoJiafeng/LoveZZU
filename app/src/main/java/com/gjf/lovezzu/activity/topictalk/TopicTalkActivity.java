@@ -1,4 +1,4 @@
-package com.gjf.lovezzu.activity.tapictalk;
+package com.gjf.lovezzu.activity.topictalk;
 
 import android.content.Intent;
 import android.os.Bundle;

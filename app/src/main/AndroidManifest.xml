@@ -27,7 +27,7 @@
 
         <activity
             android:name=".activity.UserLoginActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activity.saylvoeActivity.SayLoveActivity" />
         <activity android:name=".activity.saylvoeActivity.IWantSayLoveActivity" />
         <activity android:name=".activity.UserInfoActivity" />
@@ -35,20 +35,24 @@
         <activity android:name="me.iwf.photopicker.PhotoPickerActivity" />
 
         <!-- 话题圈 -->
-        <activity android:name=".activity.tapictalk.TopicTalkActivity"
+        <activity android:name=".activity.topictalk.TopicTalkActivity"
             android:launchMode="singleTask" />
-        <activity android:name=".activity.tapictalk.TopicInfoActivity"/>
-        <activity android:name=".activity.tapictalk.TopicPublishActivity"/>
-        <activity android:name=".activity.tapictalk.ThemePublishActivity"/>
+        <activity android:name=".activity.topictalk.TopicInfoActivity"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".activity.topictalk.TopicPublishActivity"/>
+        <activity android:name=".activity.topictalk.ThemePublishActivity"/>
         <!-- 淘鱼 -->
-        <activity android:name=".activity.taoyu.TaoyuActivity" />
+        <activity android:name=".activity.taoyu.TaoyuActivity"
+            android:launchMode="singleTask" />
         <activity android:name=".activity.taoyu.ShopcartActivity"/>
-        <activity android:name=".activity.taoyu.TaoyuChildConmmentsActivity"/>
+        <activity android:name=".activity.taoyu.TaoyuChildConmmentsActivity"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".activity.taoyu.TaoyuOrderActivity"/>
         <activity android:name=".activity.taoyu.TaoyuSearchActivity" />
         <activity android:name=".activity.taoyu.TaoyuPublishGoodActivity"
             android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".activity.taoyu.TaoyuDetialActivity" />
+        <activity android:name=".activity.taoyu.TaoyuDetialActivity"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".activity.taoyu.OrderSellInfoActivity"/>
         <activity android:name=".activity.taoyu.OrderBuyInfoAcivity"/>
         <activity android:name=".activity.taoyu.MyPublishGoodsActivity"/>
@@ -75,6 +79,7 @@
         <activity
             android:name=".activity.treehole.AddTreeHoleActivity"
             android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".activity.treehole.TreeInfoActivity"/>
 
         <!-- 兼职 -->
         <activity android:name=".activity.parttimejob.PartTimeJobActivity" />
