@@ -4,12 +4,12 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by zhao on 2017/8/16.
+ * Created by zhao on 2017/8/17.
  */
 
-public class TreeHoleData implements Serializable {
+public class TreeHoleCommData implements Serializable{
     private String result;
-    private List<TreeHole> values;
+    private List<TreeHoleComm> values;
 
     public String getResult() {
         return result;
@@ -19,11 +19,11 @@ public class TreeHoleData implements Serializable {
         this.result = result;
     }
 
-    public List<TreeHole> getValues() {
+    public List<TreeHoleComm> getValues() {
         return values;
     }
 
-    public void setValues(List<TreeHole> values) {
+    public void setValues(List<TreeHoleComm> values) {
         this.values = values;
     }
 }

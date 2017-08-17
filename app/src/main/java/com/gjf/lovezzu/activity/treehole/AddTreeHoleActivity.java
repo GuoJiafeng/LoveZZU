@@ -91,7 +91,6 @@ public class AddTreeHoleActivity extends AppCompatActivity {
                     Toast.makeText(this, "不能为空!", Toast.LENGTH_SHORT);
                 } else {
                     addTree();
-                    addTreeContent.setText("");
                 }
                 break;
             case R.id.tree_add_school:
@@ -142,12 +141,13 @@ public class AddTreeHoleActivity extends AppCompatActivity {
         x.http().post(requestParams, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.e("树洞====", result);
                 try{
                     JSONObject jsonObject=new JSONObject(result);
                     Boolean res=jsonObject.getBoolean("isSuccessful");
                     if (res){
                         Toast.makeText(addTreeHoleActivity,"发布成功！",Toast.LENGTH_SHORT).show();
+                        addTreeContent.setText("");
+                        finish();
                     }else {
                         Toast.makeText(addTreeHoleActivity,"请重新登录！",Toast.LENGTH_SHORT).show();
                     }
@@ -158,7 +158,6 @@ public class AddTreeHoleActivity extends AppCompatActivity {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("树洞====", ex.getMessage() + "--------" + ex.toString());
                 Toast.makeText(addTreeHoleActivity,"请检查网络是否异常！",Toast.LENGTH_SHORT).show();
             }
 

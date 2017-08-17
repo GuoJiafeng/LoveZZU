@@ -1,15 +1,31 @@
 package com.gjf.lovezzu.view;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gjf.lovezzu.R;
+import com.gjf.lovezzu.activity.treehole.TreeHoleActivity;
+import com.gjf.lovezzu.activity.treehole.TreeInfoActivity;
+import com.gjf.lovezzu.entity.treehole.TreeHole;
 
+import org.json.JSONObject;
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
+
+import java.util.List;
+
+import static com.gjf.lovezzu.R.id.home;
 import static com.gjf.lovezzu.R.id.tree_item_view;
+import static com.gjf.lovezzu.constant.Url.LOGIN_URL;
 
 /**
  * Created by zhao on 2017/5/4.
@@ -17,10 +33,12 @@ import static com.gjf.lovezzu.R.id.tree_item_view;
 
     public class TreeHoleAdapter extends RecyclerView.Adapter<TreeHoleAdapter.ViewHolder> {
 
-
-
-    public TreeHoleAdapter() {
-
+    private List<TreeHole> treeHoleList;
+    private String SessionID;
+    private   Boolean res=false;
+    public TreeHoleAdapter(List<TreeHole> list,String sessionID) {
+        treeHoleList=list;
+        SessionID=sessionID;
     }
 
     @Override
@@ -30,18 +48,29 @@ import static com.gjf.lovezzu.R.id.tree_item_view;
         viewHolder.talkImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent=new Intent(TreeHoleActivity.treeHoleActivity, TreeInfoActivity.class);
+                TreeHole treeHole=treeHoleList.get(viewHolder.getAdapterPosition());
+                intent.putExtra("treeHole",treeHole);
+                TreeHoleActivity.treeHoleActivity.startActivity(intent);
             }
         });
         viewHolder.zanImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                TreeHole treeHole=treeHoleList.get(viewHolder.getAdapterPosition());
+                if (addThum(treeHole.getTreeHoleId().toString())){
+                    Integer zan=Integer.parseInt(viewHolder.zanView.getText().toString());
+                    viewHolder.zanView.setText((zan+1)+"");
+                }
             }
         });
         viewHolder.contentView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent=new Intent(TreeHoleActivity.treeHoleActivity, TreeInfoActivity.class);
+                TreeHole treeHole=treeHoleList.get(viewHolder.getAdapterPosition());
+                intent.putExtra("treeHole",treeHole);
+                TreeHoleActivity.treeHoleActivity.startActivity(intent);
 
             }
         });
@@ -50,12 +79,16 @@ import static com.gjf.lovezzu.R.id.tree_item_view;
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-
+        TreeHole treeHole=treeHoleList.get(position);
+        holder.contentView.setText(treeHole.getTreeHoleContent());
+        holder.talkView.setText(treeHole.getCommentCount()+"");
+        holder.zanView.setText(treeHole.getThembCount()+"");
+        holder.testView.setText(treeHole.getCampus());
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return treeHoleList.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -74,5 +107,52 @@ import static com.gjf.lovezzu.R.id.tree_item_view;
             zanImage= (ImageView) itemView.findViewById(R.id.tree_zan_image);
             talkImage= (ImageView) itemView.findViewById(R.id.tree_talk_image);
         }
+    }
+
+
+    private boolean addThum(String treeId){
+
+        RequestParams requestParams=new RequestParams(LOGIN_URL + "TreeHoleCommentAction");
+        requestParams.addBodyParameter("action","树洞点赞");
+        requestParams.addBodyParameter("treeHoleId",treeId);
+        requestParams.addBodyParameter("SessionID",SessionID);
+        x.http().post(requestParams, new Callback.CacheCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+
+                try{
+                    JSONObject json=new JSONObject(result);
+                    res=json.getBoolean("isSuccessful");
+                    if (res){
+                        Toast.makeText(TreeHoleActivity.treeHoleActivity,"+1",Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(TreeHoleActivity.treeHoleActivity,"请重新登录！",Toast.LENGTH_SHORT).show();
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Toast.makeText(TreeHoleActivity.treeHoleActivity,"请检查网络！",Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+
+            @Override
+            public boolean onCache(String result) {
+                return false;
+            }
+        });
+        return res;
     }
 }

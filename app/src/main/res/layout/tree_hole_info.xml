@@ -3,6 +3,12 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/tree_info_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="170dp">
+
+
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="160dp"
@@ -15,21 +21,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="25dp"
+                android:layout_marginLeft="20dp"
                 android:layout_weight="3"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
-                android:maxLines="4"
+                android:maxLines="5"
                 android:text="测试测试测试测试测试"
                 android:textColor="#fdfdfd"
                 android:textSize="17sp" />
-
+        <TextView
+            android:id="@+id/tree_info_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="时间"
+            android:textColor="#fdfdfd"
+             />
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="2">
-
                 <TextView
                     android:id="@+id/tree_info_school"
                     android:layout_width="wrap_content"
@@ -37,7 +49,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
-                    android:text="测试"
+                    android:text="郑大"
                     android:textColor="#fdfdfd"
                     android:textSize="14sp" />
 
@@ -52,8 +64,8 @@
 
                     <ImageView
                         android:id="@+id/tree_info_zan_image"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:src="@drawable/zan_white" />
@@ -95,7 +107,7 @@
 
             </RelativeLayout>
         </LinearLayout>
-
+    </android.support.v4.widget.SwipeRefreshLayout>
     <android.support.v7.widget.RecyclerView
         android:layout_weight="1"
         android:id="@+id/tree_info_comm"
