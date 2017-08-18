@@ -1,4 +1,4 @@
-package com.gjf.lovezzu.fragment;
+package com.gjf.lovezzu.fragment.school;
 
 import android.app.Fragment;
 

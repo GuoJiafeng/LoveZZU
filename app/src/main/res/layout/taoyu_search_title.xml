@@ -9,7 +9,9 @@
         android:id="@+id/taoyu_search_title"
         android:layout_width="316dp"
         android:layout_height="wrap_content"
-        android:hint="请输入内容" />
+        android:hint="请输入内容"
+        android:imeOptions="actionSearch"
+        android:singleLine="true"/>
 
     <TextView
         android:id="@+id/taoyu_search_button"

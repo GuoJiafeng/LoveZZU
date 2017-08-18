@@ -7,7 +7,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -59,6 +61,17 @@ public class TaoyuSearchActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "正在加载", Toast.LENGTH_SHORT).show();
                     getTaoyuGoodsList(msg,START+=10);
                 }
+            }
+        });
+        taoyu_search_title.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    msg = taoyu_search_title.getText().toString();
+                    getTaoyuGoodsList(msg,START);
+                }
+                return false;
             }
         });
     }

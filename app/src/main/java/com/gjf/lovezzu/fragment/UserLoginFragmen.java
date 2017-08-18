@@ -9,9 +9,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -61,7 +63,24 @@ public class UserLoginFragmen extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.userlogin_fragment, container, false);
         ButterKnife.bind(this, view);
-
+        user_reg_phone.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId== EditorInfo.IME_ACTION_NEXT){
+                    user_reg_password.requestFocus();
+                }
+                return false;
+            }
+        });
+        user_reg_password.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId==EditorInfo.IME_ACTION_GO){
+                    checkInput();
+                }
+                return false;
+            }
+        });
         return view;
     }
 
@@ -72,11 +91,9 @@ public class UserLoginFragmen extends Fragment {
                 returnHome();
                 break;
             case R.id.new_user_reg:
-
                 goToreg();
                 break;
             case R.id.user_login:
-
                 checkInput();
                 break;
         }

@@ -1,15 +1,12 @@
 package com.gjf.lovezzu.activity;
 
-import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -19,7 +16,7 @@ import com.gjf.lovezzu.fragment.friends.FriendFragment;
 import com.gjf.lovezzu.fragment.LifeFragment;
 import com.gjf.lovezzu.fragment.MessageFragment;
 import com.gjf.lovezzu.fragment.PersonFragment;
-import com.gjf.lovezzu.fragment.SchoolFragment;
+import com.gjf.lovezzu.fragment.school.SchoolFragment;
 import com.gjf.lovezzu.service.CheckLogin;
 
 

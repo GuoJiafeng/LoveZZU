@@ -1,4 +1,4 @@
-package com.gjf.lovezzu.fragment;
+package com.gjf.lovezzu.fragment.school;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -123,7 +123,7 @@ public class Shool_societyfragment extends Fragment {
 
             @Override
             public void onError(Throwable e) {
-                Log.e("社会===========error", e.getMessage());
+
             }
 
             @Override

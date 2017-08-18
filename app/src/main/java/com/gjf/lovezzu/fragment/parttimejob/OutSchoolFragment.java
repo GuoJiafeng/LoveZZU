@@ -63,13 +63,7 @@ public class OutSchoolFragment extends Fragment {
 
     //获取兼职数据
     private void getJobItem(){
-        if (JobItemList.size()>=6){
-            JobItemList.clear();
-        }
-        for (int i=1;i<=3;i++){
-            com.gjf.lovezzu.entity.JobItem jobItem=new JobItem(0,"校外兼职","发传单喽","2015-5-9");
-            JobItemList.add(jobItem);
-        }
+
     }
     //显示数据
     private void shwowJobs(){
@@ -85,37 +79,13 @@ public class OutSchoolFragment extends Fragment {
             @Override
             public void onRefresh() {
                 //刷新
-                doRefreshJob();
+               getJobItem();
             }
         });
     }
 
-    private void doRefreshJob(){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(200);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        getJobItem();
-                        outSchoolJobAdapter.notifyDataSetChanged();
-                        jobRefresh.setRefreshing(false);
-                    }
-                });
-            }
-        }).start();
-    }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
 
-    }
 
     @OnClick(R.id.add_job)
     public void onViewClicked() {
