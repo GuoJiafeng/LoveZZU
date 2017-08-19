@@ -42,8 +42,8 @@ public class JobMethods {
         return SinglerHolder.INSTANCE;
     }
 
-    public void ggetAllJob(Subscriber<JobData> subscriber,String action){
-        jobServer.getAllJob(action)
+    public void getAllJob(Subscriber<JobData> subscriber,String action,String search){
+        jobServer.getAllJob(action,search)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
@@ -56,10 +56,5 @@ public class JobMethods {
                 .subscribe(subscriber);
     }
 
-    public void getSearchJob(Subscriber<JobData> subscriber,String action,String title){
-        jobServer.getSearchJob(action,title)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(subscriber);
-    }
+
 }

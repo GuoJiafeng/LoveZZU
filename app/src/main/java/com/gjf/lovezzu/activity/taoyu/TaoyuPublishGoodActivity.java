@@ -284,7 +284,7 @@ public class TaoyuPublishGoodActivity extends AppCompatActivity {
                 startActivity(new Intent(TaoyuPublishGoodActivity.this, TaoyuActivity.class));
                 break;
             case R.id.goods_commit:
-                if(goodsName.equals("")||goodsPrice.equals("")||photosURL==null){
+                if(goodsName.getText().toString().trim().equals("")||goodsPrice.getText().toString().trim().equals("")||photosURL==null){
                     Toast.makeText(getApplicationContext(),"请完善商品信息",Toast.LENGTH_SHORT).show();
                 }else {
                     upGoodsInfo();

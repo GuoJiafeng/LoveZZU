@@ -87,7 +87,7 @@ public class AddTreeHoleActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.send_tree:
-                if (addTreeContent.getText().equals("")) {
+                if (addTreeContent.getText().toString().trim().equals("")) {
                     Toast.makeText(this, "不能为空!", Toast.LENGTH_SHORT);
                 } else {
                     addTree();

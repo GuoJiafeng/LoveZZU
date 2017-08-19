@@ -14,14 +14,11 @@ import rx.Observable;
 public interface JobServer {
     @FormUrlEncoded
     @POST("PartTimeAction")
-    Observable<JobData> getAllJob(@Field("action")String action);
+    Observable<JobData> getAllJob(@Field("action")String action,@Field("search")String search);
 
     @FormUrlEncoded
     @POST("PartTimeAction")
     Observable<JobData> getMyJob(@Field("action")String action,@Field("SessionID")String sessionID);
 
-    @FormUrlEncoded
-    @POST("PartTimeAction")
-    Observable<JobData> getSearchJob(@Field("action")String action,@Field("title")String title);
 
 }

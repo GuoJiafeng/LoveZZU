@@ -282,9 +282,12 @@ public class School_shoolfragment extends Fragment {
                 int len;
                 outputStream=new ByteArrayOutputStream();
                 try {
-                    while ((len = inputStream.read(bs)) != -1) {
-                        outputStream.write(bs, 0, len);
+                    if (bs!=null){
+                        while ((len = inputStream.read(bs)) != -1) {
+                            outputStream.write(bs, 0, len);
+                        }
                     }
+
                 } catch (IOException e) {
                     e.printStackTrace();
                     Toast.makeText(getContext(),"请检查网络是否通畅",Toast.LENGTH_SHORT).show();

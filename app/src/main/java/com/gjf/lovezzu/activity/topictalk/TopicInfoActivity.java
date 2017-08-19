@@ -119,7 +119,7 @@ public class TopicInfoActivity extends AppCompatActivity {
                 addThum();
                 break;
             case R.id.send:
-                if (editComments.getText().equals("")){
+                if (editComments.getText().toString().trim().equals("")){
                     Toast.makeText(this,"评论不能为空!",Toast.LENGTH_SHORT).show();
                 }else {
                     addComm();

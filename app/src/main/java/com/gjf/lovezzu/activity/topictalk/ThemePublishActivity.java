@@ -90,7 +90,7 @@ public class ThemePublishActivity extends AppCompatActivity {
 
 
     private void publishTheme(){
-        if (themeName.getText()!=null){
+        if (themeName.getText().toString().trim()!=null){
             RequestParams requestParams=new RequestParams(LOGIN_URL+"ThemeAction");
             requestParams.addBodyParameter("ThemeTitle",themeName.getText().toString());
             requestParams.addBodyParameter("SessionID",SessionID);

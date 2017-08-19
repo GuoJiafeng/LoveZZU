@@ -95,7 +95,7 @@ public class TopicPublishActivity extends AppCompatActivity {
 
 
     private void publishChildTopic(){
-        if (topicName.getText().toString()!=null&&topicContent.getText().toString()!=null){
+        if (topicName.getText().toString().trim()!=null&&topicContent.getText().toString().trim()!=null){
             RequestParams requestParams=new RequestParams(LOGIN_URL+"TopicAction");
             requestParams.addBodyParameter(" TopicTitle",topicName.getText().toString());
             requestParams.addBodyParameter("TopicText",topicContent.getText().toString());

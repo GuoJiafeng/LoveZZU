@@ -75,19 +75,22 @@
             android:windowSoftInputMode="adjustPan" />
 
         <!-- 树洞 -->
-        <activity android:name=".activity.treehole.TreeHoleActivity" />
+        <activity android:name=".activity.treehole.TreeHoleActivity"
+            android:launchMode="singleTask" />
         <activity
             android:name=".activity.treehole.AddTreeHoleActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activity.treehole.TreeInfoActivity"/>
 
         <!-- 兼职 -->
-        <activity android:name=".activity.parttimejob.PartTimeJobActivity" />
+        <activity android:name=".activity.parttimejob.PartTimeJobActivity"
+            android:launchMode="singleTask"  />
         <activity
             android:name=".activity.parttimejob.AddJopActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activity.parttimejob.JobInfoActivity" />
-
+        <activity android:name=".activity.parttimejob.MyJobActivity"/>
+        <activity android:name=".activity.parttimejob.SearchJobActivity"/>
 
         <!--WebView-->
         <activity

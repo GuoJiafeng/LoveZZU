@@ -181,8 +181,9 @@ public class AddJopActivity extends AppCompatActivity {
 
     //插入兼职信息
     private void addJobs() {
-        if (addJobTitle.getText().equals("")||addJobSalary.getText().equals("")||
-                addJobCampus.getText().equals("")||addJobWorkPlace.getText().equals("")||addJobContactWay.getText().equals("")){
+        if (addJobTitle.getText().toString().trim().equals("")||addJobSalary.getText().toString().trim().equals("")||
+                addJobCampus.getText().toString().trim().equals("")||addJobWorkPlace.getText().toString().trim().equals("")||
+                addJobContactWay.getText().toString().trim().equals("")){
             Toast.makeText(this,"请完善信息！",Toast.LENGTH_SHORT).show();
         }else {
             RequestParams requestParams=new RequestParams(LOGIN_URL + "PartTimeAction");
@@ -202,7 +203,6 @@ public class AddJopActivity extends AppCompatActivity {
             x.http().post(requestParams, new Callback.CacheCallback<String>() {
                 @Override
                 public void onSuccess(String result) {
-                    Log.e("兼职发布==",result);
                     try {
                         JSONObject jsonObject=new JSONObject(result);
                         Boolean res=jsonObject.getBoolean("isSuccessful");
@@ -220,7 +220,7 @@ public class AddJopActivity extends AppCompatActivity {
 
                 @Override
                 public void onError(Throwable ex, boolean isOnCallback) {
-                    Log.e("兼职发布==",ex.getMessage());
+
                     Toast.makeText(AddJopActivity.addJopActivity,"请检查网络是否通畅！",Toast.LENGTH_SHORT).show();
                 }
 

@@ -256,7 +256,7 @@ public class TaoyuChildConmmentsActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.send:
-                if (editComments.getText().equals("")){
+                if (editComments.getText().toString().trim().equals("")){
                     Toast.makeText(getApplicationContext(),"评论不能为空！",Toast.LENGTH_SHORT).show();
                     return;
                 }else {

@@ -19,6 +19,15 @@ public class JobResult implements Serializable {
     private String publishDate;
     private String status;
     private String campus;
+    private Integer partTimeId;
+
+    public Integer getPartTimeId() {
+        return partTimeId;
+    }
+
+    public void setPartTimeId(Integer partTimeId) {
+        this.partTimeId = partTimeId;
+    }
 
     public String getCampus() {
         return campus;

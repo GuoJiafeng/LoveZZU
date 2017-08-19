@@ -7,17 +7,20 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.gjf.lovezzu.R;
 import com.gjf.lovezzu.activity.parttimejob.AddJopActivity;
 import com.gjf.lovezzu.activity.parttimejob.PartTimeJobActivity;
-import com.gjf.lovezzu.entity.JobItem;
 import com.gjf.lovezzu.entity.parttimejob.JobData;
-import com.gjf.lovezzu.view.SchoolJobAdapter;
+import com.gjf.lovezzu.entity.parttimejob.JobResult;
+import com.gjf.lovezzu.network.JobMethods;
+import com.gjf.lovezzu.view.JobAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,25 +43,29 @@ public class InSchoolFragment extends Fragment {
     ImageView addJob;
 
     private View view;
-    private List<JobItem> JobItemList = new ArrayList<>();
-    private SchoolJobAdapter inSchoolJobAdapter;
     private Subscriber subscriber;
+    private List<JobResult> jobResults=new ArrayList<>();
+    private JobAdapter jobAdapter;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         if (view == null) {
             view = inflater.inflate(R.layout.part_time_job_list, container, false);
             ButterKnife.bind(this, view);
+            jobRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    getJobItem();
+                }
+            });
             getJobItem();
             shwowJobs();
-            refreshJob();
         } else {
             ViewGroup viewGroup = (ViewGroup) view.getParent();
             if (viewGroup != null) {
                 viewGroup.removeView(view);
             }
         }
-
         return view;
     }
     //获取兼职数据
@@ -66,39 +73,41 @@ public class InSchoolFragment extends Fragment {
         subscriber=new Subscriber<JobData>() {
             @Override
             public void onCompleted() {
-
+                if (jobRefresh.isRefreshing()){
+                    jobRefresh.setRefreshing(false);
+                }
             }
 
             @Override
             public void onError(Throwable e) {
 
+                Toast.makeText(PartTimeJobActivity.partTimeJobActivity,"请检查网络！",Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onNext(JobData jobData) {
 
+                List<JobResult> list=jobData.getValues();
+                if (!list.isEmpty()){
+                    jobResults.clear();
+                    jobResults.addAll(list);
+                    jobAdapter.notifyDataSetChanged();
+                }else {
+                    Toast.makeText(PartTimeJobActivity.partTimeJobActivity,"还没有兼职信息！",Toast.LENGTH_SHORT).show();
+                }
             }
 
-
         };
+        JobMethods.getInstance().getAllJob(subscriber,"查询所有兼职","校内");
 
     }
-    //显示数据
+
     private void shwowJobs(){
         LinearLayoutManager layoutManager=new LinearLayoutManager(view.getContext());
         schoolJobList.setLayoutManager(layoutManager);
-        inSchoolJobAdapter=new SchoolJobAdapter(JobItemList);
-        schoolJobList.setAdapter(inSchoolJobAdapter);
+        jobAdapter=new JobAdapter(jobResults);
+        schoolJobList.setAdapter(jobAdapter);
 
-    }
-    private void refreshJob(){
-        jobRefresh.setColorSchemeResources(R.color.colorPrimary);
-        jobRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-              getJobItem();
-            }
-        });
     }
 
 

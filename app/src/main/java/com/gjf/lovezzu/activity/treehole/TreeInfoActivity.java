@@ -100,7 +100,7 @@ public class TreeInfoActivity extends AppCompatActivity {
                 editComments.requestFocus();
                 break;
             case R.id.send:
-                if (!editComments.getText().equals("")){
+                if (!editComments.getText().toString().trim().equals("")){
                     addComm();
                 }else {
                     Toast.makeText(TreeHoleActivity.treeHoleActivity,"评论不能为空！",Toast.LENGTH_SHORT).show();

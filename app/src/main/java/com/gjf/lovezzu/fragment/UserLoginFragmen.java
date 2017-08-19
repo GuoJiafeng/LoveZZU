@@ -160,6 +160,7 @@ public class UserLoginFragmen extends Fragment {
         SharedPreferences.Editor editUserInfo = sharedPreferences.edit();
         editUserInfo.putString("phone", phone);
         editUserInfo.putString("SessionID", SessionID);
+        editUserInfo.putBoolean("firstOpen",true);
         editUserInfo.apply();
         Toast.makeText(getContext(), "登录成功！", Toast.LENGTH_LONG).show();
         checkLoginApplication = (CheckLoginApplication) getActivity().getApplication();
@@ -168,7 +169,7 @@ public class UserLoginFragmen extends Fragment {
         startActivity(intent);
     }
     private void checkInput() {
-        String checkphone = user_reg_password.getText().toString();
+        String checkphone = user_reg_password.getText().toString().trim();
         String checkpassword = user_reg_password.getText().toString();
         if (checkphone == null || checkpassword == null) {
             Toast.makeText(getContext(), "请输入用户名或者密码！", Toast.LENGTH_LONG).show();

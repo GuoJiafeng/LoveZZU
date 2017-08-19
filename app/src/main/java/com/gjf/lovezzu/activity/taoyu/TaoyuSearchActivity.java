@@ -50,8 +50,7 @@ public class TaoyuSearchActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.taoyu_search_activity);
-        setChenjinshitongzhilan();
-        ButterKnife.bind(this);
+                ButterKnife.bind(this);
         intList();
         taoyu_list.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -68,31 +67,30 @@ public class TaoyuSearchActivity extends AppCompatActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    msg = taoyu_search_title.getText().toString();
-                    getTaoyuGoodsList(msg,START);
+                    if (taoyu_search_title.getText().toString().trim().equals("")){
+                        Toast.makeText(getApplicationContext(), "请输入关键字！", Toast.LENGTH_SHORT).show();
+                    }else {
+                        msg = taoyu_search_title.getText().toString();
+                        getTaoyuGoodsList(msg,START);
+                    }
                 }
                 return false;
             }
         });
     }
 
-    private void setChenjinshitongzhilan(){
-        if (Build.VERSION.SDK_INT >= 21) {
-            View decorView = getWindow().getDecorView();
-            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-            decorView.setSystemUiVisibility(option);
-            getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-            getWindow().setStatusBarColor(Color.TRANSPARENT);
 
-        }
-    }
     @OnClick({R.id.taoyu_search_button})
     public void OnClick(View view) {
         switch (view.getId()){
             case R.id.taoyu_search_button:
-                msg = taoyu_search_title.getText().toString();
-                getTaoyuGoodsList(msg,START);
+                if (taoyu_search_title.getText().toString().trim().equals("")){
+                    Toast.makeText(getApplicationContext(), "请输入关键字！", Toast.LENGTH_SHORT).show();
+                }else {
+                    msg = taoyu_search_title.getText().toString();
+                    getTaoyuGoodsList(msg,START);
+                }
+
                 break;
         }
 
