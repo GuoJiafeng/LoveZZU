@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_margin="1dp"
+    app:cardCornerRadius="5dp">
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -10,23 +12,22 @@
         android:orientation="horizontal">
 
         <com.gjf.lovezzu.view.CircleImageView
-            android:id="@+id/g_group_image"
+            android:id="@+id/play_item_user_image"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_weight="0"
-            android:src="@drawable/test_user" />
+            android:layout_margin="3dp"
+            android:src="@drawable/def_avatar" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="horizontal">
-
             <LinearLayout
                 android:id="@+id/g_end_mid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -39,40 +40,41 @@
                         android:orientation="vertical">
 
                         <TextView
-
-                            android:id="@+id/g_group_name"
+                            android:id="@+id/play_item_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="上课啦同学们"
+                            android:text="群名称"
                             android:textColor="#0091FF" />
 
                         <TextView
-                            android:id="@+id/g_group_info"
+                            android:id="@+id/play_item_user_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:gravity="center"
-                            android:text="本班不收瓜皮学生，瓜而不皮" />
+                            android:textSize="12sp"
+                            android:text="用户昵称" />
 
                     </LinearLayout>
 
                     <TextView
-                        android:id="@+id/g_join_group"
+                        android:id="@+id/play_item_join"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:layout_marginTop="20dp"
+                        android:layout_centerVertical="true"
                         android:background="@drawable/shape_text"
                         android:gravity="center"
                         android:text="加入群组"
+                        android:textSize="16sp"
                         android:textColor="#fff" />
 
                 </RelativeLayout>
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/g_end_news"
+                android:id="@+id/play_item_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/g_end_mid"
@@ -82,69 +84,69 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="5dp"
                     android:orientation="horizontal">
 
-                    <ImageView
-                        android:id="@+id/g_play_tag1"
+                    <TextView
+                        android:textColor="#0091FF"
+                        android:text="动漫、篮球"
+                        android:id="@+id/play_item_type"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/new_group" />
-
-                    <ImageView
-                        android:id="@+id/g_play_tag2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:src="@drawable/new_add" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="match_parent" />
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/g_group_info_title"
+                    android:id="@+id/play_item_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:ellipsize="end"
                     android:maxLines="2"
-                    android:text="小漠国服第一系列的第一螳螂丶第一大眼,国服最高排名第八,曾任CC战队教练击败OMG战队,现为国服第一金牌讲师长驻斗鱼.." />
+                    android:text="群组介绍" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="最新动态" />
+                    <LinearLayout
+                        android:layout_margin="5dp"
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:id="@+id/play_item_news_image1"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_weight="1"
+                             />
 
-                    <ImageView
-                        android:id="@+id/g_group_info_image1"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/shape_image"
-                        android:src="@drawable/test_person_01" />
+                        <ImageView
+                            android:id="@+id/play_item_news_image2"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_weight="1"
+                            />
 
-                    <ImageView
-                        android:id="@+id/g_group_info_image2"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/shape_image"
-                        android:src="@drawable/test_person_03" />
+                        <ImageView
+                            android:id="@+id/play_item_news_image3"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_weight="1"
+                             />
+                        <ImageView
+                            android:layout_marginLeft="8dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:src="@drawable/right_arrow" />
+                    </LinearLayout>
 
-                    <ImageView
-                        android:id="@+id/g_group_info_image3"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/shape_image"
-                        android:src="@drawable/test_person_06" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -161,38 +163,37 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp">
+                        android:layout_margin="3dp">
 
                         <com.gjf.lovezzu.view.CircleImageView
-                            android:id="@+id/g_group_joiner1"
+                            android:id="@+id/play_item_joiner1"
                             android:layout_width="0dp"
                             android:layout_height="50dp"
                             android:layout_weight="1"
-                            android:src="@drawable/test_person_01" />
-
-
+                            android:src="@drawable/def_avatar"  />
                         <com.gjf.lovezzu.view.CircleImageView
-                            android:id="@+id/g_group_joiner2"
+                            android:id="@+id/play_item_joiner2"
                             android:layout_width="0dp"
                             android:layout_height="50dp"
                             android:layout_weight="1"
-                            android:src="@drawable/test_person_01" />
-
+                            android:src="@drawable/def_avatar"  />
                         <com.gjf.lovezzu.view.CircleImageView
-                            android:id="@+id/g_group_joiner3"
+                            android:id="@+id/play_item_joiner3"
                             android:layout_width="0dp"
                             android:layout_height="50dp"
                             android:layout_weight="1"
-                            android:src="@drawable/test_person_01" />
-
+                            android:src="@drawable/def_avatar"  />
                         <com.gjf.lovezzu.view.CircleImageView
-                            android:id="@+id/g_group_joiner4"
+                            android:id="@+id/play_item_joiner4"
                             android:layout_width="0dp"
                             android:layout_height="50dp"
                             android:layout_weight="1"
-                            android:src="@drawable/test_person_01" />
-
-
+                            android:src="@drawable/def_avatar"  />
+                        <ImageView
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/right_arrow"  />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -200,7 +201,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/g_end_news"
+                android:layout_below="@id/play_item_content"
                 android:layout_margin="5dp"
                 android:orientation="horizontal">
 
@@ -211,6 +212,7 @@
                     android:src="@drawable/group_location" />
 
                 <TextView
+                    android:id="@+id/play_item_campus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -218,18 +220,9 @@
                     android:gravity="center"
                     android:text="郑州大学"
                     android:textSize="10sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
-                    android:text="1 km"
-                    android:textSize="10sp" />
             </LinearLayout>
         </RelativeLayout>
 
 
     </LinearLayout>
-</LinearLayout>
+</android.support.v7.widget.CardView>

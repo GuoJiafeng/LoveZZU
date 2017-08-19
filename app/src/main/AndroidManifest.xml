@@ -56,23 +56,14 @@
         <activity android:name=".activity.taoyu.OrderSellInfoActivity"/>
         <activity android:name=".activity.taoyu.OrderBuyInfoAcivity"/>
         <activity android:name=".activity.taoyu.MyPublishGoodsActivity"/>
+
         <!-- 一起玩 -->
         <activity
             android:name=".activity.palytogether.PlayTogetherActivity"
             android:launchMode="singleTask" />
-        <activity android:name=".activity.palytogether.PlayGroupActivity">
-            <intent-filter>
-                <action android:name="com.playGroup" />
+        <activity android:name=".activity.palytogether.PlayGroupActivity"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="com.play.MY_CATEGROY" />
 
-            </intent-filter>
-        </activity>
-        <activity android:name=".activity.palytogether.PlayGroupListActivity" />
-        <activity
-            android:name=".activity.palytogether.PlaySchoolActivity"
-            android:windowSoftInputMode="adjustPan" />
 
         <!-- 树洞 -->
         <activity android:name=".activity.treehole.TreeHoleActivity"
