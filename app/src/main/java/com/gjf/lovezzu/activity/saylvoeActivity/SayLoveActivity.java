@@ -16,24 +16,26 @@ import butterknife.OnClick;
  * Created by BlackBeard丶 on 2017/03/22.
  */
 public class SayLoveActivity extends AppCompatActivity {
+
+
+    @BindView(R.id.sayloveWall)
+    LinearLayout sayloveWall;
     @BindView(R.id.saylove_iwantsaylove)
-    LinearLayout sayout_iwantsaylove;
-
-
+    LinearLayout sayloveIwantsaylove;
+    public static SayLoveActivity sayLoveActivity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.biaobai);
         ButterKnife.bind(this);
+        sayLoveActivity=this;
+
     }
 
-    @OnClick({R.id.saylove_iwantsaylove})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.saylove_iwantsaylove:
-                goToSayLove();
-        }
 
+    private void goTosayloveWall() {
+        Intent intent = new Intent(SayLoveActivity.this, SayloveWallActivity.class);
+        startActivity(intent);
     }
 
 
@@ -42,4 +44,21 @@ public class SayLoveActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @OnClick({R.id.sayloveWall,R.id.sayloveWall_image, R.id.saylove_iwantsaylove,R.id.saylove_iwantsaylove_image})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.sayloveWall:
+                goTosayloveWall();
+                break;
+            case R.id.saylove_iwantsaylove:
+                goToSayLove();
+                break;
+            case R.id.sayloveWall_image:
+                goTosayloveWall();
+                break;
+            case R.id.saylove_iwantsaylove_image:
+                goToSayLove();
+                break;
+        }
+    }
 }

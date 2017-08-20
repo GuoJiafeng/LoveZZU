@@ -98,6 +98,7 @@
                     android:layout_height="wrap_content"
                     android:enabled="true"
                     android:gravity="top"
+                    android:background="@null"
                     android:hint="发布话题的内容"
                     android:inputType="textMultiLine"
                     android:maxLength="140"

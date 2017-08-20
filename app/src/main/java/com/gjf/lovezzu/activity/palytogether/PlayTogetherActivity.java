@@ -1,5 +1,6 @@
 package com.gjf.lovezzu.activity.palytogether;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -47,11 +48,6 @@ public class PlayTogetherActivity extends AppCompatActivity implements PopupMenu
 
     }
 
-
-
-
-
-
     @OnClick({R.id.play_title_back, R.id.play_menu})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -82,10 +78,16 @@ public class PlayTogetherActivity extends AppCompatActivity implements PopupMenu
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.play_search:
-                Toast.makeText(this, "搜索", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this,SearchGroupActivity.class));
                 break;
             case R.id.play_create_group:
-                Toast.makeText(this, "创建群组", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this,PublishGroupActivity.class));
+                break;
+            case R.id.play_publish_group:
+                startActivity(new Intent(this,MyGroupActivity.class));
+                break;
+            case R.id.play_join_group:
+                startActivity(new Intent(this,JoinGroupActivity.class));
                 break;
         }
         return false;

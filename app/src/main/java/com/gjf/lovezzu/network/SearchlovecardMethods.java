@@ -1,14 +1,12 @@
 package com.gjf.lovezzu.network;
 
 import com.gjf.lovezzu.constant.Url;
-import com.gjf.lovezzu.network.api.UploadIconServer;
+import com.gjf.lovezzu.entity.saylove.SayloveData;
+import com.gjf.lovezzu.network.api.SearchlovecardServer;
 
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -17,38 +15,38 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by BlackBeard丶 on 2017/03/15.
+ * Created by Leon on 2017/8/18.
  */
-public class UpLoadIconMethods {
-    private Retrofit retrofit;
-    private UploadIconServer uploadIconServer;
-    private static final int DEFAULT_TIMEOUT = 5;
 
-    private UpLoadIconMethods() {
-        //手动创建一个OkHttpClient并设置超时时间
+public class SearchlovecardMethods {
+    private Retrofit  retrofit;
+    private SearchlovecardServer searchlovecardServer;
+    private  static final int DEFAULT_TIMEOUT = 5;
+
+    public SearchlovecardMethods() {
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
         httpClientBuilder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
+
+
         retrofit = new Retrofit.Builder()
                 .client(httpClientBuilder.build())
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .baseUrl(Url.LOGIN_URL)
                 .build();
-
-        uploadIconServer = retrofit.create(UploadIconServer.class);
+        searchlovecardServer=retrofit.create(SearchlovecardServer.class);
     }
+   private  static class  SingletonHolder{
+        private  static final SearchlovecardMethods INSTANCE=new SearchlovecardMethods(){
 
-private static class SingletonHolder {
-    private static final UpLoadIconMethods INSTANCE = new UpLoadIconMethods();
-}
-
-    public static UpLoadIconMethods upLoadIconMethods() {
-        return SingletonHolder.INSTANCE;
+        };
     }
-
-    public void goToUploadIcon(Subscriber<ResponseBody> subscriber, Map<String, RequestBody> params) {
-        uploadIconServer.upLoadIcon(params).subscribeOn(Schedulers.io())
+    public  static SearchlovecardMethods getInstance(){
+        return  SingletonHolder.INSTANCE;
+    }
+    public  void getSearchlovecard(Subscriber<SayloveData> subscriber,String action,String search){
+        searchlovecardServer.getSearchlovecard(action, search).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
     }
-}
+    }

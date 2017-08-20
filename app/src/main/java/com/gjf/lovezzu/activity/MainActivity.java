@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.gjf.lovezzu.R;
 import com.gjf.lovezzu.entity.CheckLoginApplication;
@@ -19,7 +20,8 @@ import com.gjf.lovezzu.fragment.PersonFragment;
 import com.gjf.lovezzu.fragment.school.SchoolFragment;
 import com.gjf.lovezzu.service.CheckLogin;
 
-
+import cn.smssdk.EventHandler;
+import cn.smssdk.SMSSDK;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -41,12 +43,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private MessageFragment messageFragment;
     private PersonFragment personFragment;
     public static MainActivity mainActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mainActivity=this;
         checkLoin();
+        // 创建EventHandler对象
 
 
         if (Build.VERSION.SDK_INT >= 21) {
@@ -150,6 +154,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         transaction.commit();
 
     }
+
 
 
     private void setDefaultFragment() {

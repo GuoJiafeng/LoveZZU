@@ -6,5 +6,10 @@
     <item
         android:id="@+id/play_create_group"
         android:title="创建群组" />
-
+    <item
+        android:id="@+id/play_join_group"
+        android:title="我加入的" />
+    <item
+        android:id="@+id/play_publish_group"
+        android:title="我创建的" />
 </menu>

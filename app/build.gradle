@@ -54,5 +54,8 @@ dependencies {
     compile 'org.jsoup:jsoup:1.10.2'
     compile 'com.thefinestartist:finestwebview:1.2.7'
     compile 'com.bigkoo:convenientbanner:2.0.5'
-
+    compile files('libs/MobCommons-2017.0801.1522.jar')
+    compile files('libs/ShareSDK-QZone-3.0.1.jar')
+    compile name:'SMSSDK-3.0.0',ext:'aar'
+    compile name:'SMSSDKGUI-3.0.0',ext:'aar'
 }

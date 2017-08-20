@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#EE9572"
+        android:layout_weight="1">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:background="#ffffff"
+            android:singleLine="true"
+            android:hint="   找不到了搜一下~"
+            android:textSize="20sp"
+            android:imeOptions="actionSearch"
+            android:lines="1"
+            android:id="@+id/searchlovecard"/>
+
+    </LinearLayout>
+</LinearLayout>
