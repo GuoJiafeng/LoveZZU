@@ -9,7 +9,7 @@ import java.util.List;
 
 public class GroupData implements Serializable {
     private String result;
-    private List<GroupResult> values;
+    private List<GroupDataBridging> values;
 
     public String getResult() {
         return result;
@@ -19,11 +19,11 @@ public class GroupData implements Serializable {
         this.result = result;
     }
 
-    public List<GroupResult> getValues() {
+    public List<GroupDataBridging> getValues() {
         return values;
     }
 
-    public void setValues(List<GroupResult> values) {
+    public void setValues(List<GroupDataBridging> values) {
         this.values = values;
     }
 }

@@ -46,7 +46,7 @@ public class GroupMethods {
         return SinglerHolder.INSTANCE;
     }
 
-    public void getGroup(Subscriber<GroupData> subscriber,String action,String num){
+    public void getGroup(Subscriber<GroupData> subscriber,String action,int num){
         groupServer.getGroup(action,num)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

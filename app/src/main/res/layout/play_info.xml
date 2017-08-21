@@ -56,7 +56,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="群介绍"
-                        android:textSize="13sp" />
+                         />
 
                     <TextView
                         android:id="@+id/play_info_introduce"
@@ -67,7 +67,7 @@
                         android:maxEms="20"
                         android:maxLines="3"
                         android:text="群介绍"
-                        android:textSize="11sp" />
+                        android:textSize="15sp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -92,7 +92,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="群成员"
-                        android:textSize="13sp" />
+                         />
 
                     <TextView
                         android:id="@+id/play_info_users_num"
@@ -101,7 +101,7 @@
                         android:layout_marginLeft="10dp"
                         android:text="16"
                         android:textColor="#2574e4"
-                        android:textSize="12.5sp" />
+                        android:textSize="15sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -145,16 +145,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="群动态"
-                        android:textSize="13sp" />
+                        />
 
-                    <TextView
-                        android:id="@+id/play_info_news_num"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:text="20"
-                        android:textColor="#5a93ef"
-                        android:textSize="12.5sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -182,28 +174,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="入群条件"
-                        android:textSize="13dp" />
-
-                    <TextView
-                        android:id="@+id/play_info_request"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:maxLines="2"
-                        android:layout_marginTop="5dp"
-                        android:text="加入群组的条件"
-                        android:textSize="11sp" />
-                </LinearLayout>
             </LinearLayout>
 
             <include
@@ -222,7 +192,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="群标签"
-                    android:textSize="13sp" />
+                     />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -235,7 +205,7 @@
                         android:layout_marginTop="5dp"
                         android:text="运动-篮球"
                         android:textColor="#214bf4"
-                        android:textSize="11sp" />
+                        android:textSize="15sp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -261,7 +231,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:text="群主"
-                        android:textSize="13sp" />
+                         />
 
                     <LinearLayout
                         android:id="@+id/play_info_master_info"
@@ -298,15 +268,8 @@
                                     android:layout_height="wrap_content"
                                     android:text="北城之春"
                                     android:textColor="#000"
-                                    android:textSize="11sp" />
+                                    android:textSize="15sp" />
 
-                                <TextView
-                                    android:id="@+id/play_info_time"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="5dp"
-                                    android:text="一天前"
-                                    android:textSize="10sp" />
                             </LinearLayout>
 
                         </LinearLayout>
@@ -336,7 +299,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="地址"
-                        android:textSize="12.5sp" />
+                         />
 
                     <TextView
                         android:id="@+id/group_location"
@@ -344,7 +307,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:text="郑州大学北校区"
-                        android:textSize="11sp" />
+                        android:textSize="15sp" />
                 </LinearLayout>
 
                 <include
@@ -362,16 +325,16 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="其他信息"
-                        android:textSize="12.5sp" />
+                        android:text="创建时间"
+                         />
 
                     <TextView
-                        android:id="@+id/play_info_other_info"
+                        android:id="@+id/play_info_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="创建时间。。。"
-                        android:textSize="11sp" />
+                        android:text="2017"
+                        android:textSize="15sp" />
                 </LinearLayout>
 
                 <include

@@ -121,7 +121,9 @@ public class TaoyuGoodsStudyTypeFragment extends Fragment {
         subscriber = new Subscriber<TaoyuGoodsData>() {
             @Override
             public void onCompleted() {
-
+                if (refreshLayout.isRefreshing()){
+                    refreshLayout.setRefreshing(false);
+                }
             }
 
             @Override
@@ -143,9 +145,6 @@ public class TaoyuGoodsStudyTypeFragment extends Fragment {
         };
 
         TaoyuGoodsListMethods.getInstance().getGoodsList(subscriber,"学习",num);
-        if (num>0){
-            refreshLayout.setRefreshing(false);
-        }
 
     }
 

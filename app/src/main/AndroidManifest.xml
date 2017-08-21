@@ -65,6 +65,7 @@
         <activity android:name=".activity.palytogether.PublishGroupActivity"/>
         <activity android:name=".activity.palytogether.PublishDynamicActivity"/>
         <activity android:name=".activity.palytogether.MyGroupActivity"/>
+        <activity android:name=".activity.palytogether.GroupDynamicActivity"/>
 
         <!-- 树洞 -->
         <activity android:name=".activity.treehole.TreeHoleActivity"

@@ -67,7 +67,7 @@
                         android:background="@drawable/shape_text"
                         android:gravity="center"
                         android:text="加入群组"
-                        android:textSize="16sp"
+                        android:textSize="18sp"
                         android:textColor="#fff" />
 
                 </RelativeLayout>

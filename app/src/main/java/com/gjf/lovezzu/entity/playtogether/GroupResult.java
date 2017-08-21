@@ -14,6 +14,15 @@ public class GroupResult implements Serializable {
     private String	label;//群标签
     private String	member;//群成员
     private String	date;//创建时间
+    private String campus;//校区
+
+    public String getCampus() {
+        return campus;
+    }
+
+    public void setCampus(String campus) {
+        this.campus = campus;
+    }
 
     public Integer getGroupId() {
         return groupId;

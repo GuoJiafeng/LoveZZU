@@ -17,13 +17,16 @@ public interface GroupServer {
     //分页查询群组
     @FormUrlEncoded
     @POST("GroupAction")
-    Observable<GroupData> getGroup(@Field("action")String action,@Field("num")String num);
+    Observable<GroupData> getGroup(@Field("action")String action,@Field("num")int num);
 
     //搜索群组
     @FormUrlEncoded
     @POST("GroupAction")
     Observable<GroupData> getSearchGroup(@Field("search")String search,@Field("action")String action);
-
+    //我发布的群组
+    @FormUrlEncoded
+    @POST("GroupAction")
+    Observable<GroupData> getMyGroup(@Field("SessionID")String SessionID,@Field("action")String action);
     //加入群组
     @FormUrlEncoded
     @POST("GroupAction")

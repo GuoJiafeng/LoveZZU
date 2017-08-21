@@ -105,6 +105,37 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#999999" />
+        <LinearLayout
+            android:layout_margin="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:text="群组地址:"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/publish_group_camp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="15sp"
+                android:hint="郑州大学（新校区）" />
+
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#999999" />
     </LinearLayout>
 
     <LinearLayout
