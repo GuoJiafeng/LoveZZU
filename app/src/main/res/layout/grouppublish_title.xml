@@ -12,7 +12,7 @@
 
         <ImageView
             android:layout_gravity="center_vertical"
-            android:id="@+id/go_back"
+            android:id="@+id/publish_group_go_back"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginLeft="0.5dp"
@@ -26,10 +26,7 @@
         android:gravity="center">
 
         <TextView
-
-
             android:layout_width="wrap_content"
-
             android:layout_height="wrap_content"
             android:text="发布群组"
             android:textSize="25sp" />
@@ -42,7 +39,7 @@
         android:gravity="center">
 
         <TextView
-            android:id="@+id/goods_commit"
+            android:id="@+id/publish_group_commit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="发布"

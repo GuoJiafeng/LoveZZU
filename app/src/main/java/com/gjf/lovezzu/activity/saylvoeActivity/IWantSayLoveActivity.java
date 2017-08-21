@@ -88,6 +88,7 @@ public class IWantSayLoveActivity extends AppCompatActivity {
                         progressDialog.dismiss();
                         Intent intent=new Intent(SayLoveActivity.sayLoveActivity,SayloveWallActivity.class);
                         SayLoveActivity.sayLoveActivity.startActivity(intent);
+                        onStop();
                     }else {
                         Toast.makeText(getApplicationContext(),"请检查网络是否通畅！",Toast.LENGTH_SHORT).show();
                     }

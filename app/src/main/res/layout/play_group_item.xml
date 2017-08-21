@@ -118,39 +118,24 @@
                         android:layout_width="match_parent"
                         android:orientation="horizontal"
                         android:layout_height="wrap_content">
-                        <ImageView
-                            android:id="@+id/play_item_news_image1"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
+                        <android.support.v7.widget.RecyclerView
                             android:layout_weight="1"
-                             />
-
-                        <ImageView
-                            android:id="@+id/play_item_news_image2"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:layout_weight="1"
-                            />
-
-                        <ImageView
-                            android:id="@+id/play_item_news_image3"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:layout_weight="1"
-                             />
+                            android:id="@+id/play_item_dynamic"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
                         <ImageView
                             android:layout_marginLeft="8dp"
                             android:layout_gravity="center_vertical"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+
                             android:src="@drawable/right_arrow" />
                     </LinearLayout>
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:orientation="vertical">
@@ -161,35 +146,17 @@
                         android:text="群组成员" />
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="3dp">
 
-                        <com.gjf.lovezzu.view.CircleImageView
-                            android:id="@+id/play_item_joiner1"
-                            android:layout_width="0dp"
-                            android:layout_height="50dp"
-                            android:layout_weight="1"
-                            android:src="@drawable/def_avatar"  />
-                        <com.gjf.lovezzu.view.CircleImageView
-                            android:id="@+id/play_item_joiner2"
-                            android:layout_width="0dp"
-                            android:layout_height="50dp"
-                            android:layout_weight="1"
-                            android:src="@drawable/def_avatar"  />
-                        <com.gjf.lovezzu.view.CircleImageView
-                            android:id="@+id/play_item_joiner3"
-                            android:layout_width="0dp"
-                            android:layout_height="50dp"
-                            android:layout_weight="1"
-                            android:src="@drawable/def_avatar"  />
-                        <com.gjf.lovezzu.view.CircleImageView
-                            android:id="@+id/play_item_joiner4"
-                            android:layout_width="0dp"
-                            android:layout_height="50dp"
-                            android:layout_weight="1"
-                            android:src="@drawable/def_avatar"  />
+                       <android.support.v7.widget.RecyclerView
+                           android:layout_weight="1"
+                           android:id="@+id/play_item_users"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"/>
                         <ImageView
+                            android:layout_marginLeft="8dp"
                             android:layout_gravity="center_vertical"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

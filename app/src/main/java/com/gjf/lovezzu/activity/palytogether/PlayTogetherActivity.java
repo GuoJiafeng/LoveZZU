@@ -93,5 +93,8 @@ public class PlayTogetherActivity extends AppCompatActivity implements PopupMenu
         return false;
     }
 
+    private void getGroup(){
+
+    }
 
 }

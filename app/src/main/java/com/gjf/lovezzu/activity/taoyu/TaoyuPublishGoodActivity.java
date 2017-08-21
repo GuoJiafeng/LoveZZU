@@ -233,7 +233,6 @@ public class TaoyuPublishGoodActivity extends AppCompatActivity {
     private void upLoadImage() {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view_1);
         photoAdapter = new PhotoAdapter(this, selectedPhotos);
-
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, OrientationHelper.VERTICAL));
         recyclerView.setAdapter(photoAdapter);
 

@@ -7,13 +7,14 @@ import android.support.v7.app.AppCompatActivity;
 import com.gjf.lovezzu.R;
 
 /**
- * Created by zhao on 2017/8/20.
+ * Created by zhao on 2017/8/21.
  */
 
-public class JoinGroupActivity extends AppCompatActivity {
+public class GroupDynamicActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_joined_group);
+        setContentView(R.layout.activity_dynamic);
     }
 }
