@@ -9,8 +9,10 @@
         android:layout_height="wrap_content"
         android:layout_weight="4"
         android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:id="@+id/sayloveWall">
         <ImageButton
+            android:id="@+id/sayloveWall_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -39,6 +41,7 @@
         android:gravity="center">
 
         <ImageButton
+            android:id="@+id/saylove_iwantsaylove_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

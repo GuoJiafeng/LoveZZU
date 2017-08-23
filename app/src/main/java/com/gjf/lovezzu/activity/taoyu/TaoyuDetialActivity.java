@@ -7,6 +7,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -106,7 +107,7 @@ public class TaoyuDetialActivity extends AppCompatActivity {
                 addShopCar();
                 break;
             case R.id.send:
-                if (editComments.getText().toString().equals("")){
+                if (editComments.getText().toString().trim().equals("")){
                     Toast.makeText(this,"评论不能为空！",Toast.LENGTH_SHORT).show();
                 }else {
                     publishGoodsComments();

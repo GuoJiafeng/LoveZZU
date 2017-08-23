@@ -1,7 +1,8 @@
 package com.gjf.lovezzu.activity.treehole;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -16,8 +17,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.gjf.lovezzu.R;
-import com.gjf.lovezzu.entity.TreeHoleData;
-import com.gjf.lovezzu.entity.TreeHoleResult;
+import com.gjf.lovezzu.entity.treehole.TreeHole;
+import com.gjf.lovezzu.entity.treehole.TreeHoleData;
 import com.gjf.lovezzu.network.TreeHoleMethods;
 import com.gjf.lovezzu.view.TreeHoleAdapter;
 
@@ -36,7 +37,6 @@ import rx.Subscriber;
 public class TreeHoleActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener{
 
     public static TreeHoleActivity treeHoleActivity;
-    private Subscriber subscriber;
 
     @BindView(R.id.tree_title_back)
     ImageView treeTitleBack;
@@ -49,54 +49,37 @@ public class TreeHoleActivity extends AppCompatActivity implements PopupMenu.OnM
     @BindView(R.id.tree_fab)
     ImageView treeFab;
 
-    private List<TreeHoleResult> treeHoleResultList = new ArrayList<>();
-    TreeHoleAdapter treeHoleAdapter;
+    private Subscriber subscriber;
+    private String SessionID;
+    private List<TreeHole> treeHoleList=new ArrayList<>();
+    private TreeHoleAdapter treeHoleAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tree_hole_view);
         ButterKnife.bind(this);
-        treeHoleActivity = this;
-        initDate();
-        LinearLayoutManager layoutManager=new LinearLayoutManager(this);
-        treeItemView.setLayoutManager(layoutManager);
-        treeHoleAdapter=new TreeHoleAdapter(treeHoleResultList);
-        treeItemView.setAdapter(treeHoleAdapter);
-
-        treeRefresh.setColorSchemeColors(Color.GREEN);
+        treeHoleActivity=this;
+        SharedPreferences sharedPreferences=getSharedPreferences("userinfo", Activity.MODE_PRIVATE);
+        SessionID=sharedPreferences.getString("SessionID","");
         treeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                //刷新菜单
-                treeRefresh();
+                getTreeHole("查询树洞");
             }
         });
-
+        getTreeHole("查询树洞");
+        showTree();
     }
 
-    private void treeRefresh() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        //刷新数据
-                        initDate();
-                        treeHoleAdapter.notifyDataSetChanged();
-                        treeRefresh.setRefreshing(false);
-                    }
-                });
-            }
-        }).start();
+    private void showTree(){
+        LinearLayoutManager layoutManager=new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        treeItemView.setLayoutManager(layoutManager);
+        treeHoleAdapter=new TreeHoleAdapter(treeHoleList,SessionID);
+        treeItemView.setAdapter(treeHoleAdapter);
     }
 
-    @OnClick({R.id.tree_title_back, R.id.tree_menu, R.id.tree_refresh, R.id.tree_fab})
+    @OnClick({R.id.tree_title_back, R.id.tree_menu, R.id.tree_fab})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tree_title_back:
@@ -104,8 +87,6 @@ public class TreeHoleActivity extends AppCompatActivity implements PopupMenu.OnM
                 break;
             case R.id.tree_menu:
                 getMenu();
-                break;
-            case R.id.tree_refresh:
                 break;
             case R.id.tree_fab:
                 Intent intent=new Intent(TreeHoleActivity.this,AddTreeHoleActivity.class);
@@ -125,10 +106,10 @@ public class TreeHoleActivity extends AppCompatActivity implements PopupMenu.OnM
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()){
             case R.id.tree_publish:
-                Toast.makeText(this,"发布我的树洞",Toast.LENGTH_SHORT).show();
+                getTreeHole("查询我发布的树洞");
                 break;
             case R.id.tree_comment:
-                Toast.makeText(this,"我评论的",Toast.LENGTH_SHORT).show();
+                getTreeHole("查询我评论过的树洞");
                 break;
             default:
                 break;
@@ -136,32 +117,36 @@ public class TreeHoleActivity extends AppCompatActivity implements PopupMenu.OnM
         return false;
     }
 
-    private void initDate(){
-//        //服务器获取
-//        //测试数据
-//        for (int i = 1; i <= 5; i++){
-//            TreeHoleResult treeHole=new TreeHoleResult("发布我的树洞主体美容","啥用？","100","101");
-//            treeHoleResultList.add(treeHole);
-//        }
-
-        subscriber = new Subscriber<TreeHoleData>() {
+    private void getTreeHole(String action){
+        subscriber=new Subscriber<TreeHoleData>() {
             @Override
             public void onCompleted() {
-            Log.d("ggggg","显示成功!");
+                if (treeRefresh.isRefreshing()){
+                    treeRefresh.setRefreshing(false);
+                }
             }
 
             @Override
             public void onError(Throwable e) {
-                Log.d("ggggg",e.getMessage().toString());
+
             }
 
             @Override
             public void onNext(TreeHoleData treeHoleData) {
-                List<TreeHoleResult> list = treeHoleData.getResults();
-                treeHoleResultList.addAll(list);
 
+                List<TreeHole> list=treeHoleData.getValues();
+                if (list.size()!=0){
+                    treeHoleList.clear();
+                    treeHoleList.addAll(list);
+                    treeHoleAdapter.notifyDataSetChanged();
+                }else {
+                    Toast.makeText(TreeHoleActivity.treeHoleActivity,"还没有最新发言，快来吐槽吧！",Toast.LENGTH_SHORT).show();
+                }
             }
         };
-        TreeHoleMethods.getInstance().getHomePageList(subscriber,1);
+        TreeHoleMethods.getInstance().getTreeHole(subscriber,action,SessionID);
     }
+
+
+
 }

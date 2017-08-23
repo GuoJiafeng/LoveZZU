@@ -2,10 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/tree_publish"
-        android:icon="@drawable/publish"
         android:title="我发布的" />
     <item
         android:id="@+id/tree_comment"
-        android:icon="@drawable/tree_comment"
         android:title="我评论的" />
 </menu>

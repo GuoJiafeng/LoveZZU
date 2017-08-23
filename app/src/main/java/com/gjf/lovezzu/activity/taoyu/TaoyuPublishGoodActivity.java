@@ -3,18 +3,15 @@ package com.gjf.lovezzu.activity.taoyu;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -24,8 +21,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gjf.lovezzu.R;
-import com.gjf.lovezzu.activity.tapictalk.TopicTalkActivity;
-import com.gjf.lovezzu.fragment.taoyu.TaoyuGoodsStudyTypeFragment;
 import com.gjf.lovezzu.view.PhotoAdapter;
 import com.gjf.lovezzu.view.RecyclerItemClickListener;
 import com.gjf.lovezzu.view.WheelView;
@@ -39,11 +34,8 @@ import org.xutils.x;
 
 import java.io.File;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -121,7 +113,6 @@ public class TaoyuPublishGoodActivity extends AppCompatActivity {
 
     private void getSessionID() {
         SharedPreferences sharedPreferences=getSharedPreferences("userinfo", Activity.MODE_APPEND);
-        final SharedPreferences.Editor editor=sharedPreferences.edit();
         SessionID=sharedPreferences.getString("SessionID","");
 
     }
@@ -242,7 +233,6 @@ public class TaoyuPublishGoodActivity extends AppCompatActivity {
     private void upLoadImage() {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view_1);
         photoAdapter = new PhotoAdapter(this, selectedPhotos);
-
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, OrientationHelper.VERTICAL));
         recyclerView.setAdapter(photoAdapter);
 
@@ -293,7 +283,7 @@ public class TaoyuPublishGoodActivity extends AppCompatActivity {
                 startActivity(new Intent(TaoyuPublishGoodActivity.this, TaoyuActivity.class));
                 break;
             case R.id.goods_commit:
-                if(goodsName.equals("")||goodsPrice.equals("")||photosURL==null){
+                if(goodsName.getText().toString().trim().equals("")||goodsPrice.getText().toString().trim().equals("")||photosURL==null){
                     Toast.makeText(getApplicationContext(),"请完善商品信息",Toast.LENGTH_SHORT).show();
                 }else {
                     upGoodsInfo();

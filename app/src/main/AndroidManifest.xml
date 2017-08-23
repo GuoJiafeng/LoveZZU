@@ -6,7 +6,7 @@
     <application
         android:name=".entity.CheckLoginApplication"
         android:allowBackup="true"
-        android:icon="@drawable/lovezuu_1"
+        android:icon="@drawable/app_logo"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -27,62 +27,72 @@
 
         <activity
             android:name=".activity.UserLoginActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name=".activity.saylvoeActivity.SayLoveActivity" />
-        <activity android:name=".activity.saylvoeActivity.IWantSayLoveActivity" />
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activity.UserInfoActivity" />
         <activity android:name=".activity.UserSettingActivity" />
         <activity android:name="me.iwf.photopicker.PhotoPickerActivity" />
 
         <!-- 话题圈 -->
-        <activity android:name=".activity.tapictalk.TopicTalkActivity"
+        <activity android:name=".activity.topictalk.TopicTalkActivity"
             android:launchMode="singleTask" />
-        <activity android:name=".activity.tapictalk.TopicInfoActivity"/>
-        <activity android:name=".activity.tapictalk.TopicPublishActivity"/>
-        <activity android:name=".activity.tapictalk.ThemePublishActivity"/>
+        <activity android:name=".activity.topictalk.TopicInfoActivity"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".activity.topictalk.TopicPublishActivity"/>
+        <activity android:name=".activity.topictalk.ThemePublishActivity"/>
+        <activity android:name=".activity.palytogether.SearchGroupActivity"/>
+        <activity android:name=".activity.palytogether.JoinGroupActivity"/>
         <!-- 淘鱼 -->
-        <activity android:name=".activity.taoyu.TaoyuActivity" />
+        <activity android:name=".activity.taoyu.TaoyuActivity"
+            android:launchMode="singleTask" />
         <activity android:name=".activity.taoyu.ShopcartActivity"/>
-        <activity android:name=".activity.taoyu.TaoyuChildConmmentsActivity"/>
+        <activity android:name=".activity.taoyu.TaoyuChildConmmentsActivity"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".activity.taoyu.TaoyuOrderActivity"/>
         <activity android:name=".activity.taoyu.TaoyuSearchActivity" />
         <activity android:name=".activity.taoyu.TaoyuPublishGoodActivity"
             android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".activity.taoyu.TaoyuDetialActivity" />
+        <activity android:name=".activity.taoyu.TaoyuDetialActivity"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".activity.taoyu.OrderSellInfoActivity"/>
         <activity android:name=".activity.taoyu.OrderBuyInfoAcivity"/>
         <activity android:name=".activity.taoyu.MyPublishGoodsActivity"/>
+
         <!-- 一起玩 -->
         <activity
             android:name=".activity.palytogether.PlayTogetherActivity"
             android:launchMode="singleTask" />
-        <activity android:name=".activity.palytogether.PlayGroupActivity">
-            <intent-filter>
-                <action android:name="com.playGroup" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="com.play.MY_CATEGROY" />
-
-            </intent-filter>
-        </activity>
-        <activity android:name=".activity.palytogether.PlayGroupListActivity" />
-        <activity
-            android:name=".activity.palytogether.PlaySchoolActivity"
-            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".activity.palytogether.PlayGroupActivity"/>
+        <activity android:name=".activity.palytogether.PublishGroupActivity"/>
+        <activity android:name=".activity.palytogether.PublishDynamicActivity"/>
+        <activity android:name=".activity.palytogether.MyGroupActivity"/>
+        <activity android:name=".activity.palytogether.GroupDynamicActivity"/>
 
         <!-- 树洞 -->
-        <activity android:name=".activity.treehole.TreeHoleActivity" />
+        <activity android:name=".activity.treehole.TreeHoleActivity"
+            android:launchMode="singleTask" />
         <activity
             android:name=".activity.treehole.AddTreeHoleActivity"
             android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".activity.treehole.TreeInfoActivity"/>
 
         <!-- 兼职 -->
-        <activity android:name=".activity.parttimejob.PartTimeJobActivity" />
+        <activity android:name=".activity.parttimejob.PartTimeJobActivity"
+            android:launchMode="singleTask"  />
         <activity
             android:name=".activity.parttimejob.AddJopActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activity.parttimejob.JobInfoActivity" />
+        <activity android:name=".activity.parttimejob.MyJobActivity"/>
+        <activity android:name=".activity.parttimejob.SearchJobActivity"/>
 
+        <!--表白墙-->
+        <activity android:name=".activity.saylvoeActivity.SayLoveActivity"
+            android:launchMode="singleTask" />
+        <activity android:name=".activity.saylvoeActivity.IWantSayLoveActivity"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".activity.saylvoeActivity.SayloveReplyActivity"/>
+        <activity android:name=".activity.saylvoeActivity.SayloveWallActivity"
+            android:windowSoftInputMode="stateHidden"/>
 
         <!--WebView-->
         <activity
@@ -91,8 +101,33 @@
             android:screenOrientation="sensor"
             android:theme="@style/FinestWebViewTheme.Light" />
 
+        <!--shareSDK-->
+        <activity
+            android:name="com.mob.tools.MobUIShell"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:windowSoftInputMode="stateHidden|adjustResize" >
+
+            <intent-filter>
+                <data android:scheme="tencent100371282" />
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <!-- 调用新浪原生SDK，需要注册的回调activity -->
+            <intent-filter>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
 
 
+        </activity>
+        <!-- 填写您从Mob开发者后台中得到的Appkey和AppSecret -->
+        <meta-data android:name="Mob-AppKey" android:value="204eecc440269"/>
+        <meta-data android:name="Mob-AppSecret" android:value="bbf175eaf7515b869934772a412e3d10"/>
+
+        <!--短信验证-->
 
     </application>
 
@@ -116,5 +151,15 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-
+    <!--ShareSDK-->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <!-- 蓝牙分享所需的权限 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <!--短信SDK-->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
 </manifest>

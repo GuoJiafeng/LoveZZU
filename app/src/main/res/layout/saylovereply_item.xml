@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_margin="10dp">
+    <com.gjf.lovezzu.view.CircleImageView
+        android:layout_width="66dp"
+        android:layout_height="match_parent"
+        android:id="@+id/saylove_touxiang"
+        android:src="@drawable/def_avatar"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="30">
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="这是评论内容"
+        android:textSize="18sp"
+        android:layout_weight="4"
+        android:layout_margin="5dp"
+        android:id="@+id/saylove_reply"
+        android:textColor="#333"/>
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="2017-8-17  19:22"
+        android:textSize="10sp"
+        android:layout_weight="0.1"
+        android:gravity="right"
+            android:layout_margin="5dp"
+        android:id="@+id/biaobaicomment_time"/>
+
+    </LinearLayout>
+</LinearLayout>
+</LinearLayout>

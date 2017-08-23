@@ -1,8 +1,7 @@
 package com.gjf.lovezzu.entity;
 
-import android.app.Application;
 
-
+import com.mob.MobApplication;
 
 import org.xutils.x;
 
@@ -12,7 +11,7 @@ import org.xutils.x;
  * zhao
  * Created by BlackBeard丶 on 2017/03/08.
  */
-public class CheckLoginApplication extends Application {
+public class CheckLoginApplication extends MobApplication {
     private boolean isLogin;
 
     public boolean isLogin() {

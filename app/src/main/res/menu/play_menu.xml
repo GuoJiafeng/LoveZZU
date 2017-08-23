@@ -2,11 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/play_search"
-        android:icon="@drawable/search"
         android:title="搜索" />
     <item
         android:id="@+id/play_create_group"
-        android:icon="@drawable/create_group"
         android:title="创建群组" />
-
+    <item
+        android:id="@+id/play_join_group"
+        android:title="我加入的" />
+    <item
+        android:id="@+id/play_publish_group"
+        android:title="我创建的" />
 </menu>

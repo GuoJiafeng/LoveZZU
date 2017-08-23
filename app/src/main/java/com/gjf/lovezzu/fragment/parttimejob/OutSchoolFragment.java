@@ -11,12 +11,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.gjf.lovezzu.R;
 import com.gjf.lovezzu.activity.parttimejob.AddJopActivity;
 import com.gjf.lovezzu.activity.parttimejob.PartTimeJobActivity;
-import com.gjf.lovezzu.entity.JobItem;
-import com.gjf.lovezzu.view.SchoolJobAdapter;
+import com.gjf.lovezzu.entity.parttimejob.JobData;
+import com.gjf.lovezzu.entity.parttimejob.JobResult;
+import com.gjf.lovezzu.network.JobMethods;
+import com.gjf.lovezzu.view.JobAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +27,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Subscriber;
 
 /**
  * Created by zhaox on 2017/5/23.
@@ -40,8 +44,9 @@ public class OutSchoolFragment extends Fragment {
     ImageView addJob;
 
     private View view;
-    private List<JobItem> JobItemList = new ArrayList<>();
-    private SchoolJobAdapter outSchoolJobAdapter;
+    private Subscriber subscriber;
+    private List<JobResult> jobResults=new ArrayList<>();
+    private JobAdapter jobAdapter;
 
     @Nullable
     @Override
@@ -49,9 +54,15 @@ public class OutSchoolFragment extends Fragment {
         if (view == null) {
             view = inflater.inflate(R.layout.part_time_job_list, container, false);
             ButterKnife.bind(this, view);
+            jobRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    getJobItem();
+                }
+            });
             getJobItem();
             shwowJobs();
-            refreshJob();
+
         } else {
             ViewGroup viewGroup = (ViewGroup) view.getParent();
             if (viewGroup != null) {
@@ -63,59 +74,46 @@ public class OutSchoolFragment extends Fragment {
 
     //获取兼职数据
     private void getJobItem(){
-        if (JobItemList.size()>=6){
-            JobItemList.clear();
-        }
-        for (int i=1;i<=3;i++){
-            com.gjf.lovezzu.entity.JobItem jobItem=new JobItem(0,"校外兼职","发传单喽","2015-5-9");
-            JobItemList.add(jobItem);
-        }
+        subscriber=new Subscriber<JobData>() {
+            @Override
+            public void onCompleted() {
+                if (jobRefresh.isRefreshing()){
+                    jobRefresh.setRefreshing(false);
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+                Toast.makeText(PartTimeJobActivity.partTimeJobActivity,"请检查网络！",Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNext(JobData jobData) {
+                List<JobResult> list=jobData.getValues();
+                if (!list.isEmpty()){
+                    jobResults.clear();
+                    jobResults.addAll(list);
+                    jobAdapter.notifyDataSetChanged();
+                }else {
+                    Toast.makeText(PartTimeJobActivity.partTimeJobActivity,"还没有兼职信息！",Toast.LENGTH_SHORT).show();
+                }
+            }
+
+        };
+        JobMethods.getInstance().getAllJob(subscriber,"查询所有兼职","校外");
     }
     //显示数据
     private void shwowJobs(){
         LinearLayoutManager layoutManager=new LinearLayoutManager(view.getContext());
         schoolJobList.setLayoutManager(layoutManager);
-        outSchoolJobAdapter=new SchoolJobAdapter(JobItemList);
-        schoolJobList.setAdapter(outSchoolJobAdapter);
+        jobAdapter=new JobAdapter(jobResults);
+        schoolJobList.setAdapter(jobAdapter);
 
     }
-    private void refreshJob(){
-        jobRefresh.setColorSchemeResources(R.color.colorPrimary);
-        jobRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                //刷新
-                doRefreshJob();
-            }
-        });
-    }
 
-    private void doRefreshJob(){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(200);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        getJobItem();
-                        outSchoolJobAdapter.notifyDataSetChanged();
-                        jobRefresh.setRefreshing(false);
-                    }
-                });
-            }
-        }).start();
-    }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
 
-    }
 
     @OnClick(R.id.add_job)
     public void onViewClicked() {

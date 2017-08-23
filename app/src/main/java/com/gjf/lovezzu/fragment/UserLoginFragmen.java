@@ -9,9 +9,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -61,7 +63,24 @@ public class UserLoginFragmen extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.userlogin_fragment, container, false);
         ButterKnife.bind(this, view);
-
+        user_reg_phone.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId== EditorInfo.IME_ACTION_NEXT){
+                    user_reg_password.requestFocus();
+                }
+                return false;
+            }
+        });
+        user_reg_password.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId==EditorInfo.IME_ACTION_GO){
+                    checkInput();
+                }
+                return false;
+            }
+        });
         return view;
     }
 
@@ -72,11 +91,9 @@ public class UserLoginFragmen extends Fragment {
                 returnHome();
                 break;
             case R.id.new_user_reg:
-
                 goToreg();
                 break;
             case R.id.user_login:
-
                 checkInput();
                 break;
         }
@@ -143,6 +160,7 @@ public class UserLoginFragmen extends Fragment {
         SharedPreferences.Editor editUserInfo = sharedPreferences.edit();
         editUserInfo.putString("phone", phone);
         editUserInfo.putString("SessionID", SessionID);
+        editUserInfo.putBoolean("firstOpen",true);
         editUserInfo.apply();
         Toast.makeText(getContext(), "登录成功！", Toast.LENGTH_LONG).show();
         checkLoginApplication = (CheckLoginApplication) getActivity().getApplication();
@@ -151,7 +169,7 @@ public class UserLoginFragmen extends Fragment {
         startActivity(intent);
     }
     private void checkInput() {
-        String checkphone = user_reg_password.getText().toString();
+        String checkphone = user_reg_password.getText().toString().trim();
         String checkpassword = user_reg_password.getText().toString();
         if (checkphone == null || checkpassword == null) {
             Toast.makeText(getContext(), "请输入用户名或者密码！", Toast.LENGTH_LONG).show();

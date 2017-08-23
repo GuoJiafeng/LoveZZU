@@ -268,7 +268,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="5dp"
-                        android:text="有情绪就表达"
+                        android:text="匿名情绪想说就说"
                         android:textColor="#9F9F9F"
                         android:textSize="15dp" />
 

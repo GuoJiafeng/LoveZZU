@@ -44,49 +44,16 @@
                         android:layout_marginRight="10dp"
                         android:src="@drawable/login_phone" />
 
-                    <EditText
+                    <TextView
                         android:id="@+id/user_reg_phone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="4"
+                        android:layout_marginLeft="3dp"
+                        android:textSize="18sp"
                         android:gravity="center_vertical"
-                        android:hint="请输入手机号" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:text="获取验证码"
-                        android:textColor="#0090FD" />
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="1">
-
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:src="@drawable/login_code" />
-
-                    <EditText
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
-                        android:hint="请输入验证码"
-                        android:maxLines="1" />
-
+                        android:hint="手机号快速注册" />
 
                 </LinearLayout>
 
@@ -107,6 +74,7 @@
                         android:src="@drawable/login_pass" />
 
                     <EditText
+                        android:inputType="textPassword"
                         android:id="@+id/user_reg_password"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

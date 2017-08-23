@@ -21,9 +21,15 @@ import com.gjf.lovezzu.entity.LoginResult;
 import com.gjf.lovezzu.network.SingInMethods;
 
 
+import java.util.HashMap;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.smssdk.EventHandler;
+import cn.smssdk.OnSendMessageHandler;
+import cn.smssdk.SMSSDK;
+import cn.smssdk.gui.RegisterPage;
 import rx.Subscriber;
 
 /**
@@ -36,7 +42,7 @@ public class UserSingUpFragment extends Fragment {
     @BindView(R.id.user_singup_button)
     TextView user_singuo_button;
     @BindView(R.id.user_reg_phone)
-    EditText getuser_reg_phone;
+    TextView getuser_reg_phone;
     @BindView(R.id.user_reg_password)
     EditText getUser_reg_password;
     @BindView(R.id.reg_title_back)
@@ -45,11 +51,46 @@ public class UserSingUpFragment extends Fragment {
     private View view;
     private Subscriber subscriber;
 
+    String phoneNum;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.usersingup_fragment, container, false);
         ButterKnife.bind(this, view);
+
+
+        getuser_reg_phone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RegisterPage registerPage = new RegisterPage();
+                //回调函数
+                registerPage.setRegisterCallback(new EventHandler()
+                {
+                    public void afterEvent(int event, int result, Object data)
+                    {
+                        // 解析结果
+                        if (result == SMSSDK.RESULT_COMPLETE)
+                        {
+                            //提交验证码成功
+                            if (data instanceof Throwable) {
+                                Throwable throwable = (Throwable)data;
+                                String msg = throwable.getMessage();
+                                Toast.makeText(MainActivity.mainActivity, msg, Toast.LENGTH_SHORT).show();
+                            }else if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE)
+                            {
+                                Toast.makeText(MainActivity.mainActivity,"短信验证成功",Toast.LENGTH_SHORT).show();
+                                HashMap<String, Object> dataMaps = (HashMap<String, Object>) data;
+                                phoneNum= (String) dataMaps.get("phone");
+                                getuser_reg_phone.setText(phoneNum);
+                            }/*else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE){
+
+                            }*/
+                        }
+                    }
+                });
+                registerPage.show(MainActivity.mainActivity);
+            }
+        });
         return view;
     }
 
@@ -65,12 +106,10 @@ public class UserSingUpFragment extends Fragment {
         subscriber = new Subscriber<LoginResult>() {
             @Override
             public void onCompleted() {
-//
             }
 
             @Override
             public void onError(Throwable e) {
-
             }
 
             @Override
@@ -111,6 +150,17 @@ public class UserSingUpFragment extends Fragment {
     //回到主页
 
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        SMSSDK.unregisterAllEventHandler();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getuser_reg_phone.setText(phoneNum);
+    }
 
     private void returnHome() {
         Intent intent = new Intent();

@@ -1,17 +1,15 @@
 package com.gjf.lovezzu.view;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.gjf.lovezzu.R;
-import com.gjf.lovezzu.activity.tapictalk.TopicTalkActivity;
+import com.gjf.lovezzu.activity.topictalk.TopicTalkActivity;
 import com.gjf.lovezzu.entity.topic.TopicThemeBridging;
 
 import java.util.List;
@@ -40,7 +38,6 @@ public class TopicThemeAdapter extends RecyclerView.Adapter<TopicThemeAdapter.Vi
             @Override
             public void onClick(View v) {
                 themeId=topicThemeBridgingList.get(holder.getAdapterPosition()).getTheme().getThemeId();
-                Log.e("话题=========",themeId+"?id");
                 TopicTalkActivity.topicTalkActivity.getTopics();
             }
         });
@@ -48,7 +45,7 @@ public class TopicThemeAdapter extends RecyclerView.Adapter<TopicThemeAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         TopicThemeBridging bridging=topicThemeBridgingList.get(position);
         holder.theme_title.setText(bridging.getTheme().getThemeTitle());
         holder.theme_count.setText(bridging.getTheme().getTopicCount()+"");
