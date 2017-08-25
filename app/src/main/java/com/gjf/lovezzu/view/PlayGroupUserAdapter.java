@@ -11,7 +11,9 @@ import com.bumptech.glide.Glide;
 import com.gjf.lovezzu.R;
 import com.gjf.lovezzu.activity.palytogether.PlayTogetherActivity;
 import com.gjf.lovezzu.entity.UserInfoResult;
+import com.gjf.lovezzu.entity.playtogether.GroupDataBridging;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.gjf.lovezzu.constant.Url.LOGIN_URL;
@@ -22,10 +24,14 @@ import static com.gjf.lovezzu.constant.Url.LOGIN_URL;
 
 public class PlayGroupUserAdapter extends RecyclerView.Adapter<PlayGroupUserAdapter.ViewHolder> {
 
-    private List<UserInfoResult> userInfoResultList;
+    private List<UserInfoResult> userInfoResultList=new ArrayList<>();
     private Context mContext;
-    public PlayGroupUserAdapter(List<UserInfoResult> list,Context context){
-        userInfoResultList=list;
+    public PlayGroupUserAdapter(GroupDataBridging groupDataBridging, Context context){
+
+        List<UserInfoResult> userInfoResultList1=groupDataBridging.getMemberInfo();
+        for (int i=0;i<userInfoResultList1.size();i++){
+            userInfoResultList.add(userInfoResultList1.get(i));
+        }
         mContext=context;
     }
 

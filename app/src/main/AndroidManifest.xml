@@ -66,7 +66,9 @@
         <activity android:name=".activity.palytogether.PublishDynamicActivity"/>
         <activity android:name=".activity.palytogether.MyGroupActivity"/>
         <activity android:name=".activity.palytogether.GroupDynamicActivity"/>
-
+        <activity android:name=".activity.palytogether.DynamicInfoActivity"/>
+        <activity android:name=".activity.palytogether.SearchGroupActivity"/>
+        <activity android:name=".activity.palytogether.UpdateGroupImage"/>
         <!-- 树洞 -->
         <activity android:name=".activity.treehole.TreeHoleActivity"
             android:launchMode="singleTask" />

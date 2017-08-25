@@ -2,6 +2,7 @@ package com.gjf.lovezzu.network;
 
 import com.gjf.lovezzu.constant.Url;
 import com.gjf.lovezzu.entity.CommResult;
+import com.gjf.lovezzu.entity.playtogether.DynamicCommentData;
 import com.gjf.lovezzu.entity.playtogether.GroupData;
 import com.gjf.lovezzu.entity.playtogether.GroupDynamicData;
 import com.gjf.lovezzu.network.api.GroupServer;
@@ -77,10 +78,20 @@ public class GroupMethods {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
     }
-    public void getDynamic(Subscriber<GroupDynamicData> subscriber,String groupId,String action,String num){
-        groupServer.getDynamic(groupId, action, num) .subscribeOn(Schedulers.io())
+    public void getDynamic(Subscriber<GroupDynamicData> subscriber,String SessionID,String groupId,String action,int num){
+        groupServer.getDynamic(SessionID,groupId, action, num) .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+    }
+    public  void getDynamicComment(Subscriber<DynamicCommentData> subscriber, String dynamicId, String action){
+        groupServer.getDynamicComment(dynamicId,action).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
     }
 
+    public void getMyGroup(Subscriber<GroupData> subscriber,String action,String SessionID){
+        groupServer.getMyGroup(SessionID,action).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+    }
 }

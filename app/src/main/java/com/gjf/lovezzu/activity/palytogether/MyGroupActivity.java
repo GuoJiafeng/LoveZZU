@@ -1,6 +1,8 @@
 package com.gjf.lovezzu.activity.palytogether;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -36,11 +38,20 @@ public class MyGroupActivity extends AppCompatActivity {
     private Subscriber subscriber;
     private List<GroupDataBridging> groupDataBridgingList=new ArrayList<>();
     private PlayTogetherAdapter playTogetherAdapter;
+    private String SessionID;
+    public static MyGroupActivity myGroupActivity;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_group);
         ButterKnife.bind(this);
+        myGroupActivity=this;
+        SharedPreferences sharedPreferences=getSharedPreferences("userinfo", Activity.MODE_APPEND);
+        SessionID=sharedPreferences.getString("SessionID","");
+        getMyGroup();
+        showGroup();
+
+
     }
 
     @OnClick(R.id.activity_my_group_back)
@@ -50,13 +61,13 @@ public class MyGroupActivity extends AppCompatActivity {
     }
 
     private void showGroup(){
-        LinearLayoutManager layoutManager=new LinearLayoutManager(this);
+        LinearLayoutManager layoutManager=new LinearLayoutManager(myGroupActivity);
         myGroupRecycler.setLayoutManager(layoutManager);
-        playTogetherAdapter=new PlayTogetherAdapter(groupDataBridgingList);
+        playTogetherAdapter=new PlayTogetherAdapter(groupDataBridgingList,"退出群组",this);
         myGroupRecycler.setAdapter(playTogetherAdapter);
     }
 
-    private void searchGroup(){
+    private void getMyGroup(){
         subscriber=new Subscriber<GroupData>() {
             @Override
             public void onCompleted() {
@@ -78,11 +89,10 @@ public class MyGroupActivity extends AppCompatActivity {
                     groupDataBridgingList.addAll(list);
                     playTogetherAdapter.notifyDataSetChanged();
                 }else {
-                    Toast.makeText(PlayTogetherActivity.playTogetherActivity,"没有更多数据了",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(myGroupActivity,"没有更多数据了",Toast.LENGTH_SHORT).show();
                 }
             }
-
         };
-
+        GroupMethods.getInstance().getMyGroup(subscriber,"查询我创建的群组",SessionID);
     }
 }

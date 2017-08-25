@@ -183,7 +183,9 @@ public class PublishGroupActivity extends AppCompatActivity {
                     if (res) {
                         progressDialog.dismiss();
                         Toast.makeText(getApplicationContext(), "发布成功！", Toast.LENGTH_SHORT).show();
+                        photosURL.clear();
                         selectedPhotos.clear();
+                        photoList.clear();
                         Intent intent = new Intent(PublishGroupActivity.publishGroupActivity, PlayTogetherActivity.class);
                         startActivity(intent);
                         onStop();

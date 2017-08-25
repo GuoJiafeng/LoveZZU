@@ -178,6 +178,9 @@ public class PublishDynamicActivity extends AppCompatActivity {
                     Boolean res=jsonObject.getBoolean("isSuccessful");
                     if (res){
                         progressDialog.dismiss();
+                        photosURL.clear();
+                        selectedPhotos.clear();
+                        photoList.clear();
                         Toast.makeText(getApplicationContext(),"发布成功！",Toast.LENGTH_SHORT).show();
                         Intent intent=new Intent(PublishDynamicActivity.publishDynamicActivity,PlayTogetherActivity.class);
                         startActivity(intent);

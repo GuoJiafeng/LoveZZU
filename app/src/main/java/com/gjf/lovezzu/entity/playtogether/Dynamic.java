@@ -3,16 +3,25 @@ package com.gjf.lovezzu.entity.playtogether;
 import java.io.Serializable;
 
 /**
- * Created by zhao on 2017/8/20.
+ * Created by zhao on 2017/8/24.
  */
 
-public class GroupDynamicReault implements Serializable {
+public class Dynamic implements Serializable {
     private Integer dynamicId;//群动态id
     private String talk;//说说
     private String	talkImg;//说说的图片
-    private String	thembCount;//点赞量
-    private String	commentCount;//评论量
+    private int	thembCount;//点赞量
+    private int	commentCount;//评论量
     private String	date;//发表时间
+    private Boolean thembed;//点赞记录
+
+    public Boolean getThembed() {
+        return thembed;
+    }
+
+    public void setThembed(Boolean thembed) {
+        this.thembed = thembed;
+    }
 
     public Integer getDynamicId() {
         return dynamicId;
@@ -38,19 +47,19 @@ public class GroupDynamicReault implements Serializable {
         this.talkImg = talkImg;
     }
 
-    public String getThembCount() {
+    public int getThembCount() {
         return thembCount;
     }
 
-    public void setThembCount(String thembCount) {
+    public void setThembCount(int thembCount) {
         this.thembCount = thembCount;
     }
 
-    public String getCommentCount() {
+    public int getCommentCount() {
         return commentCount;
     }
 
-    public void setCommentCount(String commentCount) {
+    public void setCommentCount(int commentCount) {
         this.commentCount = commentCount;
     }
 

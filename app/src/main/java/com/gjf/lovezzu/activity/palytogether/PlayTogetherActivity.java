@@ -22,6 +22,10 @@ import com.gjf.lovezzu.entity.playtogether.GroupData;
 import com.gjf.lovezzu.entity.playtogether.GroupDataBridging;
 import com.gjf.lovezzu.network.GroupMethods;
 import com.gjf.lovezzu.view.PlayTogetherAdapter;
+import com.google.gson.Gson;
+
+import org.json.JSONStringer;
+import org.json.JSONTokener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,9 +63,11 @@ public class PlayTogetherActivity extends AppCompatActivity implements PopupMenu
         playTogetherActivity=this;
         START=0;
         getGroup(0);
+        groupDataBridgingList.clear();
         playSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                START=0;
                 getGroup(0);
             }
         });
@@ -146,11 +152,11 @@ public class PlayTogetherActivity extends AppCompatActivity implements PopupMenu
     private void showGroup(){
         LinearLayoutManager layoutManager=new LinearLayoutManager(this);
         playRecyvlerView.setLayoutManager(layoutManager);
-        playTogetherAdapter=new PlayTogetherAdapter(groupDataBridgingList);
+        playTogetherAdapter=new PlayTogetherAdapter(groupDataBridgingList,"加入群组",this);
         playRecyvlerView.setAdapter(playTogetherAdapter);
     }
 
-    private void getGroup(int num){
+    private void getGroup(final int num){
         subscriber=new Subscriber<GroupData>() {
             @Override
             public void onCompleted() {
@@ -166,11 +172,14 @@ public class PlayTogetherActivity extends AppCompatActivity implements PopupMenu
 
             @Override
             public void onNext(GroupData groupData) {
+
                 Log.e("一起玩--查询",groupData.getResult());
                 Log.e("一起玩--查询",groupData.getValues().size()+"num");
                 List<GroupDataBridging> list=groupData.getValues();
                 if (!list.isEmpty()){
-                    groupDataBridgingList.clear();
+                    if (num==0){
+                        groupDataBridgingList.clear();
+                    }
                     groupDataBridgingList.addAll(list);
                     playTogetherAdapter.notifyDataSetChanged();
                 }else {
@@ -179,13 +188,19 @@ public class PlayTogetherActivity extends AppCompatActivity implements PopupMenu
             }
 
         };
-
         GroupMethods.getInstance().getGroup(subscriber,"查询群组",num);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        START=0;
+        getGroup(0);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        START=0;
+        playSwipeRefresh.setRefreshing(true);
     }
 }

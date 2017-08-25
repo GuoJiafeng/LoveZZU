@@ -1,6 +1,7 @@
 package com.gjf.lovezzu.network.api;
 
 import com.gjf.lovezzu.entity.CommResult;
+import com.gjf.lovezzu.entity.playtogether.DynamicCommentData;
 import com.gjf.lovezzu.entity.playtogether.GroupData;
 import com.gjf.lovezzu.entity.playtogether.GroupDynamicData;
 
@@ -23,10 +24,12 @@ public interface GroupServer {
     @FormUrlEncoded
     @POST("GroupAction")
     Observable<GroupData> getSearchGroup(@Field("search")String search,@Field("action")String action);
-    //我发布的群组
+
+    //我发布的群组或者我加入的群组
     @FormUrlEncoded
     @POST("GroupAction")
     Observable<GroupData> getMyGroup(@Field("SessionID")String SessionID,@Field("action")String action);
+
     //加入群组
     @FormUrlEncoded
     @POST("GroupAction")
@@ -51,7 +54,12 @@ public interface GroupServer {
     //查询群动态
     @FormUrlEncoded
     @POST("GroupDynamicAction")
-    Observable<GroupDynamicData> getDynamic(@Field("groupId")String groupId,@Field("action")String action,@Field("num")String num);
+    Observable<GroupDynamicData> getDynamic(@Field("SessionID")String SessionID,@Field("groupId")String groupId,@Field("action")String action,@Field("num") int num);
+
+    //查询群动态评论
+    @FormUrlEncoded
+    @POST("DynamicCommentAction")
+    Observable<DynamicCommentData> getDynamicComment(@Field("dynamicId") String dynamicId, @Field("action") String action);
 
 
 

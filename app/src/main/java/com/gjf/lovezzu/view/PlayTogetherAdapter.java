@@ -1,6 +1,7 @@
 package com.gjf.lovezzu.view;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.widget.LinearLayoutManager;
@@ -40,8 +41,17 @@ public class PlayTogetherAdapter extends RecyclerView.Adapter<PlayTogetherAdapte
     private List<GroupDataBridging> groupDataBridgingList;
     private  String SessionID;
     private  Subscriber subscriber;
-    public PlayTogetherAdapter(List<GroupDataBridging> list) {
+    private String type;
+    private  LinearLayoutManager layoutManager;
+    private PlayGroupDynamicAdapter playGroupDynamicAdapter;
+    private Context mContext;
+    private  LinearLayoutManager layoutManager1;
+    private List<UserInfoResult> userInfoResults=new ArrayList<>();
+    private PlayGroupUserAdapter playGroupUserAdapter;
+    public PlayTogetherAdapter(List<GroupDataBridging> list,String ty,Context context) {
+        type=ty;
         groupDataBridgingList=list;
+        mContext=context;
         SharedPreferences sharedPreferences=PlayTogetherActivity.playTogetherActivity.getSharedPreferences("userinfo", Activity.MODE_APPEND);
         SessionID=sharedPreferences.getString("SessionID","");
     }
@@ -64,16 +74,29 @@ public class PlayTogetherAdapter extends RecyclerView.Adapter<PlayTogetherAdapte
             @Override
             public void onClick(View v) {
                 GroupDataBridging groupDataBridging=groupDataBridgingList.get(holder.getAdapterPosition());
-                joinGroup(groupDataBridging.getGroup().getGroupId()+"");
+                if (type.equals("加入群组")){
+                    joinGroup(groupDataBridging.getGroup().getGroupId()+"");
+                }else {
+                    quitGroup(groupDataBridging.getGroup().getGroupId()+"");
+                }
+
             }
         });
+        layoutManager=new LinearLayoutManager(view.getContext());
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        holder.group_dynamic.setLayoutManager(layoutManager);
+
+        layoutManager1=new LinearLayoutManager(view.getContext());
+        layoutManager1.setOrientation(LinearLayoutManager.HORIZONTAL);
+        holder.group_users.setLayoutManager(layoutManager1);
+
         return holder;
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         GroupDataBridging groupDataBridging=groupDataBridgingList.get(position);
-        Glide.with(PlayTogetherActivity.playTogetherActivity)
+        Glide.with(mContext)
                 .load(LOGIN_URL + "filedownload?action=头像&imageURL=" + groupDataBridging.getUserinfo().getImageUrl())
                 .centerCrop().dontAnimate()
                 .placeholder(R.drawable.def_avatar)
@@ -84,37 +107,14 @@ public class PlayTogetherAdapter extends RecyclerView.Adapter<PlayTogetherAdapte
         holder.group_lable.setText(groupDataBridging.getGroup().getLabel());
         holder.group_indec.setText(groupDataBridging.getGroup().getIntroduce());
         holder.group_school.setText(groupDataBridging.getGroup().getCampus());
+        holder.join_group.setText(type);
 
-        LinearLayoutManager layoutManager=new LinearLayoutManager(PlayTogetherActivity.playTogetherActivity);
-        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        GroupDataBridging groupDataBridging2=groupDataBridgingList.get(holder.getAdapterPosition());
 
-        String dynamicImg=groupDataBridging.getTalkImg();
-        if (!dynamicImg.trim().equals("")){
-            String dynamicUrl[]=dynamicImg.split("ZZU");
-            List<String> dynamicImages=new ArrayList<>();
-            for (int i=0;i<dynamicUrl.length;i++){
-                dynamicImages.add(dynamicUrl[i]);
-            }
-            PlayGroupDynamicAdapter playGroupDynamicAdapter=new PlayGroupDynamicAdapter(dynamicImages);
-            holder.group_dynamic.setLayoutManager(layoutManager);
-            holder.group_dynamic.setAdapter(playGroupDynamicAdapter);
-        }
+        playGroupDynamicAdapter=new PlayGroupDynamicAdapter(groupDataBridging2,mContext);
+        holder.group_dynamic.setAdapter(playGroupDynamicAdapter);
 
-
-        List<UserInfoResult> userInfoResultList=groupDataBridging.getMemberInfo();
-        List<UserInfoResult> userInfoResults=new ArrayList<>();
-        for (int i=0;i<userInfoResultList.size();i++){
-            if (i<4){
-                userInfoResults.add(userInfoResultList.get(i));
-            }else {
-                break;
-            }
-
-        }
-        LinearLayoutManager layoutManager1=new LinearLayoutManager(PlayTogetherActivity.playTogetherActivity);
-        layoutManager1.setOrientation(LinearLayoutManager.HORIZONTAL);
-        PlayGroupUserAdapter playGroupUserAdapter=new PlayGroupUserAdapter(userInfoResults,PlayTogetherActivity.playTogetherActivity);
-        holder.group_users.setLayoutManager(layoutManager1);
+        playGroupUserAdapter=new PlayGroupUserAdapter(groupDataBridging2,mContext);
         holder.group_users.setAdapter(playGroupUserAdapter);
 
     }
@@ -180,4 +180,32 @@ public class PlayTogetherAdapter extends RecyclerView.Adapter<PlayTogetherAdapte
         GroupMethods.getInstance().joinGroup(subscriber,SessionID,"加入群组",id);
     }
 
+    public void quitGroup(String id){
+        subscriber=new Subscriber<CommResult>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.e("加入群组",e.getMessage());
+            }
+
+            @Override
+            public void onNext(CommResult commResult) {
+                Log.e("退出群组",commResult.getSuccessful()+"");
+                if (commResult.getSuccessful()){
+                    Log.e("退出群组","成功");
+                    Toast.makeText(PlayTogetherActivity.playTogetherActivity,"退出成功！",Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(PlayTogetherActivity.playTogetherActivity,"未加入！",Toast.LENGTH_SHORT).show();
+                    Log.e("退出群组","已经退出群组");
+                }
+            }
+
+
+        };
+        GroupMethods.getInstance().joinGroup(subscriber,SessionID,"退出群组",id);
+    }
 }

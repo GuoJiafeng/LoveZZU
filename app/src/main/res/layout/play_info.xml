@@ -274,12 +274,16 @@
 
                         </LinearLayout>
 
-                        <ImageView
+                        <TextView
+                            android:id="@+id/update_group_image"
+                            android:text="修改群图片"
+                            android:textSize="18sp"
+                            android:textColor="#214bf4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="1"
-                            android:src="@drawable/right_arrow" />
+                            />
                     </LinearLayout>
                 </LinearLayout>
 
