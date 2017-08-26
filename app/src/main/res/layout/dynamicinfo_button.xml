@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#e1e1e1"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/edit_comments"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="3dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="3dp"
+            android:layout_weight="1"
+            android:background="#ffffff"
+            android:hint="   发表评论"
+            android:textSize="13sp" />
+
+        <TextView
+            android:background="#ede9e9"
+            android:id="@+id/send_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="10dp"
+            android:adjustViewBounds="true"
+            android:gravity="center"
+            android:textColor="#ef7f2a"
+            android:text="发送"
+            android:textSize="20sp"
+            android:scaleType="fitEnd" />
+
+
+
+    </LinearLayout>
+</LinearLayout>

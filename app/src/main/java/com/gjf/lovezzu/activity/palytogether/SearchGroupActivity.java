@@ -46,13 +46,13 @@ public class SearchGroupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_group);
         ButterKnife.bind(this);
-        showGroup();
         taoyuSearchTitle.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId== EditorInfo.IME_ACTION_SEARCH){
                     if (!taoyuSearchTitle.getText().toString().trim().equals("")){
                         searchGroup();
+                        showGroup();
                     }else {
                         Toast.makeText(SearchGroupActivity.this,"请输入关键字",Toast.LENGTH_SHORT).show();
                     }
@@ -60,12 +60,14 @@ public class SearchGroupActivity extends AppCompatActivity {
                 return false;
             }
         });
+
     }
 
     @OnClick(R.id.taoyu_search_button)
     public void onViewClicked() {
         if (!taoyuSearchTitle.getText().toString().trim().equals("")){
             searchGroup();
+            showGroup();
         }else {
             Toast.makeText(this,"请输入关键字",Toast.LENGTH_SHORT).show();
         }
@@ -74,7 +76,7 @@ public class SearchGroupActivity extends AppCompatActivity {
     private void showGroup(){
         LinearLayoutManager layoutManager=new LinearLayoutManager(this);
         groupSearchList.setLayoutManager(layoutManager);
-        playTogetherAdapter=new PlayTogetherAdapter(groupDataBridgingList);
+        playTogetherAdapter=new PlayTogetherAdapter(groupDataBridgingList,"加入群组",this);
         groupSearchList.setAdapter(playTogetherAdapter);
     }
 

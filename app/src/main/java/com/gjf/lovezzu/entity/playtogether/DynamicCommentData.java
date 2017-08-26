@@ -4,12 +4,12 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by zhao on 2017/8/20.
+ * Created by lenovo047 on 2017/8/22.
  */
 
-public class GroupDynamicData implements Serializable {
+public class DynamicCommentData implements Serializable{
     private String result;
-    private List<GroupDynamicResult> values;
+    private List<DynamicComment>  values;
 
     public String getResult() {
         return result;
@@ -19,11 +19,11 @@ public class GroupDynamicData implements Serializable {
         this.result = result;
     }
 
-    public List<GroupDynamicResult> getValues() {
+    public List<DynamicComment> getValues() {
         return values;
     }
 
-    public void setValues(List<GroupDynamicResult> values) {
+    public void setValues(List<DynamicComment> values) {
         this.values = values;
     }
 }

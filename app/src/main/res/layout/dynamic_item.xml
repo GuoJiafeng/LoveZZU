@@ -18,7 +18,8 @@
         <com.gjf.lovezzu.view.CircleImageView
             android:layout_width="45dp"
             android:layout_height="43dp"
-            android:src="@drawable/def_avatar" />
+            android:src="@drawable/def_avatar"
+            android:id="@+id/dynamic_img"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -31,38 +32,50 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="昵称"
-                android:textSize="23sp" />
+                android:textSize="23sp"
+                android:id="@+id/dynamic_username"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="2017-8-21 16:45" />
+                android:text="2017-8-21 16:45"
+                android:id="@+id/dynamic_date"/>
         </LinearLayout>
 
     </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="4"
+        android:orientation="vertical"
+        android:id="@+id/dynamicinfo_button">
+
+        <TextView
+            android:id="@+id/dynamic_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:text="动态文字"
+            android:textSize="16dp" />
+
+        <ImageView
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/dynamic_talk_img"/>
+    </LinearLayout>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#e1e1e1"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_weight="4"
-        android:layout_marginBottom="10dp">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="动态文字"
-            android:textSize="16dp"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"/>
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            />
-    </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -82,6 +95,7 @@
             android:gravity="right"
             android:layout_weight="1">
         <ImageView
+            android:id="@+id/item_dynamic_zan"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:background="@drawable/life_zan"/>
@@ -90,8 +104,10 @@
             android:layout_height="match_parent"
             android:text="123"
             android:gravity="center"
-            android:layout_marginLeft="5dp"/>
+            android:layout_marginLeft="5dp"
+            android:id="@+id/dynamic_zan"/>
         <ImageView
+            android:id="@+id/item_dynamic_comm"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:background="@drawable/comment"
@@ -101,9 +117,15 @@
             android:layout_height="match_parent"
             android:text="123"
             android:layout_marginLeft="5dp"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:id="@+id/dynamic_commentnum"/>
         </LinearLayout>
 
     </LinearLayout>
+
 </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#e1e1e1"/>
 </LinearLayout>
