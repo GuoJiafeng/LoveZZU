@@ -1,8 +1,9 @@
 package com.gjf.lovezzu.activity.taoyu;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -73,7 +74,7 @@ public class TaoyuOrderActivity extends AppCompatActivity {
 
 
     private  void replaceFragment(Fragment fragment){
-        FragmentManager fragmentManager=getFragmentManager();
+        FragmentManager fragmentManager=getSupportFragmentManager();
         FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.order_activity,fragment);
         fragmentTransaction.commit();

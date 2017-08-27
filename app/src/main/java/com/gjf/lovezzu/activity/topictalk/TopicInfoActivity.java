@@ -2,6 +2,7 @@ package com.gjf.lovezzu.activity.topictalk;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -83,8 +84,9 @@ public class TopicInfoActivity extends AppCompatActivity {
     private TopicDataBridging topicDataBridging;
     private TopicInfoImagesAdapter topicInfoImagesAdapter;
     private List<GoodsImages> goodsImages=new ArrayList<>();
-    private String typeZan="1";
     private String topicId;
+    private Boolean canZ=true;
+    private String zanNum;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,6 +96,7 @@ public class TopicInfoActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("userinfo", Activity.MODE_APPEND);
         SessionID=sharedPreferences.getString("SessionID","");
         topicDataBridging= (TopicDataBridging) getIntent().getSerializableExtra("topicInfo");
+        zanNum=getIntent().getStringExtra("zanNum");
         topicId=topicDataBridging.getTopic().getTopicId().toString();
         initView();
         getComm();
@@ -116,7 +119,12 @@ public class TopicInfoActivity extends AppCompatActivity {
                 editComments.requestFocus();
                 break;
             case R.id.topic_info_zan_image:
-                addThum();
+                if (topicDataBridging.getTopic().getThembed()==false&&canZ){
+                    addThum();
+                }else {
+                    Toast.makeText(this,"已经点过赞了!",Toast.LENGTH_SHORT).show();
+                }
+
                 break;
             case R.id.send:
                 if (editComments.getText().toString().trim().equals("")){
@@ -149,11 +157,14 @@ public class TopicInfoActivity extends AppCompatActivity {
         topicInfoUserName.setText(topicDataBridging.getUserinfo().getNickname());
         topicInfoText.setText(topicDataBridging.getTopic().getTopicText());
         topicInfoComm.setText(topicDataBridging.getTopic().getTopicCommentCount()+"");
-        topicInfoZan.setText(topicDataBridging.getTopic().getTopicThumbCount()+"");
-
-
-
-
+        topicInfoZan.setText(zanNum);
+        if (topicDataBridging.getTopic().getThembed()){
+            topicInfoZan.setTextColor(Color.parseColor("#F48F0B"));
+            topicInfoZanImage.setImageResource(R.drawable.life_zan_done);
+        }else {
+            topicInfoZanImage.setImageResource(R.drawable.life_zan);
+            topicInfoZan.setTextColor(Color.parseColor("#757575"));
+        }
     }
     private void showComm(){
         LinearLayoutManager layoutManager1=new LinearLayoutManager(this);
@@ -174,7 +185,7 @@ public class TopicInfoActivity extends AppCompatActivity {
 
             @Override
             public void onError(Throwable e) {
-                Log.e("评论==",e.getMessage());
+
             }
 
             @Override
@@ -212,7 +223,7 @@ public class TopicInfoActivity extends AppCompatActivity {
                         topicInfoComm.setText((comm+1)+"");
                         editComments.setText("");
                     }else {
-                        Toast.makeText(TopicInfoActivity.topicInfoActivity,"请重新登录并检查网络是否通畅!",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(TopicInfoActivity.topicInfoActivity,"已经点过赞了!",Toast.LENGTH_SHORT).show();
                     }
                 }catch (Exception e){
                     e.printStackTrace();
@@ -243,8 +254,9 @@ public class TopicInfoActivity extends AppCompatActivity {
     }
     private void addThum(){
         RequestParams requestParams=new RequestParams(LOGIN_URL+"TopicCommentAction");
-        requestParams.addBodyParameter("ThumbNum",typeZan);
+        requestParams.addBodyParameter("ThumbNum","1");
         requestParams.addBodyParameter("TopicId",topicId);
+        requestParams.addBodyParameter("SessionID",SessionID);
         requestParams.addBodyParameter("action","话题点赞");
         x.http().post(requestParams, new Callback.CacheCallback<String>() {
             @Override
@@ -254,14 +266,13 @@ public class TopicInfoActivity extends AppCompatActivity {
                     Boolean res=jsonObject.getBoolean("isSuccessful");
                     if (res){
                         int zan=Integer.parseInt(topicInfoZan.getText().toString());
-                        if (typeZan.equals("1")){
-                            Toast.makeText(TopicInfoActivity.topicInfoActivity,"+1 再点一次取消点赞！",Toast.LENGTH_SHORT).show();
-                            topicInfoZan.setText((zan+1)+"");
-                        }else {
-                            Toast.makeText(TopicInfoActivity.topicInfoActivity,"-1",Toast.LENGTH_SHORT).show();
-                            topicInfoZan.setText((zan-1)+"");
-                        }
+                        Toast.makeText(TopicInfoActivity.topicInfoActivity,"+1",Toast.LENGTH_SHORT).show();
+                        topicInfoZan.setText((zan+1)+"");
+                        topicInfoZanImage.setImageResource(R.drawable.life_zan_done);
+                        topicInfoZan.setTextColor(Color.parseColor("#F48F0B"));
+                        canZ=false;
                     }else {
+                        canZ=true;
                         Toast.makeText(TopicInfoActivity.topicInfoActivity,"请重新登录并检查网络是否通畅!",Toast.LENGTH_SHORT).show();
                     }
                 }catch (Exception e){
@@ -282,11 +293,6 @@ public class TopicInfoActivity extends AppCompatActivity {
 
             @Override
             public void onFinished() {
-                if (typeZan.equals("1")){
-                    typeZan="0";
-                }else {
-                    typeZan="1";
-                }
             }
 
             @Override

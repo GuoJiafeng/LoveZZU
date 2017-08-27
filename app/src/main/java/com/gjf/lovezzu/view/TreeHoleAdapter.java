@@ -2,6 +2,7 @@ package com.gjf.lovezzu.view;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -58,10 +59,17 @@ import static com.gjf.lovezzu.constant.Url.LOGIN_URL;
             @Override
             public void onClick(View v) {
                 TreeHole treeHole=treeHoleList.get(viewHolder.getAdapterPosition());
-                if (addThum(treeHole.getTreeHoleId().toString())){
-                    Integer zan=Integer.parseInt(viewHolder.zanView.getText().toString());
-                    viewHolder.zanView.setText((zan+1)+"");
+                if (treeHole.getThembed()){
+                    Toast.makeText(TreeHoleActivity.treeHoleActivity,"已经点过赞了！",Toast.LENGTH_SHORT).show();
+                }else {
+                    if (addThum(treeHole.getTreeHoleId().toString())){
+                        Integer zan=Integer.parseInt(viewHolder.zanView.getText().toString());
+                        viewHolder.zanView.setText((zan+1)+"");
+                        viewHolder.zanView.setTextColor(Color.parseColor("#F48F0B"));
+                        viewHolder.zanImage.setImageResource(R.drawable.life_zan_done);
+                    }
                 }
+
             }
         });
         viewHolder.contentView.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +91,13 @@ import static com.gjf.lovezzu.constant.Url.LOGIN_URL;
         holder.contentView.setText(treeHole.getTreeHoleContent());
         holder.talkView.setText(treeHole.getCommentCount()+"");
         holder.zanView.setText(treeHole.getThembCount()+"");
+        if (treeHole.getThembed()){
+            holder.zanView.setTextColor(Color.parseColor("#F48F0B"));
+            holder.zanImage.setImageResource(R.drawable.life_zan_done);
+        }else {
+            holder.zanView.setTextColor(Color.parseColor("#757575"));
+            holder.zanImage.setImageResource(R.drawable.zan_white);
+        }
         holder.testView.setText(treeHole.getCampus());
     }
 
@@ -125,8 +140,9 @@ import static com.gjf.lovezzu.constant.Url.LOGIN_URL;
                     res=json.getBoolean("isSuccessful");
                     if (res){
                         Toast.makeText(TreeHoleActivity.treeHoleActivity,"+1",Toast.LENGTH_SHORT).show();
+
                     }else {
-                        Toast.makeText(TreeHoleActivity.treeHoleActivity,"请重新登录！",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(TreeHoleActivity.treeHoleActivity,"已经点过赞了！",Toast.LENGTH_SHORT).show();
                     }
                 }catch (Exception e){
                     e.printStackTrace();

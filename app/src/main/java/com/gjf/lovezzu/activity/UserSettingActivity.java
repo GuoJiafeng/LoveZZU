@@ -1,6 +1,8 @@
 package com.gjf.lovezzu.activity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +14,9 @@ import android.widget.Toast;
 
 import com.gjf.lovezzu.R;
 import com.gjf.lovezzu.entity.CheckLoginApplication;
+import com.gjf.lovezzu.entity.friend.DemoApplication;
+import com.hyphenate.EMCallBack;
+import com.hyphenate.chat.EMClient;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -82,6 +87,52 @@ public class UserSettingActivity extends AppCompatActivity {
         oks.show(this);
     }
 
+    private void logout(){
+       /* EMClient.getInstance().logout(false, new EMCallBack() {
+            @Override
+            public void onSuccess() {
+                finish();
+                Log.e("环信--注册","退出成功");
+            }
+
+            @Override
+            public void onError(int i, String s) {
+                Log.e("环信--退出登录",i+", "+s);
+            }
+
+            @Override
+            public void onProgress(int i, String s) {
+
+            }
+        });*/
+        final ProgressDialog pd = new ProgressDialog(this);
+        String st = getResources().getString(R.string.Are_logged_out);
+        pd.setMessage(st);
+        pd.setCanceledOnTouchOutside(false);
+        pd.show();
+        DemoApplication.getInstance().logout(false,new EMCallBack() {
+
+            @Override
+            public void onSuccess() {
+                        pd.dismiss();
+                Log.e("环信--注册","退出成功");
+                        finish();
+            }
+
+            @Override
+            public void onProgress(int progress, String status) {
+
+            }
+
+            @Override
+            public void onError(int code, String message) {
+                        pd.dismiss();
+                        Log.e("环信--退出登录",code+", "+message);
+
+            }
+        });
+    }
+
     private void cleanUserLoinInfo() {
         checkLoginApplication = (CheckLoginApplication) getApplication();
         if (checkLoginApplication.isLogin()) {
@@ -92,7 +143,7 @@ public class UserSettingActivity extends AppCompatActivity {
             editor.clear().apply();
             checkLoginApplication.setIsLogin(false);
             Toast.makeText(getApplicationContext(), "已退出登录！", Toast.LENGTH_LONG).show();
-            finish();
+            logout();
         } else {
             Toast.makeText(getApplicationContext(), "您还未登录！", Toast.LENGTH_LONG).show();
         }

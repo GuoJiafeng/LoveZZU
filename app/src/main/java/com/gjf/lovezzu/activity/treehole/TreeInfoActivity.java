@@ -2,6 +2,7 @@ package com.gjf.lovezzu.activity.treehole;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -113,6 +114,13 @@ public class TreeInfoActivity extends AppCompatActivity {
         treeInfoContent.setText(treeHole.getTreeHoleContent());
         treeInfoSchool.setText(treeHole.getCampus());
         treeInfoZan.setText(treeHole.getThembCount()+"");
+        if (treeHole.getThembed()){
+            treeInfoZan.setTextColor(Color.parseColor("#F48F0B"));
+            treeInfoZanImage.setImageResource(R.drawable.life_zan_done);
+        }else {
+            treeInfoZan.setTextColor(Color.parseColor("#757575"));
+            treeInfoZanImage.setImageResource(R.drawable.zan_white);
+        }
         treeInfoTalk.setText(treeHole.getCommentCount()+"");
         treeInfoDate.setText(treeHole.getDate());
         getComm();
@@ -172,9 +180,11 @@ public class TreeInfoActivity extends AppCompatActivity {
                     if (res){
                         Integer zan=Integer.parseInt(treeInfoZan.getText().toString());
                         treeInfoZan.setText((zan+1)+"");
+                        treeInfoZan.setTextColor(Color.parseColor("#F48F0B"));
+                        treeInfoZanImage.setImageResource(R.drawable.life_zan_done);
                         Toast.makeText(TreeHoleActivity.treeHoleActivity,"+1",Toast.LENGTH_SHORT).show();
                     }else {
-                        Toast.makeText(TreeHoleActivity.treeHoleActivity,"请重新登录！",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(TreeHoleActivity.treeHoleActivity,"已经点过赞了！",Toast.LENGTH_SHORT).show();
                     }
                 }catch (Exception e){
                     e.printStackTrace();

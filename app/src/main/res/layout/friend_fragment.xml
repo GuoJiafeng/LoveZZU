@@ -55,10 +55,11 @@
         android:id="@+id/cc"
         android:layout_below="@id/aa"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
+        android:layout_height="1dp"
         />
 
     <FrameLayout
+        android:id="@+id/friend_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/cc" >

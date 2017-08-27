@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,7 +41,7 @@ public class TaoyuGoodsChildCommentsAdapter extends RecyclerView.Adapter<TaoyuGo
     private GoodsChildCommentsDateBridging goodsChildCommentsDateBridging;
     private  GoodsChildCommentsDateBridging goodsChildCommentsDateBridgingNew;
 
-    private String type="1";
+
     private String SeesionID;
 
     public TaoyuGoodsChildCommentsAdapter(List<GoodsChildCommentsDateBridging> list, Context context){
@@ -79,14 +80,16 @@ public class TaoyuGoodsChildCommentsAdapter extends RecyclerView.Adapter<TaoyuGo
             @Override
             public void onClick(View v) {
                 goodsChildCommentsDateBridgingNew=goodsChildCommentsDateBridgings.get(holder.getAdapterPosition());
-                Integer th=Integer.parseInt(holder.child_comments_thumbnum.getText().toString());
-
-                if (type.equals("1")){
-                    holder.child_comments_thumbnum.setText(th+1+"");
+                if (goodsChildCommentsDateBridgingNew.getComments_l2().getThembed()){
+                    Toast.makeText(TaoyuChildConmmentsActivity.taoyuChildConmmentsActivity,"已经点过赞了",Toast.LENGTH_SHORT).show();
                 }else {
-                    holder.child_comments_thumbnum.setText(th-1+"");
+                    Integer th=Integer.parseInt(holder.child_comments_thumbnum.getText().toString());
+                    holder.child_comments_thumbnum.setText(th+1+"");
+                    holder.child_comments_thumbnum.setTextColor(Color.parseColor("#F48F0B"));
+                    holder.do_zan.setImageResource(R.drawable.life_zan_done);
+                    addThnum();
                 }
-                addThnum(type);
+
             }
         });
         holder.do_comm.setOnClickListener(new View.OnClickListener() {
@@ -126,6 +129,13 @@ public class TaoyuGoodsChildCommentsAdapter extends RecyclerView.Adapter<TaoyuGo
         holder.child_comments_date.setText(goodsChildCommentsDateBridging.getComments_l2().getCdate());
         holder.child_comments_reples.setText(goodsChildCommentsDateBridging.getComments_l2().getNum_replies()+"");
         holder.child_comments_thumbnum.setText(goodsChildCommentsDateBridging.getComments_l2().getNum_thumb()+"");
+        if (goodsChildCommentsDateBridging.getComments_l2().getThembed()){
+            holder.child_comments_thumbnum.setTextColor(Color.parseColor("#F48F0B"));
+            holder.do_zan.setImageResource(R.drawable.life_zan_done);
+        }else {
+            holder.child_comments_thumbnum.setTextColor(Color.parseColor("#757575"));
+            holder.do_zan.setImageResource(R.drawable.life_zan);
+        }
     }
 
     @Override
@@ -172,7 +182,6 @@ public class TaoyuGoodsChildCommentsAdapter extends RecyclerView.Adapter<TaoyuGo
                     Boolean res = jsonObject.getBoolean("isSuccessful");
                     if (res) {
                         Toast.makeText(TaoyuChildConmmentsActivity.taoyuChildConmmentsActivity,"评论成功！",Toast.LENGTH_SHORT).show();
-                        notifyDataSetChanged();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -201,14 +210,14 @@ public class TaoyuGoodsChildCommentsAdapter extends RecyclerView.Adapter<TaoyuGo
         });
     }
 
-    private void addThnum(String num) {
+    private void addThnum() {
         RequestParams requestParams = new RequestParams(LOGIN_URL + "comments_L2Action");
         requestParams.addBodyParameter("action", "postcomments_L2");
         requestParams.addBodyParameter("L1_Cid", "");
         requestParams.addBodyParameter("L2_Cid", goodsChildCommentsDateBridgingNew.getComments_l2().getL2_Cid().toString());
         requestParams.addBodyParameter("SessionID", SeesionID);
         requestParams.addBodyParameter("comments", "");
-        requestParams.addBodyParameter("ThumbNum", num);
+        requestParams.addBodyParameter("ThumbNum", "1");
         x.http().post(requestParams, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -217,13 +226,9 @@ public class TaoyuGoodsChildCommentsAdapter extends RecyclerView.Adapter<TaoyuGo
                     JSONObject jsonObject = new JSONObject(result);
                     Boolean res = jsonObject.getBoolean("isSuccessful");
                     if (res) {
-                        if (type.equals("1")){
-                            Toast.makeText(TaoyuChildConmmentsActivity.taoyuChildConmmentsActivity,"+1 再点取消点赞",Toast.LENGTH_SHORT).show();
-
-                        }else {
-                            Toast.makeText(TaoyuChildConmmentsActivity.taoyuChildConmmentsActivity,"-1 ",Toast.LENGTH_SHORT).show();
-                        }
-                        notifyDataSetChanged();
+                        Toast.makeText(TaoyuChildConmmentsActivity.taoyuChildConmmentsActivity,"+1",Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(TaoyuChildConmmentsActivity.taoyuChildConmmentsActivity,"已经点过赞了",Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -244,11 +249,7 @@ public class TaoyuGoodsChildCommentsAdapter extends RecyclerView.Adapter<TaoyuGo
 
             @Override
             public void onFinished() {
-                if (type.equals("1")){
-                    type="0";
-                }else {
-                    type="1";
-                }
+
             }
 
             @Override

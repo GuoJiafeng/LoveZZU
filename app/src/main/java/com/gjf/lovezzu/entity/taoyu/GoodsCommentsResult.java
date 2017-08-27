@@ -13,6 +13,19 @@ public class GoodsCommentsResult implements Serializable{
     private Integer l1_Cid;
     private int num_replies;
     private int num_thumb;
+    private Boolean thembed;//点赞记录
+
+    public void setL1_Cid(Integer l1_Cid) {
+        this.l1_Cid = l1_Cid;
+    }
+
+    public Boolean getThembed() {
+        return thembed;
+    }
+
+    public void setThembed(Boolean thembed) {
+        this.thembed = thembed;
+    }
 
     public String getAccount() {
         return account;

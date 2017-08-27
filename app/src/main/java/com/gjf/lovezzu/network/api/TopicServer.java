@@ -14,5 +14,5 @@ import rx.Observable;
 public interface TopicServer {
     @FormUrlEncoded
     @POST("TopicAction")
-    Observable<TopicData> getTopic(@Field("ThemeId")String themeId,@Field("action")String action);
+    Observable<TopicData> getTopic(@Field("ThemeId")String themeId,@Field("action")String action,@Field("SessionID")String SessionID);
 }

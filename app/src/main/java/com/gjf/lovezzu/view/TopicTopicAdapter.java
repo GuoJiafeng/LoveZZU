@@ -1,6 +1,9 @@
 package com.gjf.lovezzu.view;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +15,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.gjf.lovezzu.R;
+import com.gjf.lovezzu.activity.palytogether.GroupDynamicActivity;
 import com.gjf.lovezzu.activity.topictalk.TopicInfoActivity;
 import com.gjf.lovezzu.activity.topictalk.TopicTalkActivity;
 import com.gjf.lovezzu.entity.topic.TopicDataBridging;
@@ -33,9 +37,12 @@ import static com.gjf.lovezzu.constant.Url.LOGIN_URL;
 public class TopicTopicAdapter extends RecyclerView.Adapter<TopicTopicAdapter.ViewHolder> {
 
     private List<TopicDataBridging> topicDataBridgingList=new ArrayList<>();
-    private String typeZan="1";
+    private String SessionID;
+
     public TopicTopicAdapter(List<TopicDataBridging> list) {
             topicDataBridgingList=list;
+        SharedPreferences sharedPreferences= TopicTalkActivity.topicTalkActivity.getSharedPreferences("userinfo", Activity.MODE_APPEND);
+        SessionID=sharedPreferences.getString("SessionID","");
     }
 
     @Override
@@ -49,24 +56,26 @@ public class TopicTopicAdapter extends RecyclerView.Adapter<TopicTopicAdapter.Vi
                 Intent intent =new Intent(TopicTalkActivity.topicTalkActivity,TopicInfoActivity.class);
                 TopicDataBridging bridging=topicDataBridgingList.get(holder.getAdapterPosition());
                 intent.putExtra("topicInfo",bridging);
+                intent.putExtra("zanNum",holder.zan_num.getText().toString());
                 TopicTalkActivity.topicTalkActivity.startActivity(intent);
             }
         });
         holder.zan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 TopicDataBridging bridging=topicDataBridgingList.get(holder.getAdapterPosition());
-                String topicId=bridging.getTopic().getTopicId().toString();
-                int zan=Integer.parseInt(holder.zan_num.getText().toString());
-                    if (typeZan.equals("1")){
+                Log.e("话题点赞",bridging.getTopic().getThembed()+"");
+                if (!bridging.getTopic().getThembed()){
+                        String topicId=bridging.getTopic().getTopicId().toString();
+                        int zan=Integer.parseInt(holder.zan_num.getText().toString());
                         holder.zan_num.setText((zan+1)+"");
+                        holder.zan.setImageResource(R.drawable.life_zan_done);
+                        holder.zan_num.setTextColor(Color.parseColor("#F48F0B"));
                         addThum(topicId);
-                    }else {
-                        holder.zan_num.setText((zan-1)+"");
-                        addThum(topicId);
-                    }
+                }else {
+                    Toast.makeText(TopicTalkActivity.topicTalkActivity,"已经点过赞了",Toast.LENGTH_SHORT).show();
 
+                }
 
             }
         });
@@ -88,6 +97,13 @@ public class TopicTopicAdapter extends RecyclerView.Adapter<TopicTopicAdapter.Vi
             holder.comm_num.setText(bridging.getTopic().getTopicCommentCount()+"");
             holder.content.setText(bridging.getTopic().getTopicText());
             holder.zan_num.setText(bridging.getTopic().getTopicThumbCount()+"");
+            if (bridging.getTopic().getThembed()){
+                holder.zan.setImageResource(R.drawable.life_zan_done);
+                holder.zan_num.setTextColor(Color.parseColor("#F48F0B"));
+            }else {
+                holder.zan.setImageResource(R.drawable.life_zan);
+                holder.zan_num.setTextColor(Color.parseColor("#757575"));
+            }
             holder.title.setText(bridging.getTopic().getTopicTitle());
             holder.topic_date.setText(bridging.getTopic().getDate());
             String url=bridging.getTopic().getTopicImg();
@@ -128,11 +144,12 @@ public class TopicTopicAdapter extends RecyclerView.Adapter<TopicTopicAdapter.Vi
     }
 
 
-    private boolean addThum(String topicId){
-        boolean res=false;
+    private void addThum(String topicId){
+
             RequestParams requestParams=new RequestParams(LOGIN_URL+"TopicCommentAction");
-            requestParams.addBodyParameter("ThumbNum",typeZan);
+            requestParams.addBodyParameter("ThumbNum","1");
             requestParams.addBodyParameter("TopicId",topicId);
+            requestParams.addBodyParameter("SessionID",SessionID);
             requestParams.addBodyParameter("action","话题点赞");
             x.http().post(requestParams, new Callback.CacheCallback<String>() {
                 @Override
@@ -142,17 +159,9 @@ public class TopicTopicAdapter extends RecyclerView.Adapter<TopicTopicAdapter.Vi
                         JSONObject jsonObject=new JSONObject(result);
                         Boolean res=jsonObject.getBoolean("isSuccessful");
                         if (res){
-                            res=true;
-                            if (typeZan.equals("1")){
-                                Toast.makeText(TopicTalkActivity.topicTalkActivity,"+1 再点一次取消点赞！",Toast.LENGTH_SHORT).show();
-                                typeZan="0";
-                            }else {
-                                Toast.makeText(TopicTalkActivity.topicTalkActivity,"-1",Toast.LENGTH_SHORT).show();
-                                typeZan="1";
-                            }
+                            Toast.makeText(TopicTalkActivity.topicTalkActivity,"+1",Toast.LENGTH_SHORT).show();
                         }else {
-                            res=false;
-                            Toast.makeText(TopicTalkActivity.topicTalkActivity,"请重新登录!",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(TopicTalkActivity.topicTalkActivity,"已经点过赞了！",Toast.LENGTH_SHORT).show();
                         }
                     }catch (Exception e){
                         e.printStackTrace();
@@ -162,7 +171,7 @@ public class TopicTopicAdapter extends RecyclerView.Adapter<TopicTopicAdapter.Vi
                 @Override
                 public void onError(Throwable ex, boolean isOnCallback) {
                     Log.e("话题点赞",ex.getMessage());
-                    Toast.makeText(TopicTalkActivity.topicTalkActivity,"请重新登录并检查网络是否通畅!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TopicTalkActivity.topicTalkActivity,"请重新登录并检查网络是否通畅！",Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
@@ -180,7 +189,7 @@ public class TopicTopicAdapter extends RecyclerView.Adapter<TopicTopicAdapter.Vi
                     return false;
                 }
             });
-        return res;
+
     }
 
 

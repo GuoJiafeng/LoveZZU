@@ -4,7 +4,7 @@
 
 
     <application
-        android:name=".entity.CheckLoginApplication"
+        android:name=".entity.friend.DemoApplication"
         android:allowBackup="true"
         android:icon="@drawable/app_logo"
         android:label="@string/app_name"
@@ -12,7 +12,6 @@
         android:theme="@style/AppTheme">
 
         <service android:name=".service.CheckLogin" />
-
 
 
         <activity
@@ -33,68 +32,78 @@
         <activity android:name="me.iwf.photopicker.PhotoPickerActivity" />
 
         <!-- 话题圈 -->
-        <activity android:name=".activity.topictalk.TopicTalkActivity"
+        <activity
+            android:name=".activity.topictalk.TopicTalkActivity"
             android:launchMode="singleTask" />
-        <activity android:name=".activity.topictalk.TopicInfoActivity"
-            android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".activity.topictalk.TopicPublishActivity"/>
-        <activity android:name=".activity.topictalk.ThemePublishActivity"/>
-        <activity android:name=".activity.palytogether.SearchGroupActivity"/>
-        <activity android:name=".activity.palytogether.JoinGroupActivity"/>
+        <activity
+            android:name=".activity.topictalk.TopicInfoActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".activity.topictalk.TopicPublishActivity" />
+        <activity android:name=".activity.topictalk.ThemePublishActivity" />
         <!-- 淘鱼 -->
-        <activity android:name=".activity.taoyu.TaoyuActivity"
+        <activity
+            android:name=".activity.taoyu.TaoyuActivity"
             android:launchMode="singleTask" />
-        <activity android:name=".activity.taoyu.ShopcartActivity"/>
-        <activity android:name=".activity.taoyu.TaoyuChildConmmentsActivity"
-            android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".activity.taoyu.TaoyuOrderActivity"/>
+        <activity android:name=".activity.taoyu.ShopcartActivity" />
+        <activity
+            android:name=".activity.taoyu.TaoyuChildConmmentsActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".activity.taoyu.TaoyuOrderActivity" />
         <activity android:name=".activity.taoyu.TaoyuSearchActivity" />
-        <activity android:name=".activity.taoyu.TaoyuPublishGoodActivity"
-            android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".activity.taoyu.TaoyuDetialActivity"
-            android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".activity.taoyu.OrderSellInfoActivity"/>
-        <activity android:name=".activity.taoyu.OrderBuyInfoAcivity"/>
-        <activity android:name=".activity.taoyu.MyPublishGoodsActivity"/>
+        <activity
+            android:name=".activity.taoyu.TaoyuPublishGoodActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.taoyu.TaoyuDetialActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".activity.taoyu.OrderSellInfoActivity" />
+        <activity android:name=".activity.taoyu.OrderBuyInfoAcivity" />
+        <activity android:name=".activity.taoyu.MyPublishGoodsActivity" />
 
         <!-- 一起玩 -->
         <activity
             android:name=".activity.palytogether.PlayTogetherActivity"
             android:launchMode="singleTask" />
-        <activity android:name=".activity.palytogether.PlayGroupActivity"/>
-        <activity android:name=".activity.palytogether.PublishGroupActivity"/>
-        <activity android:name=".activity.palytogether.PublishDynamicActivity"/>
-        <activity android:name=".activity.palytogether.MyGroupActivity"/>
-        <activity android:name=".activity.palytogether.GroupDynamicActivity"/>
-        <activity android:name=".activity.palytogether.DynamicInfoActivity"/>
-        <activity android:name=".activity.palytogether.SearchGroupActivity"/>
-        <activity android:name=".activity.palytogether.UpdateGroupImage"/>
+        <activity android:name=".activity.palytogether.PlayGroupActivity" />
+        <activity android:name=".activity.palytogether.PublishGroupActivity" />
+        <activity android:name=".activity.palytogether.PublishDynamicActivity" />
+        <activity android:name=".activity.palytogether.MyGroupActivity" />
+        <activity android:name=".activity.palytogether.GroupDynamicActivity" />
+        <activity android:name=".activity.palytogether.DynamicInfoActivity" />
+        <activity android:name=".activity.palytogether.SearchGroupActivity" />
+        <activity android:name=".activity.palytogether.JoinGroupActivity" />
+        <activity android:name=".activity.palytogether.UpdateGroupImage" />
         <!-- 树洞 -->
-        <activity android:name=".activity.treehole.TreeHoleActivity"
+        <activity
+            android:name=".activity.treehole.TreeHoleActivity"
             android:launchMode="singleTask" />
         <activity
             android:name=".activity.treehole.AddTreeHoleActivity"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.treehole.TreeInfoActivity"/>
+        <activity android:name=".activity.treehole.TreeInfoActivity" />
 
         <!-- 兼职 -->
-        <activity android:name=".activity.parttimejob.PartTimeJobActivity"
-            android:launchMode="singleTask"  />
+        <activity
+            android:name=".activity.parttimejob.PartTimeJobActivity"
+            android:launchMode="singleTask" />
         <activity
             android:name=".activity.parttimejob.AddJopActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activity.parttimejob.JobInfoActivity" />
-        <activity android:name=".activity.parttimejob.MyJobActivity"/>
-        <activity android:name=".activity.parttimejob.SearchJobActivity"/>
+        <activity android:name=".activity.parttimejob.MyJobActivity" />
+        <activity android:name=".activity.parttimejob.SearchJobActivity" />
 
         <!--表白墙-->
-        <activity android:name=".activity.saylvoeActivity.SayLoveActivity"
+        <activity
+            android:name=".activity.saylvoeActivity.SayLoveActivity"
             android:launchMode="singleTask" />
-        <activity android:name=".activity.saylvoeActivity.IWantSayLoveActivity"
-            android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".activity.saylvoeActivity.SayloveReplyActivity"/>
-        <activity android:name=".activity.saylvoeActivity.SayloveWallActivity"
-            android:windowSoftInputMode="stateHidden"/>
+        <activity
+            android:name=".activity.saylvoeActivity.IWantSayLoveActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".activity.saylvoeActivity.SayloveReplyActivity" />
+        <activity
+            android:name=".activity.saylvoeActivity.SayloveWallActivity"
+            android:windowSoftInputMode="stateHidden" />
 
         <!--WebView-->
         <activity
@@ -106,13 +115,14 @@
         <!--shareSDK-->
         <activity
             android:name="com.mob.tools.MobUIShell"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:windowSoftInputMode="stateHidden|adjustResize" >
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="stateHidden|adjustResize">
 
             <intent-filter>
                 <data android:scheme="tencent100371282" />
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -125,16 +135,59 @@
 
 
         </activity>
-        <!-- 填写您从Mob开发者后台中得到的Appkey和AppSecret -->
-        <meta-data android:name="Mob-AppKey" android:value="204eecc440269"/>
-        <meta-data android:name="Mob-AppSecret" android:value="bbf175eaf7515b869934772a412e3d10"/>
-
         <!--短信验证-->
+        <!-- 填写您从Mob开发者后台中得到的Appkey和AppSecret -->
+        <meta-data
+            android:name="Mob-AppKey"
+            android:value="204eecc440269" />
+        <meta-data
+            android:name="Mob-AppSecret"
+            android:value="bbf175eaf7515b869934772a412e3d10" />
+
+        <!--环信-->
+        <activity android:name=".activity.friend.AddFriendActivity" />
+        <activity android:name=".activity.friend.ChatActivity" />
+        <activity android:name=".activity.friend.NewFriendsMsgActivity" />
+        <activity android:name="com.hyphenate.easeui.ui.EaseBaiduMapActivity" />
+        <activity android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity" />
+
+        <meta-data
+            android:name="EASEMOB_APPKEY"
+            android:value="1113170131115043#lovezzu" />
+        <meta-data
+            android:name="com.baidu.android.lbs.API_KEY"
+            android:value="dMAqec5wN5y6sG3GItg5XXPcH3vHCG0h" />
+
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" />
+
+        <!-- 声明SDK所需的service SDK核心功能-->
+        <service
+            android:name="com.hyphenate.chat.EMChatService"
+            android:exported="true" />
+        <service
+            android:name="com.hyphenate.chat.EMJobService"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+        <!-- 声明SDK所需的receiver -->
+        <receiver android:name="com.hyphenate.chat.EMMonitorReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+                <data android:scheme="package" />
+            </intent-filter>
+            <!-- 可选filter -->
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+            </intent-filter>
+        </receiver>
 
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -155,8 +208,8 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <!--ShareSDK-->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
-    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <!-- 蓝牙分享所需的权限 -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
@@ -164,4 +217,8 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
+
+    <!--环信-->
+    <!--<uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />-->
+
 </manifest>

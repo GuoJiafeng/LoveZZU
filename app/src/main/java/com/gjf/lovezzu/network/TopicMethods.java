@@ -45,8 +45,8 @@ public class TopicMethods {
         return SinglerHolder.INSTANCE;
     }
 
-    public void getTopic(Subscriber<TopicData> subscriber,String themeId,String action){
-        topicServer.getTopic(themeId,action)
+    public void getTopic(Subscriber<TopicData> subscriber,String themeId,String action,String SeesionID){
+        topicServer.getTopic(themeId,action,SeesionID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
