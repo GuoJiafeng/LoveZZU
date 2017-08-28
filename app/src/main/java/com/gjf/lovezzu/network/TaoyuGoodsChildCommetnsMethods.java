@@ -45,8 +45,8 @@ public class TaoyuGoodsChildCommetnsMethods {
     }
 
 
-    public void getChileComments(Subscriber<GoodsChildCommentsData> subscriber,String action ,String L1_Cid){
-        taoyuGoodsChildCommentsServer.getChileComments(action,L1_Cid)
+    public void getChileComments(Subscriber<GoodsChildCommentsData> subscriber,String action ,String L1_Cid,String SessionID){
+        taoyuGoodsChildCommentsServer.getChileComments(action,L1_Cid,SessionID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);

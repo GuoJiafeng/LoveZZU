@@ -12,6 +12,14 @@ android {
         multiDexEnabled true
         versionCode 1
         versionName "1.0"
+        manifestPlaceholders = [
+                GETUI_APP_ID :  "7NFvhkCWUq7ypj9rf3OXB7",
+                GETUI_APP_KEY : "hE5kiVpXCo6v7G9vZtL9VA",
+                GETUI_APP_SECRET : "OA4si0ptWd5TdR8fj2iDX"
+        ]
+        ndk {
+            abiFilters "armeabi-v8a","armeabi", "armeabi-v7a", "x86"
+        }
     }
     buildTypes {
         release {
@@ -59,4 +67,6 @@ dependencies {
     compile name: 'SMSSDK-3.0.0', ext: 'aar'
     compile name: 'SMSSDKGUI-3.0.0', ext: 'aar'
     compile project(':easeui')
+    compile 'com.getui:sdk:2.11.1.0'
+    compile 'com.android.support:support-v4:+'
 }

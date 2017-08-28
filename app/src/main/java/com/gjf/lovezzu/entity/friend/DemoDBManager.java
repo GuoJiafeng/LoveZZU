@@ -64,6 +64,8 @@ public class DemoDBManager {
                 String avatar = cursor.getString(cursor.getColumnIndex(UserDao.COLUMN_NAME_AVATAR));
                 EaseUser user = new EaseUser(username);
                 user.setNick(nick);
+                user.setNickname(nick);
+                user.setInitialLetter(avatar);
                 user.setAvatar(avatar);
                 if (username.equals(Constant.NEW_FRIENDS_USERNAME) || username.equals(Constant.GROUP_USERNAME)
                         || username.equals(Constant.CHAT_ROOM)|| username.equals(Constant.CHAT_ROBOT)) {

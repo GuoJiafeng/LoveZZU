@@ -1,14 +1,19 @@
 package com.gjf.lovezzu.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -23,10 +28,14 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.gjf.lovezzu.R;
 import com.gjf.lovezzu.entity.UserInfoResult;
+import com.gjf.lovezzu.entity.friend.DemoApplication;
 import com.gjf.lovezzu.network.DownloadIconMethods;
 import com.gjf.lovezzu.network.GetUserInfoMethods;
 import com.gjf.lovezzu.network.SaveUserInfoMethods;
 import com.gjf.lovezzu.view.CircleImageView;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.easeui.domain.EaseUser;
+import com.hyphenate.exceptions.HyphenateException;
 
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
@@ -34,6 +43,9 @@ import org.xutils.x;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -105,6 +117,7 @@ public class UserInfoActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         sharedPreferences = getSharedPreferences("userinfo", Activity.MODE_APPEND);
         phone = sharedPreferences.getString("phone", "");
+        getPremission();
         dispalyUserInfo();
         onRefresh();
 
@@ -196,6 +209,8 @@ public class UserInfoActivity extends AppCompatActivity {
         DownloadIconMethods.getInstance().startDownloadIcon(subscriber, userIcon, "头像");
     }
 
+
+
     //显示用户信息
     private void dispalyUserInfo() {
         final SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -240,9 +255,8 @@ public class UserInfoActivity extends AppCompatActivity {
         PhotoPicker.builder()
                 .setPhotoCount(1)
                 .setShowCamera(true)
-                .setShowGif(true)
                 .setPreviewEnabled(false)
-                .start(this, PhotoPicker.REQUEST_CODE);
+                .start(UserInfoActivity.this, PhotoPicker.REQUEST_CODE);
     }
 
     private void UploadIcon() {
@@ -563,5 +577,26 @@ public class UserInfoActivity extends AppCompatActivity {
     public void onViewClicked() {
         Intent intent=new Intent(UserInfoActivity.this,MainActivity.class);
         startActivity(intent);
+    }
+
+    private void getPremission(){
+        if (ContextCompat.checkSelfPermission(UserInfoActivity.this, Manifest.permission.CAMERA)!=PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(UserInfoActivity.this,new String[]{Manifest.permission.CAMERA},1);
+        }else {
+            return;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode){
+            case 1:
+                if (grantResults.length>0&&grantResults[0]== PackageManager.PERMISSION_GRANTED){
+                    break;
+                }else {
+                    Toast.makeText(this,"无相机权限将不能正常拍摄图片！",Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
     }
 }

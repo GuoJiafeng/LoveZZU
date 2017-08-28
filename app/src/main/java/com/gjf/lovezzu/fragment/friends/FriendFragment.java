@@ -1,6 +1,8 @@
 package com.gjf.lovezzu.fragment.friends;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -13,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gjf.lovezzu.R;
 import com.gjf.lovezzu.activity.MainActivity;
@@ -62,7 +65,6 @@ public class FriendFragment extends Fragment {
     private View view;
     private EaseContactListFragment contactListFragment;
     private EaseConversationListFragment conversationListFragment;
-    private EaseChatFragment chatFragment;
     private Map<String, EaseUser> contactsMap = new Hashtable<String, EaseUser>();
     protected List<EaseUser> contactList = new ArrayList<EaseUser>();
     private EMConversation conversation;
@@ -73,11 +75,8 @@ public class FriendFragment extends Fragment {
         ButterKnife.bind(this, view);
         friendsMessages.setTextColor(Color.parseColor("#0090FD"));
         friendsPeople.setTextColor(Color.parseColor("#000000"));
-        chatFragment=new EaseChatFragment();
+
         contactListFragment=new EaseContactListFragment();
-        if (!contactsMap.isEmpty()){
-            contactsMap.clear();
-        }
         contactListFragment.setContactsMap(getContactList());
         contactListFragment.hideTitleBar();
         contactListFragment.setContactListItemClickListener(new EaseContactListFragment.EaseContactListItemClickListener() {
@@ -91,6 +90,7 @@ public class FriendFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
         conversationListFragment = new EaseConversationListFragment();
         conversationListFragment.setConversationListItemClickListener(new EaseConversationListFragment.EaseConversationListItemClickListener() {
             @Override
@@ -104,7 +104,6 @@ public class FriendFragment extends Fragment {
         conversationListFragment.hideTitleBar();
         replceFragment(conversationListFragment);
         return view;
-
     }
 
     @OnClick({R.id.friends_messages, R.id.friends_people, R.id.add_friends})
@@ -170,9 +169,6 @@ public class FriendFragment extends Fragment {
         contactList.clear();
         // 获取联系人列表
         contactsMap = DemoApplication.getInstance().getContactList();
-        if (contactsMap == null) {
-            return new Hashtable<String, EaseUser>();
-        }
         synchronized (this.contactsMap) {
             Iterator<Map.Entry<String, EaseUser>> iterator = contactsMap.entrySet().iterator();
             List<String> blackList = EMClient.getInstance().contactManager().getBlackListUsernames();
@@ -210,5 +206,6 @@ public class FriendFragment extends Fragment {
         });
         return contactsMap;
     }
+
 
 }

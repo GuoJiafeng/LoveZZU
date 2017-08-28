@@ -168,8 +168,7 @@ public class TaoyuGoodsChildCommentsAdapter extends RecyclerView.Adapter<TaoyuGo
     private void publishChildComments(String comments) {
 
         RequestParams requestParams = new RequestParams(LOGIN_URL + "comments_L2Action");
-        requestParams.addBodyParameter("action", "postcomments_L2");
-        requestParams.addBodyParameter("L1_Cid",  "");
+        requestParams.addBodyParameter("action", "对二级评论发表评论");
         requestParams.addBodyParameter("L2_Cid", goodsChildCommentsDateBridgingNew.getComments_l2().getL2_Cid().toString());
         requestParams.addBodyParameter("SessionID", SeesionID);
         requestParams.addBodyParameter("comments",comments);
@@ -212,12 +211,9 @@ public class TaoyuGoodsChildCommentsAdapter extends RecyclerView.Adapter<TaoyuGo
 
     private void addThnum() {
         RequestParams requestParams = new RequestParams(LOGIN_URL + "comments_L2Action");
-        requestParams.addBodyParameter("action", "postcomments_L2");
-        requestParams.addBodyParameter("L1_Cid", "");
+        requestParams.addBodyParameter("action", "对二级评论点赞");
         requestParams.addBodyParameter("L2_Cid", goodsChildCommentsDateBridgingNew.getComments_l2().getL2_Cid().toString());
         requestParams.addBodyParameter("SessionID", SeesionID);
-        requestParams.addBodyParameter("comments", "");
-        requestParams.addBodyParameter("ThumbNum", "1");
         x.http().post(requestParams, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {

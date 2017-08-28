@@ -219,7 +219,6 @@ public class UserLoginFragmen extends Fragment {
                 EMClient.getInstance().groupManager().loadAllGroups();
                 EMClient.getInstance().chatManager().loadAllConversations();
                 getFriends();
-
                 // 进入主页面
                 Intent intent = new Intent(getContext(), UserInfoActivity.class);
                 startActivity(intent);
@@ -244,6 +243,8 @@ public class UserLoginFragmen extends Fragment {
             }
         });
     }
+
+
     private  void  getFriends(){
         try {
             List<String> usernames = EMClient.getInstance().contactManager().getAllContactsFromServer();
@@ -261,31 +262,6 @@ public class UserLoginFragmen extends Fragment {
 
     }
 
-
-
-
-   /* private void loginIM(){
-        EMClient.getInstance().login(user_reg_phone.getText().toString().trim(), user_reg_password.getText().toString().trim(), new EMCallBack() {
-            @Override
-            public void onSuccess() {
-                Log.e("环信--登录","登录成功");
-                Intent intent = new Intent(getContext(), UserInfoActivity.class);
-                startActivity(intent);
-            }
-
-            @Override
-            public void onError(int i, String s) {
-                Log.e("环信--登陆失败",i +", "+s);
-            }
-
-            @Override
-            public void onProgress(int i, String s) {
-
-            }
-        });
-
-
-    }*/
     private void saveUserInfo(String SessionID, String phone) {
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("userinfo", getContext().MODE_PRIVATE);
         SharedPreferences.Editor editUserInfo = sharedPreferences.edit();

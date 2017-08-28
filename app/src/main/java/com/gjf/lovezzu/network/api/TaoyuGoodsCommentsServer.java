@@ -16,7 +16,7 @@ import rx.Observable;
 public interface TaoyuGoodsCommentsServer {
     @FormUrlEncoded
     @POST("comments_L1Action")
-    Observable<GoodsCommentsData> getTaoyuGoodsComments(@Field("action") String action,@Field("goods_id") String goods_id);
+    Observable<GoodsCommentsData> getTaoyuGoodsComments(@Field("action") String action,@Field("goods_id") String goods_id,@Field("SessionID") String SessionID);
 
 
 

@@ -95,7 +95,6 @@ import static com.gjf.lovezzu.constant.Url.LOGIN_URL;
             holder.zanView.setTextColor(Color.parseColor("#F48F0B"));
             holder.zanImage.setImageResource(R.drawable.life_zan_done);
         }else {
-            holder.zanView.setTextColor(Color.parseColor("#757575"));
             holder.zanImage.setImageResource(R.drawable.zan_white);
         }
         holder.testView.setText(treeHole.getCampus());
@@ -140,7 +139,6 @@ import static com.gjf.lovezzu.constant.Url.LOGIN_URL;
                     res=json.getBoolean("isSuccessful");
                     if (res){
                         Toast.makeText(TreeHoleActivity.treeHoleActivity,"+1",Toast.LENGTH_SHORT).show();
-
                     }else {
                         Toast.makeText(TreeHoleActivity.treeHoleActivity,"已经点过赞了！",Toast.LENGTH_SHORT).show();
                     }

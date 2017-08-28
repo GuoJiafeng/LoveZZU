@@ -14,6 +14,6 @@ import rx.Observable;
 public interface TaoyuGoodsChildCommentsServer {
     @FormUrlEncoded
     @POST("comments_L2Action")
-    Observable<GoodsChildCommentsData> getChileComments(@Field("action") String action,@Field("L1_Cid")String L1_Cid);
+    Observable<GoodsChildCommentsData> getChileComments(@Field("action") String action,@Field("L1_Cid")String L1_Cid,@Field("SessionID")String SessionID);
 
 }

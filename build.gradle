@@ -19,6 +19,9 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        maven {
+            url "http://mvn.gt.igexin.com/nexus/content/repositories/releases/"
+        }
         flatDir{
             dirs 'libs' //就是你放aar的目录地址
         }

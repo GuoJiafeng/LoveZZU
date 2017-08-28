@@ -5,8 +5,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.IBinder;
-import android.util.Log;
-import android.widget.Toast;
+
 
 import com.gjf.lovezzu.entity.CheckLoginApplication;
 import com.gjf.lovezzu.entity.LoginResult;

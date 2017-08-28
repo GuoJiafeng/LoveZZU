@@ -146,14 +146,13 @@ public class TaoyuChildConmmentsActivity extends AppCompatActivity {
                 }
             }
         };
-        TaoyuGoodsChildCommetnsMethods.getInsance().getChileComments(subscriber, "querycomments_L2", parentComments.getComments_L1().getL1_Cid() + "");
+        TaoyuGoodsChildCommetnsMethods.getInsance().getChileComments(subscriber, "querycomments_L2", parentComments.getComments_L1().getL1_Cid() + "",SessionID);
     }
 
     private void publishChildComments() {
         RequestParams requestParams = new RequestParams(LOGIN_URL + "comments_L2Action");
-        requestParams.addBodyParameter("action", "postcomments_L2");
+        requestParams.addBodyParameter("action", "对一级评论发表评论");
         requestParams.addBodyParameter("L1_Cid", parentComments.getComments_L1().getL1_Cid() + "");
-        requestParams.addBodyParameter("L2_Cid", "");
         requestParams.addBodyParameter("SessionID", SessionID);
         requestParams.addBodyParameter("comments", editComments.getText().toString());
         x.http().post(requestParams, new Callback.CacheCallback<String>() {
@@ -200,12 +199,10 @@ public class TaoyuChildConmmentsActivity extends AppCompatActivity {
     private void addThnum() {
 
         RequestParams requestParams = new RequestParams(LOGIN_URL + "comments_L2Action");
-        requestParams.addBodyParameter("action", "postcomments_L2");
+        requestParams.addBodyParameter("action", "对一级评论点赞");
         requestParams.addBodyParameter("L1_Cid", parentComments.getComments_L1().getL1_Cid() + "");
-        requestParams.addBodyParameter("L2_Cid", "");
         requestParams.addBodyParameter("SessionID", SessionID);
-        requestParams.addBodyParameter("comments", "");
-        requestParams.addBodyParameter("ThumbNum","1");
+
         x.http().post(requestParams, new Callback.CacheCallback<String>() {
 
             @Override

@@ -179,7 +179,7 @@ public class TaoyuDetialActivity extends AppCompatActivity {
 
         };
 
-        TaoyuGoodsCommentsMethods.getInstance().getTaoyuGoodsComments(subscriber,"querycomments_L1",goods.getGoods_id().toString());
+        TaoyuGoodsCommentsMethods.getInstance().getTaoyuGoodsComments(subscriber,"querycomments_L1",goods.getGoods_id().toString(),SessionID);
     }
 
     private void publishGoodsComments() {
