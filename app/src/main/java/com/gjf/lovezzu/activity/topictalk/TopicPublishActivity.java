@@ -213,9 +213,9 @@ public class TopicPublishActivity extends AppCompatActivity {
 
                         if (photoAdapter.getItemViewType(position) == PhotoAdapter.TYPE_ADD) {
                             PhotoPicker.builder()
-                                    .setPhotoCount(PhotoAdapter.MAX)
+                                    .setPhotoCount(5)
                                     .setShowCamera(true)
-                                    .setPreviewEnabled(false)
+                                    .setPreviewEnabled(true)
                                     .setSelected(selectedPhotos)
                                     .start(TopicPublishActivity.this);
                             photoAdapter.notifyDataSetChanged();

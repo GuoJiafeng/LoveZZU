@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gjf.lovezzu.R;
+import com.gjf.lovezzu.activity.topictalk.TopicPublishActivity;
 import com.gjf.lovezzu.view.PhotoAdapter;
 import com.gjf.lovezzu.view.RecyclerItemClickListener;
 import com.gjf.lovezzu.view.WheelView;
@@ -238,6 +239,8 @@ public class TaoyuPublishGoodActivity extends AppCompatActivity {
 
         PhotoPicker.builder()
                 .setPhotoCount(5)
+                .setShowCamera(true)
+                .setPreviewEnabled(true)
                 .start(TaoyuPublishGoodActivity.this);
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this,
                 new RecyclerItemClickListener.OnItemClickListener() {
@@ -248,8 +251,14 @@ public class TaoyuPublishGoodActivity extends AppCompatActivity {
                             PhotoPicker.builder()
                                     .setPhotoCount(5)
                                     .setShowCamera(true)
-                                    .setPreviewEnabled(false)
+                                    .setPreviewEnabled(true)
                                     .setSelected(selectedPhotos)
+                                    .start(TaoyuPublishGoodActivity.this);
+                            photoAdapter.notifyDataSetChanged();
+                        }else {
+                            PhotoPreview.builder()
+                                    .setPhotos(selectedPhotos)
+                                    .setCurrentItem(position)
                                     .start(TaoyuPublishGoodActivity.this);
                             photoAdapter.notifyDataSetChanged();
                         }

@@ -68,5 +68,5 @@ dependencies {
     compile name: 'SMSSDKGUI-3.0.0', ext: 'aar'
     compile project(':easeui')
     compile 'com.getui:sdk:2.11.1.0'
-    compile 'com.android.support:support-v4:+'
+
 }

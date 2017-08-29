@@ -254,8 +254,6 @@ public class UserInfoActivity extends AppCompatActivity {
     private void startUp() {
         PhotoPicker.builder()
                 .setPhotoCount(1)
-                .setShowCamera(true)
-                .setPreviewEnabled(false)
                 .start(UserInfoActivity.this, PhotoPicker.REQUEST_CODE);
     }
 
@@ -567,9 +565,18 @@ public class UserInfoActivity extends AppCompatActivity {
         if (upIcon != null && !upIcon.equals("")) {
             upIcon = null;
         }
-        upIcon = selectedPhotos.get(0).toString();
+        String images=null;
+        for (String image:selectedPhotos){
+            images=image;
+        }
+        upIcon = images;
         Glide.with(UserInfoActivity.this).load(upIcon).into(circleImageView);
-        UploadIcon();
+        if (upIcon==null){
+            Toast.makeText(this,"未选择图片,请点击完成！",Toast.LENGTH_SHORT).show();
+        }else {
+            UploadIcon();
+        }
+
     }
 
 
