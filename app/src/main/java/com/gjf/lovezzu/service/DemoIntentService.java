@@ -4,8 +4,11 @@ import android.content.Context;
 import android.util.Log;
 
 import com.igexin.sdk.GTIntentService;
+import com.igexin.sdk.GTServiceManager;
 import com.igexin.sdk.message.GTCmdMessage;
 import com.igexin.sdk.message.GTTransmitMessage;
+
+import org.json.JSONObject;
 
 /**
  * Created by zhao on 2017/8/28.
@@ -28,6 +31,7 @@ public class DemoIntentService extends GTIntentService {
     @Override
     public void onReceiveMessageData(Context context, GTTransmitMessage gtTransmitMessage) {
 
+
     }
 
     @Override
@@ -37,6 +41,5 @@ public class DemoIntentService extends GTIntentService {
 
     @Override
     public void onReceiveCommandResult(Context context, GTCmdMessage gtCmdMessage) {
-
     }
 }
