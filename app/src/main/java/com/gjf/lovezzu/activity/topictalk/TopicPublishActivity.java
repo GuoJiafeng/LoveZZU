@@ -219,12 +219,6 @@ public class TopicPublishActivity extends AppCompatActivity {
                                     .setSelected(selectedPhotos)
                                     .start(TopicPublishActivity.this);
                             photoAdapter.notifyDataSetChanged();
-                        } else {
-                            PhotoPreview.builder()
-                                    .setPhotos(selectedPhotos)
-                                    .setCurrentItem(position)
-                                    .start(TopicPublishActivity.this);
-                            photoAdapter.notifyDataSetChanged();
                         }
                     }
                 }));

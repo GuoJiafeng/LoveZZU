@@ -208,7 +208,6 @@ public class ThemePublishActivity extends AppCompatActivity {
         themePublishImages.setAdapter(photoAdapter);
 
         PhotoPicker.builder()
-                .setShowGif(true)
                 .setPhotoCount(1)
                 .start(ThemePublishActivity.this);
         themePublishImages.addOnItemTouchListener(new RecyclerItemClickListener(this,
@@ -220,7 +219,7 @@ public class ThemePublishActivity extends AppCompatActivity {
                             PhotoPicker.builder()
                                     .setPhotoCount(1)
                                     .setShowCamera(true)
-                                    .setPreviewEnabled(false)
+                                    .setPreviewEnabled(true)
                                     .setSelected(selectedPhotos)
                                     .start(ThemePublishActivity.this);
                             photoAdapter.notifyDataSetChanged();

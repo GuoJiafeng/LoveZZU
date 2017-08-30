@@ -255,12 +255,6 @@ public class TaoyuPublishGoodActivity extends AppCompatActivity {
                                     .setSelected(selectedPhotos)
                                     .start(TaoyuPublishGoodActivity.this);
                             photoAdapter.notifyDataSetChanged();
-                        }else {
-                            PhotoPreview.builder()
-                                    .setPhotos(selectedPhotos)
-                                    .setCurrentItem(position)
-                                    .start(TaoyuPublishGoodActivity.this);
-                            photoAdapter.notifyDataSetChanged();
                         }
                     }
                 }));

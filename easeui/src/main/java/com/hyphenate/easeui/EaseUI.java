@@ -15,8 +15,6 @@ import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.model.EaseAtMessageHelper;
 import com.hyphenate.easeui.model.EaseNotifier;
 import com.hyphenate.easeui.domain.EaseAvatarOptions;
-import com.hyphenate.easeui.utils.EaseCommonUtils;
-import com.hyphenate.exceptions.HyphenateException;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -202,7 +200,7 @@ public final class EaseUI {
     
     /**
      * set user profile provider
-     * @param
+     * @param provider
      */
     public void setUserProfileProvider(EaseUserProfileProvider userProvider){
         this.userProvider = userProvider;
@@ -221,7 +219,6 @@ public final class EaseUI {
     }
     
     public EaseSettingsProvider getSettingsProvider(){
-
         return settingsProvider;
     }
     

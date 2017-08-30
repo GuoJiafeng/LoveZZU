@@ -5,7 +5,6 @@ import android.app.ProgressDialog;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
@@ -767,10 +766,6 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
         }
         if(chatFragmentHelper != null){
             //set extension
-/*            SharedPreferences sharedPreferences=getActivity().getSharedPreferences("userinfo",Activity.MODE_APPEND);
-            message.setAttribute("username",sharedPreferences.getString("phone",""));
-            message.setAttribute("nick", sharedPreferences.getString("userNickName",""));
-            message.setAttribute("avatar", "http://192.168.1.123:8080/LoveZZU/filedownload?action=头像&imageURL="+sharedPreferences.getString("userIcon","")) ;*/
             chatFragmentHelper.onSetMessageAttributes(message);
         }
         if (chatType == EaseConstant.CHATTYPE_GROUP){
