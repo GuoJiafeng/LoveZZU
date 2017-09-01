@@ -1,7 +1,9 @@
 package com.gjf.lovezzu.fragment;
 
 import android.app.Activity;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -19,6 +21,7 @@ import com.gjf.lovezzu.activity.MainActivity;
 import com.gjf.lovezzu.activity.UserInfoActivity;
 import com.gjf.lovezzu.activity.UserLoginActivity;
 import com.gjf.lovezzu.activity.UserSettingActivity;
+import com.gjf.lovezzu.activity.friend.NewFriendsMsgActivity;
 import com.gjf.lovezzu.activity.saylvoeActivity.SayLoveActivity;
 import com.gjf.lovezzu.activity.taoyu.MyPublishGoodsActivity;
 import com.gjf.lovezzu.activity.taoyu.ShopcartActivity;
@@ -114,7 +117,7 @@ public class PersonFragment extends Fragment {
         startActivity(intent);
     }
 
-    @OnClick({R.id.user_image, R.id.person_usersetting, R.id.person_saylove, R.id.user_shop_car, R.id.user_shop_list,R.id.user_publish_goods_list,R.id.user_mark})
+    @OnClick({R.id.user_image,R.id.my_info, R.id.person_usersetting, R.id.person_saylove, R.id.user_shop_car, R.id.user_shop_list,R.id.user_publish_goods_list,R.id.user_mark})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.user_image:
@@ -125,6 +128,10 @@ public class PersonFragment extends Fragment {
                     Toast.makeText(getContext(), "请先登录！", Toast.LENGTH_LONG).show();
                     goTologin();
                 }
+                break;
+            case R.id.my_info:
+                Intent intentF = new Intent(getContext(),NewFriendsMsgActivity.class);
+                startActivity(intentF);
                 break;
             case R.id.person_usersetting:
                 goToSetting();

@@ -42,8 +42,8 @@ public class TaoyuGoodsCommentsMethods {
         return SinglerHolder.INSTANCE;
     }
 
-    public void getTaoyuGoodsComments(Subscriber<GoodsCommentsData> subscriber, String action, String goods_id){
-        taoyuGoodsCommentsServer.getTaoyuGoodsComments(action,goods_id)
+    public void getTaoyuGoodsComments(Subscriber<GoodsCommentsData> subscriber, String action, String goods_id,String SessionID){
+        taoyuGoodsCommentsServer.getTaoyuGoodsComments(action,goods_id,SessionID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);

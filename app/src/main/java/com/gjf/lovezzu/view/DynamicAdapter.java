@@ -112,10 +112,8 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.ViewHold
                 try {
                     JSONObject json = new JSONObject(result);
                    boolean res = json.getBoolean("isSuccessful");
-                    if (res) {
-
-                    } else {
-                        Toast.makeText(GroupDynamicActivity.groupDynamicActivity, "请重新登录！", Toast.LENGTH_SHORT).show();
+                    if (!res) {
+                        Toast.makeText(GroupDynamicActivity.groupDynamicActivity, "已经点过赞了！", Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

@@ -2,6 +2,7 @@ package com.gjf.lovezzu.activity.palytogether;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -104,7 +105,16 @@ public class DynamicInfoActivity extends AppCompatActivity {
         dynamicinfoUsername.setText(dynamicReault.getUserinfo().getNickname());
         dynamicinfoContent.setText(dynamicReault.getGroupDynamic().getTalk());
         dynamicinfoZan.setText(dynamicReault.getGroupDynamic().getThembCount() + "");
+        if (dynamicReault.getGroupDynamic().getThembed()){
+            dynamicinfoZan.setTextColor(Color.parseColor("#F48F0B"));
+            dynamicInfoZan.setImageResource(R.drawable.life_zan_done);
+        }else {
+            dynamicinfoZan.setTextColor(Color.parseColor("#757575"));
+            dynamicInfoZan.setImageResource(R.drawable.life_zan);
+        }
+
         dynamicinfoCommentnum.setText(dynamicReault.getGroupDynamic().getCommentCount() + "");
+
         String images = dynamicReault.getGroupDynamic().getTalkImg();
         String url[] = images.split("ZZU");
         dynamicImagesList.clear();
@@ -181,11 +191,16 @@ public class DynamicInfoActivity extends AppCompatActivity {
                 if (editComments.getText().toString().trim() != null) {
                     addsayloveReply();
                 } else {
-                    Toast.makeText(DynamicInfoActivity.dynamicInfoActivity, "评论不能为空", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DynamicInfoActivity.dynamicInfoActivity, "评论不能为空！", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.dynamic_info_zan:
-                addThum();
+                if (dynamicReault.getGroupDynamic().getThembed()){
+                    Toast.makeText(DynamicInfoActivity.dynamicInfoActivity, "已经点过赞了！", Toast.LENGTH_SHORT).show();
+                }else{
+                    addThum();
+                }
+
                 break;
         }
 
@@ -257,8 +272,10 @@ public class DynamicInfoActivity extends AppCompatActivity {
                         Toast.makeText(DynamicInfoActivity.dynamicInfoActivity, "+1", Toast.LENGTH_SHORT).show();
                         Integer zan = Integer.parseInt(dynamicinfoZan.getText().toString() + "");
                         dynamicinfoZan.setText((zan + 1) + "");
+                        dynamicinfoZan.setTextColor(Color.parseColor("#F48F0B"));
+                        dynamicInfoZan.setImageResource(R.drawable.life_zan_done);
                     } else {
-                        Toast.makeText(DynamicInfoActivity.dynamicInfoActivity, "请重新登录！", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DynamicInfoActivity.dynamicInfoActivity, "已经点过赞了！", Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

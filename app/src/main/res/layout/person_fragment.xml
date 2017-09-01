@@ -63,7 +63,7 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="6dp"
                     android:layout_weight="4"
-                    android:text="我的状态" />
+                    android:text="好友请求" />
 
                 <ImageView
                     android:layout_width="0dp"

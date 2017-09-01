@@ -1,8 +1,9 @@
 package com.gjf.lovezzu.activity.taoyu;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -67,7 +68,7 @@ public class TaoyuActivity extends AppCompatActivity {
     }
 
     private void setDefaultFragment() {
-        FragmentManager fm = getFragmentManager();
+        FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
         taoyuGoodsStudyTypeFragment = new TaoyuGoodsStudyTypeFragment();
         transaction.replace(R.id.id_taoyuactivity, taoyuGoodsStudyTypeFragment);
@@ -115,7 +116,7 @@ public class TaoyuActivity extends AppCompatActivity {
     }
 
     private void showFragmen(Fragment fragment) {
-        FragmentManager fm = getFragmentManager();
+        FragmentManager fm =getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
         transaction.replace(R.id.id_taoyuactivity, fragment);
         transaction.commit();

@@ -1,9 +1,10 @@
 package com.gjf.lovezzu.activity.parttimejob;
 
 import android.annotation.TargetApi;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -98,7 +99,7 @@ public class PartTimeJobActivity extends AppCompatActivity implements PopupMenu.
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void replaceFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager =getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.part_job, fragment);
         fragmentTransaction.commit();

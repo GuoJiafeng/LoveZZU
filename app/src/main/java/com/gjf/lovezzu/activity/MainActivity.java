@@ -1,32 +1,50 @@
 package com.gjf.lovezzu.activity;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.gjf.lovezzu.R;
 import com.gjf.lovezzu.entity.CheckLoginApplication;
+import com.gjf.lovezzu.entity.friend.DemoApplication;
+import com.gjf.lovezzu.entity.friend.InviteMessage;
+import com.gjf.lovezzu.entity.friend.InviteMessgeDao;
+import com.gjf.lovezzu.entity.friend.UserDao;
 import com.gjf.lovezzu.fragment.friends.FriendFragment;
 import com.gjf.lovezzu.fragment.LifeFragment;
 import com.gjf.lovezzu.fragment.MessageFragment;
 import com.gjf.lovezzu.fragment.PersonFragment;
 import com.gjf.lovezzu.fragment.school.SchoolFragment;
 import com.gjf.lovezzu.service.CheckLogin;
+import com.gjf.lovezzu.service.DemoIntentService;
+import com.gjf.lovezzu.service.DemoPushService;
+import com.igexin.sdk.PushManager;
+import com.hyphenate.EMContactListener;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.easeui.domain.EaseUser;
 
-import cn.smssdk.EventHandler;
-import cn.smssdk.SMSSDK;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-
+    private InviteMessgeDao inviteMessgeDao;
+    private UserDao userDao;
     LinearLayout mOne;
 
     LinearLayout mTwo;
@@ -49,10 +67,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mainActivity=this;
+        getPremission();
         checkLoin();
+        PushManager.getInstance().initialize(this.getApplicationContext(),DemoPushService.class);
+        PushManager.getInstance().registerPushIntentService(this.getApplicationContext(), DemoIntentService.class);
         // 创建EventHandler对象
 
-
+        inviteMessgeDao = new InviteMessgeDao(MainActivity.this);
+        userDao = new UserDao(MainActivity.this);
+        EMClient.getInstance().contactManager().setContactListener(new MyContactListener());
         if (Build.VERSION.SDK_INT >= 21) {
             View decorView = getWindow().getDecorView();
             int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
@@ -81,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        FragmentManager fm = getFragmentManager();
+        FragmentManager fm = getSupportFragmentManager();
         // 开启Fragment事务
         FragmentTransaction transaction = fm.beginTransaction();
 
@@ -158,7 +181,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private void setDefaultFragment() {
-        FragmentManager fm = getFragmentManager();
+        FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
         schoolFragment = new SchoolFragment();
         transaction.replace(R.id.id_content, schoolFragment);
@@ -175,8 +198,149 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * 保存并提示消息的邀请消息
+     * @param msg
+     */
+    private void notifyNewIviteMessage(InviteMessage msg){
+        if(inviteMessgeDao == null){
+            inviteMessgeDao = new InviteMessgeDao(MainActivity.this);
+        }
+        inviteMessgeDao.saveMessage(msg);
+        //保存未读数，这里没有精确计算
+        inviteMessgeDao.saveUnreadMessageCount(1);
+        // 提示有新消息
+        //响铃或其他操作
+    }
 
 
+    public class MyContactListener implements EMContactListener {
+
+        @Override
+        public void onContactAdded(final String username) {
+            // 保存增加的联系人
+            Map<String, EaseUser> localUsers = DemoApplication.getInstance().getContactList();
+            Map<String, EaseUser> toAddUsers = new HashMap<String, EaseUser>();
+            EaseUser user = new EaseUser(username);
+            // 添加好友时可能会回调added方法两次
+            if (!localUsers.containsKey(username)) {
+                userDao.saveContact(user);
+            }
+            toAddUsers.put(username, user);
+            localUsers.putAll(toAddUsers);
+            runOnUiThread(new Runnable(){
+
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(), "增加联系人：+"+username, Toast.LENGTH_SHORT).show();
+                }
 
 
+            });
+
+        }
+
+        @Override
+        public void onContactDeleted(final String username) {
+            // 被删除
+            Map<String, EaseUser> localUsers = DemoApplication.getInstance().getContactList();
+            localUsers.remove(username);
+            userDao.deleteContact(username);
+            inviteMessgeDao.deleteMessage(username);
+
+            runOnUiThread(new Runnable(){
+
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(), "删除联系人：+"+username, Toast.LENGTH_SHORT).show();
+                }
+
+
+            });
+        }
+
+        @Override
+        public void onContactInvited(final String username, String reason) {
+            // 接到邀请的消息，如果不处理(同意或拒绝)，掉线后，服务器会自动再发过来，所以客户端不需要重复提醒
+            List<InviteMessage> msgs = inviteMessgeDao.getMessagesList();
+
+            for (InviteMessage inviteMessage : msgs) {
+                if (inviteMessage.getGroupId() == null && inviteMessage.getFrom().equals(username)) {
+                    inviteMessgeDao.deleteMessage(username);
+                }
+            }
+            // 自己封装的javabean
+            InviteMessage msg = new InviteMessage();
+            msg.setFrom(username);
+            msg.setTime(System.currentTimeMillis());
+            msg.setReason(reason);
+
+            // 设置相应status
+            msg.setStatus(InviteMessage.InviteMesageStatus.BEINVITEED);
+            notifyNewIviteMessage(msg);
+            runOnUiThread(new Runnable(){
+
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(), "收到好友申请：+"+username, Toast.LENGTH_SHORT).show();
+                }
+
+
+            });
+
+        }
+
+        @Override
+        public void onFriendRequestAccepted(final String username) {
+            List<InviteMessage> msgs = inviteMessgeDao.getMessagesList();
+            for (InviteMessage inviteMessage : msgs) {
+                if (inviteMessage.getFrom().equals(username)) {
+                    return;
+                }
+            }
+            // 自己封装的javabean
+            InviteMessage msg = new InviteMessage();
+            msg.setFrom(username);
+            msg.setTime(System.currentTimeMillis());
+
+            msg.setStatus(InviteMessage.InviteMesageStatus.BEAGREED);
+            notifyNewIviteMessage(msg);
+            runOnUiThread(new Runnable(){
+
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(), "好友申请同意：+"+username, Toast.LENGTH_SHORT).show();
+                }
+
+
+            });
+        }
+
+        @Override
+        public void onFriendRequestDeclined(String s) {
+            Log.d(s, s + "拒绝了你的好友请求");
+        }
+    }
+
+    private void getPremission(){
+        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.RECORD_AUDIO)!=PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.RECORD_AUDIO},1);
+        }else {
+            return;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode){
+            case 1:
+                if (grantResults.length>0&&grantResults[0]== PackageManager.PERMISSION_GRANTED){
+                    break;
+                }else {
+                    Toast.makeText(this,"无麦克风权限将不能正常发送语音！",Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
+
+    }
 }

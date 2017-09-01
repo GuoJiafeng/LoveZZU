@@ -3,6 +3,7 @@ package com.gjf.lovezzu.fragment;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,7 +19,12 @@ import android.widget.Toast;
 import com.gjf.lovezzu.R;
 import com.gjf.lovezzu.activity.MainActivity;
 import com.gjf.lovezzu.entity.LoginResult;
+import com.gjf.lovezzu.entity.friend.DemoApplication;
 import com.gjf.lovezzu.network.SingInMethods;
+import com.hyphenate.EMCallBack;
+import com.hyphenate.EMError;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.exceptions.HyphenateException;
 
 
 import java.util.HashMap;
@@ -31,6 +37,8 @@ import cn.smssdk.OnSendMessageHandler;
 import cn.smssdk.SMSSDK;
 import cn.smssdk.gui.RegisterPage;
 import rx.Subscriber;
+
+import static com.thefinestartist.utils.content.ContextUtil.getApplicationContext;
 
 /**
  * Created by BlackBeard丶 on 2017/03/01.
@@ -102,6 +110,49 @@ public class UserSingUpFragment extends Fragment {
         transaction.commit();
     }
 
+   /* private void singUpIM(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    EMClient.getInstance().createAccount(getuser_reg_phone.getText().toString().trim(),getUser_reg_password.getText().toString().trim());
+                    Log.e("环信--注册成功","");
+                } catch (HyphenateException e) {
+                    e.printStackTrace();
+                    Log.e("环信--注册失败",e.getErrorCode()+", "+e.getMessage());
+                }
+            }
+        }).start();
+    }*/
+
+   private void singUpIM(){
+
+       new Thread(new Runnable() {
+           @Override
+           public void run() {
+               try {
+                   EMClient.getInstance().createAccount(getuser_reg_phone.getText().toString().trim(),getUser_reg_password.getText().toString().trim());
+                   Log.e("环信--注册成功","");
+                   // 保存用户名
+                   DemoApplication.getInstance().setCurrentUserName(getuser_reg_phone.getText().toString().trim());
+
+               } catch (HyphenateException e) {
+                   e.printStackTrace();
+                   int errorCode=e.getErrorCode();
+                   if(errorCode== EMError.NETWORK_ERROR){
+                       Toast.makeText(getApplicationContext(), getResources().getString(R.string.network_anomalies), Toast.LENGTH_SHORT).show();
+                   }else if(errorCode == EMError.USER_ALREADY_EXIST){
+                       Toast.makeText(getApplicationContext(), getResources().getString(R.string.User_already_exists), Toast.LENGTH_SHORT).show();
+                   }else if(errorCode == EMError.USER_ILLEGAL_ARGUMENT){
+                       Toast.makeText(getApplicationContext(), getResources().getString(R.string.illegal_user_name),Toast.LENGTH_SHORT).show();
+                   }else
+                   Log.e("环信--注册失败",e.getErrorCode()+", "+e.getMessage());
+               }
+           }
+       }).start();
+
+   }
+
     private void goTosingup() {
         subscriber = new Subscriber<LoginResult>() {
             @Override
@@ -141,6 +192,7 @@ public class UserSingUpFragment extends Fragment {
                 break;
             case R.id.user_singup_button:
                 goTosingup();
+                singUpIM();
                 break;
             case R.id.reg_title_back:
                 returnHome();

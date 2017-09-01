@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -63,7 +64,7 @@ public class TaoyuChildConmmentsActivity extends AppCompatActivity {
     TextView send;
     @BindView(R.id.parent_comm_zan)
     TextView parentCommZan;
-
+    ImageView parent_goods_zan;
     LinearLayout zan;
     @BindView(R.id.goods_child_refresh)
     TextView goodsChildRefresh;
@@ -73,7 +74,7 @@ public class TaoyuChildConmmentsActivity extends AppCompatActivity {
     private List<GoodsChildCommentsDateBridging> goodsChildCommentsDateBridgingList = new ArrayList<>();
     private String SessionID;
     public static TaoyuChildConmmentsActivity taoyuChildConmmentsActivity;
-    private String type="1";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +85,7 @@ public class TaoyuChildConmmentsActivity extends AppCompatActivity {
         parentComments = (GoodsCommentsDataBridging) getIntent().getSerializableExtra("parentComm");
         SharedPreferences sharedPreferences = getSharedPreferences("userinfo", Activity.MODE_APPEND);
         SessionID = sharedPreferences.getString("SessionID", "");
+        parent_goods_zan= (ImageView) findViewById(R.id.parent_goods_zan);
         initView();
         getChildCommetns();
         showChildComments();
@@ -100,6 +102,13 @@ public class TaoyuChildConmmentsActivity extends AppCompatActivity {
         parentCommContent.setText(parentComments.getComments_L1().getComments());
         parentCommTime.setText(parentComments.getComments_L1().getCdate());
         parentCommZan.setText(parentComments.getComments_L1().getNum_thumb() + "");
+        if (parentComments.getComments_L1().getThembed()){
+            parentCommZan.setTextColor(Color.parseColor("#F48F0B"));
+            parent_goods_zan.setImageResource(R.drawable.life_zan_done);
+        }else {
+            parentCommZan.setTextColor(Color.parseColor("#757575"));
+            parent_goods_zan.setImageResource(R.drawable.life_zan);
+        }
 
     }
 
@@ -137,14 +146,13 @@ public class TaoyuChildConmmentsActivity extends AppCompatActivity {
                 }
             }
         };
-        TaoyuGoodsChildCommetnsMethods.getInsance().getChileComments(subscriber, "querycomments_L2", parentComments.getComments_L1().getL1_Cid() + "");
+        TaoyuGoodsChildCommetnsMethods.getInsance().getChileComments(subscriber, "querycomments_L2", parentComments.getComments_L1().getL1_Cid() + "",SessionID);
     }
 
     private void publishChildComments() {
         RequestParams requestParams = new RequestParams(LOGIN_URL + "comments_L2Action");
-        requestParams.addBodyParameter("action", "postcomments_L2");
+        requestParams.addBodyParameter("action", "对一级评论发表评论");
         requestParams.addBodyParameter("L1_Cid", parentComments.getComments_L1().getL1_Cid() + "");
-        requestParams.addBodyParameter("L2_Cid", "");
         requestParams.addBodyParameter("SessionID", SessionID);
         requestParams.addBodyParameter("comments", editComments.getText().toString());
         x.http().post(requestParams, new Callback.CacheCallback<String>() {
@@ -188,15 +196,13 @@ public class TaoyuChildConmmentsActivity extends AppCompatActivity {
         });
     }
 
-    private void addThnum(String num) {
+    private void addThnum() {
 
         RequestParams requestParams = new RequestParams(LOGIN_URL + "comments_L2Action");
-        requestParams.addBodyParameter("action", "postcomments_L2");
+        requestParams.addBodyParameter("action", "对一级评论点赞");
         requestParams.addBodyParameter("L1_Cid", parentComments.getComments_L1().getL1_Cid() + "");
-        requestParams.addBodyParameter("L2_Cid", "");
         requestParams.addBodyParameter("SessionID", SessionID);
-        requestParams.addBodyParameter("comments", "");
-        requestParams.addBodyParameter("ThumbNum",num);
+
         x.http().post(requestParams, new Callback.CacheCallback<String>() {
 
             @Override
@@ -207,18 +213,14 @@ public class TaoyuChildConmmentsActivity extends AppCompatActivity {
                     Boolean res = jsonObject.getBoolean("isSuccessful");
 
                     if (res) {
-                        if (type.equals("1")){
-                            Toast.makeText(getApplicationContext(), "+1 再点取消点赞", Toast.LENGTH_SHORT).show();
+
+                            Toast.makeText(getApplicationContext(), "+1", Toast.LENGTH_SHORT).show();
                             Integer zanNum = Integer.parseInt(parentCommZan.getText().toString());
                             parentCommZan.setText((zanNum + 1)+"");
-                        }else {
-                            Toast.makeText(getApplicationContext(), "-1", Toast.LENGTH_SHORT).show();
-                            Integer zanNum = Integer.parseInt(parentCommZan.getText().toString());
-                            parentCommZan.setText((zanNum - 1)+"");
-                        }
-
+                        parentCommZan.setTextColor(Color.parseColor("#F48F0B"));
+                        parent_goods_zan.setImageResource(R.drawable.life_zan_done);
                     } else {
-                        Toast.makeText(getApplicationContext(), "请重新登录或检查网络是否通畅！", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "已经点过赞了！", Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -229,6 +231,7 @@ public class TaoyuChildConmmentsActivity extends AppCompatActivity {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
+                Toast.makeText(getApplicationContext(), "请重新登录或检查网络是否通畅！", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -238,11 +241,7 @@ public class TaoyuChildConmmentsActivity extends AppCompatActivity {
 
             @Override
             public void onFinished() {
-                if (type.equals("1")){
-                    type="0";
-                }else {
-                    type="1";
-                }
+
             }
 
             @Override
@@ -265,8 +264,11 @@ public class TaoyuChildConmmentsActivity extends AppCompatActivity {
 
                 break;
             case R.id.child_zan:
-                    addThnum(type);
-
+                if (parentComments.getComments_L1().getThembed()){
+                    Toast.makeText(getApplicationContext(),"已经点过赞了！",Toast.LENGTH_SHORT).show();
+                }else {
+                    addThnum();
+                }
                 break;
             case  R.id.goods_child_refresh:
                 goodsChildRefresh.setTextColor(Color.parseColor("#CDC9C9"));

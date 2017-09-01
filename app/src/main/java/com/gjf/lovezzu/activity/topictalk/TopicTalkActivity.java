@@ -1,6 +1,8 @@
 package com.gjf.lovezzu.activity.topictalk;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -57,12 +59,16 @@ public class TopicTalkActivity extends AppCompatActivity {
 
     private List<TopicDataBridging> topicDataBridgingList=new ArrayList<>();
     private TopicTopicAdapter topicTopicAdapter;
+
+    private String SessionID;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         topicTalkActivity = this;
         setContentView(R.layout.topic_activity);
         ButterKnife.bind(this);
+        SharedPreferences sharedPreferences= TopicTalkActivity.topicTalkActivity.getSharedPreferences("userinfo", Activity.MODE_APPEND);
+        SessionID=sharedPreferences.getString("SessionID","");
         onRefresh();
         getTopicTheme();
         showTheme();
@@ -138,7 +144,7 @@ public class TopicTalkActivity extends AppCompatActivity {
                 }
             }
         };
-        TopicMethods.getInstance().getTopic(subscriber,topicThemeAdapter.getTheme()+"","查询话题");
+        TopicMethods.getInstance().getTopic(subscriber,topicThemeAdapter.getTheme()+"","查询话题",SessionID);
     }
 
     private void showTheme() {

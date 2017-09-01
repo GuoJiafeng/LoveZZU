@@ -2,6 +2,7 @@ package com.gjf.lovezzu.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,6 +62,13 @@ public class TaoyuGoodsCommentsAdapter extends RecyclerView.Adapter<TaoyuGoodsCo
         holder.comments_date.setText(goodsCommentsDataBridging.getComments_L1().getCdate());
         holder.comments_reples.setText(goodsCommentsDataBridging.getComments_L1().getNum_replies()+"");
         holder.comments_zan.setText(goodsCommentsDataBridging.getComments_L1().getNum_thumb()+"");
+        if (goodsCommentsDataBridging.getComments_L1().getThembed()){
+            holder.comments_zan.setTextColor(Color.parseColor("#F48F0B"));
+            holder.goods_comments_zan.setImageResource(R.drawable.life_zan_done);
+        }else {
+            holder.comments_zan.setTextColor(Color.parseColor("#757575"));
+            holder.goods_comments_zan.setImageResource(R.drawable.life_zan);
+        }
     }
 
     @Override
@@ -71,6 +79,7 @@ public class TaoyuGoodsCommentsAdapter extends RecyclerView.Adapter<TaoyuGoodsCo
     static class ViewHolder extends RecyclerView.ViewHolder {
         LinearLayout commentView;
         ImageView goodsUserIcon;
+        ImageView goods_comments_zan;
         TextView goodsUserNickName;
         TextView comments_content;
         TextView comments_date;
@@ -80,6 +89,7 @@ public class TaoyuGoodsCommentsAdapter extends RecyclerView.Adapter<TaoyuGoodsCo
             super(itemView);
             commentView= (LinearLayout) itemView.findViewById(R.id.comment_main);
             goodsUserIcon= (ImageView) itemView.findViewById(R.id.goods_comm_user_icon);
+            goods_comments_zan= (ImageView) itemView.findViewById(R.id.goods_comments_zan);
             goodsUserNickName= (TextView) itemView.findViewById(R.id.goods_comm_user_nickname);
             comments_content= (TextView) itemView.findViewById(R.id.goods_comm_content);
             comments_date= (TextView) itemView.findViewById(R.id.goods_comm_time);

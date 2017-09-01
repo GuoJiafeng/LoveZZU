@@ -13,6 +13,15 @@ public class TreeHole implements Serializable{
     private int thembCount;
     private int commentCount;
     private String date;
+    private Boolean thembed;//点赞记录
+
+    public Boolean getThembed() {
+        return thembed;
+    }
+
+    public void setThembed(Boolean thembed) {
+        this.thembed = thembed;
+    }
 
     public String getDate() {
         return date;
